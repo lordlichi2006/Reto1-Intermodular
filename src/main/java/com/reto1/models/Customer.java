@@ -4,10 +4,16 @@
  */
 package com.reto1.models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Ekaitz.Rivero
  */
 public class Customer {
+    ArrayList<String> addresses;
+    Double totalSpent;
+    Type type;
+    ArrayList<Object> cart;
     
 }

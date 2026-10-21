@@ -9,5 +9,6 @@ package com.reto1.models;
  * @author Ekaitz.Rivero
  */
 public enum Type {
-    
+    INDIVIDUAL,
+    BUSINESS;
 }
