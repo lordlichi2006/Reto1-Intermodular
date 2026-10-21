@@ -1,4 +1,4 @@
-package com.reto1.models;
+package com.reto1.controllers;
 
 import java.io.IOException;
 import javafx.fxml.FXML;

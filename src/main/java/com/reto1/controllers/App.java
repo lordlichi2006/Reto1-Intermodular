@@ -1,4 +1,4 @@
-package com.reto1.models;
+package com.reto1.controllers;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
