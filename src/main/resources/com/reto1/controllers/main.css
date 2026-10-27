@@ -1,0 +1,49 @@
+.mainPanel {
+    -fx-background-image: url("/images/bg.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+}
+.menuButton{
+    -fx-background-color: #FF82C0;
+    -fx-border-color:white;
+    -fx-border-style:solid;
+    -fx-border-width:2px;
+    -fx-border-radius:999px;
+    -fx-background-radius:999px;
+}
+.menuButton:hover,
+.menuButton:disabled{
+    -fx-background-color: #ff3791;
+    -fx-scale-x: 1.05;
+    -fx-scale-y:1.05;
+    -fx-effect: dropshadow(gaussian, #FF82C0CC, 10, 0.3, 0, 0);
+}
+.menuButton:disabled{
+    -fx-text-fill:white;
+    -fx-opacity:1;
+    -fx-border-color:white;
+    -fx-border-style:solid;
+    -fx-effect: dropshadow(gaussian, #FFAADDBB, 14, 0.3, 0, 0);
+
+}
+.windowControls{
+    -fx-background-color: #0000;
+    -fx-text-fill:white;
+    -fx-border-width:0px;
+
+}
+.windowControls{
+    /*overridea el de defecto*/
+    -fx-effect: dropshadow(gaussian, #0000, 0, 0, 0, 0);
+
+}
+.windowControls:hover{
+    -fx-scale-x: 1.2;
+    -fx-scale-y:1.2;
+     -fx-text-fill:#ff3791;
+   
+}
