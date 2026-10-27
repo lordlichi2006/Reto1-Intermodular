@@ -6,9 +6,8 @@ package com.reto1.models;
 
 /**
  *
- * @author Ekaitz.Rivero
+ * @author 20ala
  */
-public enum Type {
-    INDIVIDUAL,
-    BUSINESS;
+public enum ShipmentStatus {
+    IN_PROGRESS, IN_SHIPMENT, ARRIVED, CANCELLED
 }
