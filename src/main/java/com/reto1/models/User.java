@@ -4,12 +4,15 @@
  */
 package com.reto1.models;
 
+import org.bson.types.ObjectId;
+
 /**
  *
  * @author Ekaitz.Rivero
  */
 public class User {
 
+    private ObjectId id;
     private String name;
     private String email;
     private String password;
@@ -27,6 +30,14 @@ public class User {
         this.email = email;
         this.password = password;
         this.idDocument = idDocument;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getName() {

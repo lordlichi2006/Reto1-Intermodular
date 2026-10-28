@@ -4,15 +4,20 @@
  */
 package com.reto1.models;
 import java.util.ArrayList;
+import org.bson.types.ObjectId;
 /**
  *
  * @author 20ala
  */
 public class DiscountPack {
-       private String name;
+    private ObjectId id;
+    private String name;
     private double discountPercentage;
     private ArrayList<String> products;   // productID
     private int remainingUnits;
+
+    public DiscountPack() {
+    }
 
     public DiscountPack(String name, double discountPercentage,
                         ArrayList<String> products, int remainingUnits) {
@@ -20,6 +25,14 @@ public class DiscountPack {
         this.discountPercentage = discountPercentage;
         this.products = products;
         this.remainingUnits = remainingUnits;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getName() {

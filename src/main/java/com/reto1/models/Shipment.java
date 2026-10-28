@@ -14,6 +14,9 @@ public class Shipment {
     private String shipmentCompany;
     private ShipmentStatus status;
 
+    public Shipment() {
+    }
+
     public Shipment(String shipmentID, String trackingID,
                     String shipmentCompany, ShipmentStatus status) {
         this.shipmentID = shipmentID;

@@ -4,21 +4,35 @@
  */
 package com.reto1.models;
 
+import org.bson.types.ObjectId;
+
 /**
  *
  * @author 20ala
  */
 public class Supplier {
+    private ObjectId id;
     private String name;
     private String cif;
     private String email;
     private String telephone;
+
+    public Supplier() {
+    }
 
     public Supplier(String name, String cif, String email, String telephone) {
         this.name = name;
         this.cif = cif;
         this.email = email;
         this.telephone = telephone;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getName() {
