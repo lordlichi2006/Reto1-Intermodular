@@ -18,7 +18,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("shopTemplate"), 860, 540);
+        //scene = new Scene(loadFXML("shopTemplate"), 860, 540);
+        scene = new Scene(loadFXML("loginView"), 270, 340);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();

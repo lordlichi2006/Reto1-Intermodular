@@ -1,11 +1,15 @@
 package com.reto1.controllers;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.Level;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
 
 public class BaseController {
 
@@ -14,8 +18,35 @@ public class BaseController {
     private double xOffset;
     private double yOffset;
 
-    
-    
+    protected Logger logger;
+
+    protected void initializeBase() {
+        logger = Logger.getLogger(getClass().getName());
+
+        try {
+            FileHandler file = new FileHandler("application.log", true);
+            ConsoleHandler console = new ConsoleHandler();
+            
+            // Formats the log output so its easier to read
+            file.setFormatter(new SimpleFormatter()); 
+            console.setFormatter(new SimpleFormatter());
+
+            logger.addHandler(file);
+            logger.addHandler(console);
+
+            // Remove default handlers since we have our custom ones
+            logger.setUseParentHandlers(false); 
+            
+            // Sets the levels of the logger
+            logger.setLevel(Level.ALL); //  set to all so each handler can choose which logging level you want
+            file.setLevel(Level.INFO); // only SEVERE, WARNING and INFO
+            console.setLevel(Level.ALL); // ALL includes Debug
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
     @FXML
     private void onDragStart(MouseEvent event) {
         Stage stage = (Stage) titleBar.getScene().getWindow();
