@@ -17,6 +17,10 @@ public class Customer extends User{
     private ArrayList<CartItem> cart;
     private ArrayList<Shipment> shipments;
 
+    public Customer() {
+        super();
+    }
+
     public Customer(String name, String email, String password, String idDocument,
                     ArrayList<String> addresses, double totalSpent, CustomerType type,
                     ArrayList<CartItem> cart, ArrayList<Shipment> shipments) {

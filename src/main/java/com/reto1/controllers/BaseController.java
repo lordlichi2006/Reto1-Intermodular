@@ -20,7 +20,7 @@ public class BaseController {
 
     protected Logger logger;
 
-    protected void initializeBase() {
+    protected void initializeLogger() {
         logger = Logger.getLogger(getClass().getName());
 
         try {

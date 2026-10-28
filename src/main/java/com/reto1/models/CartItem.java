@@ -16,6 +16,9 @@ public class CartItem {
     private String productID;
     private int unitsSelected;
 
+    public CartItem() {
+    }
+
     public CartItem(String name, String brand, double price, int stock,
                     String productID, int unitsSelected) {
         this.name = name;

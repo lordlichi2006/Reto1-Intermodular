@@ -30,7 +30,7 @@ public class LoginController extends BaseController {
 
     @FXML
     private void initialize() {
-        initializeBase(); // some utilities are initialized here.
+        initializeLogger();
         logger.log(Level.FINE, "{0} Initialized", getClass().getName());
 
         lblError.setText("");

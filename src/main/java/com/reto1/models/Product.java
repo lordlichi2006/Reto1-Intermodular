@@ -4,17 +4,22 @@
  */
 package com.reto1.models;
 import java.util.ArrayList;
+import org.bson.types.ObjectId;
 /**
  *
  * @author 20ala
  */
 public class Product {
+    private ObjectId id;
     private String name;
     private String brand;
     private double price;
     private int stock;
     private String description;
     private ArrayList<Supplier> supplier;
+
+    public Product() {
+    }
 
     public Product(String name, String brand, double price, int stock,
                    String description, ArrayList<Supplier> supplier) {
@@ -24,6 +29,14 @@ public class Product {
         this.stock = stock;
         this.description = description;
         this.supplier = supplier;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getName() {
