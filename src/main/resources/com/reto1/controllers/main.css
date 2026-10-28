@@ -1,28 +1,53 @@
 .mainPanel {
     -fx-background-image: url("/images/bg.png");
+    -fx-background-color:#A22D68;
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 
-    -fx-background-radius: 15px;
-    -fx-border-radius: 15px;
 }
-.menuButton{
+.text{
+    -fx-text-fill:#FFCEE6;
+}
+.errorText{
+    -fx-text-fill:#FF82C0;
+    -fx-effect: dropshadow(gaussian, #FFF2, 9, 0.7, 0, 0);
+}
+.textField{
+    -fx-prompt-text-fill:#FFCEE699;
+    -fx-text-fill:#FFCEE6;
+    -fx-background-color: #C93E83;
+    -fx-border-color:white;
+    -fx-border-style:solid;
+    -fx-border-radius:5px;
+    -fx-background-radius:5px;
+    -fx-border-width:1px;
+}
+.textField:focused{
+    -fx-border-color:#FF59B1;
+    -fx-effect: dropshadow(gaussian, #FF59B1, 7, 0.3, 0, 0);
+
+}
+.menuButton,
+.uiButton{
+    -fx-text-fill:white;
     -fx-background-color: #FF82C0;
     -fx-border-color:white;
     -fx-border-style:solid;
-    -fx-border-width:2px;
     -fx-border-radius:999px;
     -fx-background-radius:999px;
 }
 .menuButton:hover,
-.menuButton:disabled{
+.menuButton:disabled,
+.uiButton:hover,
+.uiButton:disabled{
     -fx-background-color: #ff3791;
     -fx-scale-x: 1.05;
     -fx-scale-y:1.05;
     -fx-effect: dropshadow(gaussian, #FF82C0CC, 10, 0.3, 0, 0);
 }
-.menuButton:disabled{
+.menuButton:disabled,
+.uiButton:disabled{
     -fx-text-fill:white;
     -fx-opacity:1;
     -fx-border-color:white;
@@ -30,6 +55,13 @@
     -fx-effect: dropshadow(gaussian, #FFAADDBB, 14, 0.3, 0, 0);
 
 }
+.menuButton{
+    -fx-border-width:2px;
+}
+.uiButton{
+    -fx-border-width:1px;
+}
+
 .windowControls{
     -fx-background-color: #0000;
     -fx-text-fill:white;
@@ -44,6 +76,6 @@
 .windowControls:hover{
     -fx-scale-x: 1.2;
     -fx-scale-y:1.2;
-     -fx-text-fill:#ff3791;
-   
+    -fx-text-fill:#ff3791;
+
 }
