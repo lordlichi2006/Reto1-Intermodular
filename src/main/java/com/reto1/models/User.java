@@ -1,20 +1,28 @@
 package com.reto1.models;
 
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.types.ObjectId;
 
 /**
+ * Common data of every person that can log in (collection "users").
+ * Customers and workers are stored in the same collection; the field "_t"
+ * (discriminator) says which subclass each document belongs to.
  *
  * @author Ekaitz.Rivero
  */
+@BsonDiscriminator(key = "_t")
 public class User {
 
+    /** MongoDB _id. The POJO codec maps the property "id" to "_id". */
     private ObjectId id;
     private String name;
     private String email;
+    /** Password hash (never the plain password; hashing is added in Fase 8). */
     private String password;
+    /** DNI / NIE / CIF of the user. */
     private String idDocument;
 
-    public User() {        
+    public User() {
         this.name = "";
         this.email = "";
         this.password = "";
@@ -70,7 +78,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "name=" + name + ", email=" + email + ", password=" + password + ", idDocument=" + idDocument + '}';
+        return "User{" + "id=" + id + ", name=" + name + ", email=" + email + ", idDocument=" + idDocument + '}';
     }
-
 }

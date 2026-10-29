@@ -1,28 +1,40 @@
 package com.reto1.models;
 
+import org.bson.types.ObjectId;
+
 /**
+ * Line of a customer's cart (embedded inside Customer.cart).
+ * Name, brand and price are copied so the cart can be shown without
+ * querying "products"; the stock is NOT copied because it changes all the time.
  *
  * @author 20ala
  */
 public class CartItem {
+
+    /** _id of the product in the "products" collection. */
+    private ObjectId productId;
     private String name;
     private String brand;
     private double price;
-    private int stock;
-    private String productID;
-    private int unitsSelected;
+    private int units;
 
     public CartItem() {
     }
 
-    public CartItem(String name, String brand, double price, int stock,
-                    String productID, int unitsSelected) {
+    public CartItem(ObjectId productId, String name, String brand, double price, int units) {
+        this.productId = productId;
         this.name = name;
         this.brand = brand;
         this.price = price;
-        this.stock = stock;
-        this.productID = productID;
-        this.unitsSelected = unitsSelected;
+        this.units = units;
+    }
+
+    public ObjectId getProductId() {
+        return productId;
+    }
+
+    public void setProductId(ObjectId productId) {
+        this.productId = productId;
     }
 
     public String getName() {
@@ -49,35 +61,17 @@ public class CartItem {
         this.price = price;
     }
 
-    public int getStock() {
-        return stock;
+    public int getUnits() {
+        return units;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public String getProductID() {
-        return productID;
-    }
-
-    public void setProductID(String productID) {
-        this.productID = productID;
-    }
-
-    public int getUnitsSelected() {
-        return unitsSelected;
-    }
-
-    public void setUnitsSelected(int unitsSelected) {
-        this.unitsSelected = unitsSelected;
+    public void setUnits(int units) {
+        this.units = units;
     }
 
     @Override
     public String toString() {
-        return "CartItem{" + "name=" + name + ", brand=" + brand + ", price=" + price + ", stock=" + stock + ", productID=" + productID + ", unitsSelected=" + unitsSelected + '}';
+        return "CartItem{" + "productId=" + productId + ", name=" + name + ", brand=" + brand
+                + ", price=" + price + ", units=" + units + '}';
     }
-    
-    
-
 }

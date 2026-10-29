@@ -11,6 +11,9 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+import com.reto1.models.Customer;
+import com.reto1.models.User;
+import com.reto1.models.Worker;
 import com.reto1.util.AppConfig;
 
 /**
@@ -28,20 +31,44 @@ public class Database {
     private Database() {
     }
 
-    public static synchronized MongoDatabase getDatabase() {
+    /**
+     * @return the application database, opening the connection the first time
+     */
+    public static MongoDatabase getDatabase() {
+        return getDatabase(DB_NAME);
+    }
+
+    /**
+     * Returns a database by name using the shared connection.
+     * Used by tests to work on a separate database.
+     *
+     * @param name database name
+     * @return the database
+     */
+    static synchronized MongoDatabase getDatabase(String name) {
         if (client == null) {
+            // User, Customer and Worker are registered explicitly so the codec can
+            // read the "_t" discriminator and build the right subclass.
+            PojoCodecProvider pojoProvider = PojoCodecProvider.builder()
+                    .register(User.class, Customer.class, Worker.class)
+                    .automatic(true)
+                    .build();
+
             CodecRegistry registry = fromRegistries(
                     MongoClientSettings.getDefaultCodecRegistry(),
-                    fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+                    fromProviders(pojoProvider));
 
             client = MongoClients.create(MongoClientSettings.builder()
                     .applyConnectionString(new ConnectionString(URI))
                     .codecRegistry(registry)
                     .build());
         }
-        return client.getDatabase(DB_NAME);
+        return client.getDatabase(name);
     }
 
+    /**
+     * Closes the connection. Called from App.stop() when the application exits.
+     */
     public static synchronized void close() {
         if (client != null) {
             client.close();

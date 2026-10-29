@@ -1,0 +1,11 @@
+{
+  "bsonType": "object",
+  "title": "suppliers",
+  "required": ["name", "cif", "email"],
+  "properties": {
+    "name": { "bsonType": "string", "minLength": 1 },
+    "cif": { "bsonType": "string", "pattern": "^[A-Z][0-9]{7}[0-9A-Z]$" },
+    "email": { "bsonType": "string", "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" },
+    "telephone": { "bsonType": "string", "pattern": "^[0-9+ ]{9,15}$" }
+  }
+}

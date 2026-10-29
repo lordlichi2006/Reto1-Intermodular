@@ -1,25 +1,34 @@
 package com.reto1.models;
+
 import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.types.ObjectId;
+
 /**
+ * Offer pack (collection "discountPacks").
+ * References its products with an array of _id (productIds).
  *
  * @author 20ala
  */
 public class DiscountPack {
+
     private ObjectId id;
     private String name;
+    /** Discount between 0 and 100. */
     private double discountPercentage;
-    private ArrayList<String> products;   // productID
+    /** _id of the products of the "products" collection included in the pack. */
+    private List<ObjectId> productIds = new ArrayList<>();
     private int remainingUnits;
 
     public DiscountPack() {
     }
 
     public DiscountPack(String name, double discountPercentage,
-                        ArrayList<String> products, int remainingUnits) {
+                        List<ObjectId> productIds, int remainingUnits) {
         this.name = name;
         this.discountPercentage = discountPercentage;
-        this.products = products;
+        this.productIds = productIds;
         this.remainingUnits = remainingUnits;
     }
 
@@ -47,12 +56,12 @@ public class DiscountPack {
         this.discountPercentage = discountPercentage;
     }
 
-    public ArrayList<String> getProducts() {
-        return products;
+    public List<ObjectId> getProductIds() {
+        return productIds;
     }
 
-    public void setProducts(ArrayList<String> products) {
-        this.products = products;
+    public void setProductIds(List<ObjectId> productIds) {
+        this.productIds = productIds;
     }
 
     public int getRemainingUnits() {
@@ -65,10 +74,7 @@ public class DiscountPack {
 
     @Override
     public String toString() {
-        return "DiscountPack{" + "name=" + name + ", discountPercentage=" + discountPercentage + ", products=" + products + ", remainingUnits=" + remainingUnits + '}';
+        return "DiscountPack{" + "id=" + id + ", name=" + name + ", discountPercentage=" + discountPercentage
+                + ", productIds=" + productIds + ", remainingUnits=" + remainingUnits + '}';
     }
-    
-    
-    
-    
 }

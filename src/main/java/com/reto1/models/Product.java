@@ -1,30 +1,37 @@
 package com.reto1.models;
+
 import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.types.ObjectId;
+
 /**
+ * Product of the shop (collection "products").
+ * Embeds a summary of its suppliers ({@link ProductSupplier}).
  *
  * @author 20ala
  */
 public class Product {
+
     private ObjectId id;
     private String name;
     private String brand;
     private double price;
     private int stock;
     private String description;
-    private ArrayList<Supplier> supplier;
+    private List<ProductSupplier> suppliers = new ArrayList<>();
 
     public Product() {
     }
 
     public Product(String name, String brand, double price, int stock,
-                   String description, ArrayList<Supplier> supplier) {
+                   String description, List<ProductSupplier> suppliers) {
         this.name = name;
         this.brand = brand;
         this.price = price;
         this.stock = stock;
         this.description = description;
-        this.supplier = supplier;
+        this.suppliers = suppliers;
     }
 
     public ObjectId getId() {
@@ -75,17 +82,17 @@ public class Product {
         this.description = description;
     }
 
-    public ArrayList<Supplier> getSupplier() {
-        return supplier;
+    public List<ProductSupplier> getSuppliers() {
+        return suppliers;
     }
 
-    public void setSupplier(ArrayList<Supplier> supplier) {
-        this.supplier = supplier;
+    public void setSuppliers(List<ProductSupplier> suppliers) {
+        this.suppliers = suppliers;
     }
 
     @Override
     public String toString() {
-        return "Product{" + "name=" + name + ", brand=" + brand + ", price=" + price + ", stock=" + stock + ", description=" + description + ", supplier=" + supplier + '}';
+        return "Product{" + "id=" + id + ", name=" + name + ", brand=" + brand + ", price=" + price
+                + ", stock=" + stock + ", description=" + description + ", suppliers=" + suppliers + '}';
     }
-    
 }
