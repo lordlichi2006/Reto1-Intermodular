@@ -1,4 +1,4 @@
-package com.reto1.controllers;
+package com.reto1.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

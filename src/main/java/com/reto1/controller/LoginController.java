@@ -59,9 +59,9 @@ public class LoginController extends BaseController {
         boolean isWorker = false;
 
         if (isWorker) {
-            switchScene("workerHome", 860, 540);
+            switchScene("workerHome", 860, 540,true);
         } else {
-            switchScene("shopHome", 860, 540);
+            switchScene("shopHome", 860, 540,true);
         }
 
     }

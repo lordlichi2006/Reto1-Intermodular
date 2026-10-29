@@ -17,12 +17,9 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-
-
 /**
- * Parent class of every window controller.
- * Holds the custom title bar behaviour (drag, minimize, maximize, close)
- * so the child controllers do not repeat it.
+ * Parent class of every window controller. Holds the custom title bar behaviour
+ * (drag, minimize, maximize, close) so the child controllers do not repeat it.
  */
 public class BaseController {
 
@@ -37,22 +34,23 @@ public class BaseController {
     protected static Logger logger;
     protected boolean unsavedChanges = false;
 
-    protected void switchScene(String fxml, int resolutionX, int resolutionY) {
+    protected void switchScene(String fxml, int resolutionX, int resolutionY, boolean center) {
 
         try {
             // Get the Stage
-            Stage stage = (Stage) mainPanel.getScene().getWindow(); 
-            
+            Stage stage = (Stage) mainPanel.getScene().getWindow();
+
             // Load the FXML
             FXMLLoader fxmlLoader = new FXMLLoader(BaseController.class.getResource(fxml + ".fxml"));
-            
+
             // Set the scene
             Scene scene = new Scene(fxmlLoader.load(), resolutionX, resolutionY);
             stage.setScene(scene);
             stage.show();
-            
-            centerStage(stage); // after loading new scene, centers stage.
-            
+            if (center) {
+                centerStage(stage); // after loading new scene, centers stage.
+            }
+
             logger.log(Level.INFO, "User has switched to {0}.fxml view", fxml);
 
         } catch (IOException e) {
@@ -63,7 +61,7 @@ public class BaseController {
 
     public void centerStage(Stage stage) {
         Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-        
+
         // calculate the center of the screen
         double x = bounds.getMinX() + (bounds.getWidth() - stage.getWidth()) / 2;
         double y = bounds.getMinY() + (bounds.getHeight() - stage.getHeight()) / 2;
@@ -101,13 +99,13 @@ public class BaseController {
 
     // handle menu buttons
     @FXML
-    private void menuHome()      {switchScene("shopHome",       860, 540);}
+    private void menuHome() {switchScene("shopHome", 860, 540,false);}
     @FXML
-    private void menuCart()      {switchScene("shopCart",       860, 540);}
-    @FXML 
-    private void menuDeliveries(){switchScene("shopDeliveries", 860, 540);}
+    private void menuCart() {switchScene("shopCart", 860, 540,false);}
     @FXML
-    private void menuProfile()   {switchScene("shopProfile",    860, 540);}
+    private void menuDeliveries() {switchScene("shopDeliveries", 860, 540,false);}
+    @FXML
+    private void menuProfile() {switchScene("shopProfile", 860, 540,false);}
 
     // Window Controls (moving, minimize,maximize and close)
     @FXML
@@ -117,6 +115,7 @@ public class BaseController {
         xOffset = event.getScreenX() - stage.getX();
         yOffset = event.getScreenY() - stage.getY();
     }
+
     @FXML
     protected void onDrag(MouseEvent event) {
         Stage stage = (Stage) titleBar.getScene().getWindow();
@@ -124,7 +123,7 @@ public class BaseController {
         stage.setX(event.getScreenX() - xOffset);
         stage.setY(event.getScreenY() - yOffset);
     }
-    
+
     @FXML
     protected void minimizeWindow() {
         Stage stage = (Stage) titleBar.getScene().getWindow();
@@ -132,6 +131,7 @@ public class BaseController {
         logger.log(Level.INFO, "User has minimized the window.");
 
     }
+
     @FXML
     protected void closeWindow() {
         Stage stage = (Stage) titleBar.getScene().getWindow();
@@ -139,6 +139,7 @@ public class BaseController {
         logger.log(Level.INFO, "User has exited the applicaiton.");
 
     }
+
     @FXML
     protected void maximizeWindow() {
         Stage stage = (Stage) titleBar.getScene().getWindow();
