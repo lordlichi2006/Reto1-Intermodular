@@ -1,0 +1,28 @@
+{
+  "bsonType": "object",
+  "title": "shipments",
+  "required": ["customerId", "createdAt", "address", "lines", "total", "status"],
+  "properties": {
+    "customerId": { "bsonType": "objectId" },
+    "createdAt": { "bsonType": "date" },
+    "address": { "bsonType": "string", "minLength": 1 },
+    "lines": {
+      "bsonType": "array",
+      "minItems": 1,
+      "items": {
+        "bsonType": "object",
+        "required": ["productId", "name", "price", "units"],
+        "properties": {
+          "productId": { "bsonType": "objectId" },
+          "name": { "bsonType": "string" },
+          "price": { "bsonType": "number", "minimum": 0 },
+          "units": { "bsonType": "int", "minimum": 1 }
+        }
+      }
+    },
+    "total": { "bsonType": "number", "minimum": 0 },
+    "trackingId": { "bsonType": "string" },
+    "shipmentCompany": { "bsonType": "string" },
+    "status": { "enum": ["IN_PROGRESS", "IN_SHIPMENT", "ARRIVED", "CANCELLED"] }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "bsonType": "object",
+  "title": "users: customers and workers (discriminator _t)",
+  "required": ["_t", "name", "email", "password", "idDocument"],
+  "properties": {
+    "_t": { "enum": ["customer", "worker"] },
+    "name": { "bsonType": "string", "minLength": 1 },
+    "email": { "bsonType": "string", "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" },
+    "password": { "bsonType": "string", "minLength": 1 },
+    "idDocument": { "bsonType": "string", "minLength": 1 },
+    "role": { "enum": ["WORKER", "ADMIN"] },
+    "type": { "enum": ["INDIVIDUAL", "BUSINESS"] },
+    "totalSpent": { "bsonType": "number", "minimum": 0 },
+    "addresses": { "bsonType": "array", "items": { "bsonType": "string" } },
+    "cart": {
+      "bsonType": "array",
+      "items": {
+        "bsonType": "object",
+        "required": ["productId", "name", "price", "units"],
+        "properties": {
+          "productId": { "bsonType": "objectId" },
+          "name": { "bsonType": "string" },
+          "brand": { "bsonType": "string" },
+          "price": { "bsonType": "number", "minimum": 0 },
+          "units": { "bsonType": "int", "minimum": 1 }
+        }
+      }
+    },
+    "shipmentIds": { "bsonType": "array", "items": { "bsonType": "objectId" } }
+  },
+  "anyOf": [
+    { "properties": { "_t": { "enum": ["worker"] } }, "required": ["role"] },
+    { "properties": { "_t": { "enum": ["customer"] } }, "required": ["type"] }
+  ]
+}

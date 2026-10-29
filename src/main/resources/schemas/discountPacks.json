@@ -1,0 +1,11 @@
+{
+  "bsonType": "object",
+  "title": "discountPacks",
+  "required": ["name", "discountPercentage", "productIds", "remainingUnits"],
+  "properties": {
+    "name": { "bsonType": "string", "minLength": 1 },
+    "discountPercentage": { "bsonType": "number", "minimum": 0, "maximum": 100 },
+    "productIds": { "bsonType": "array", "minItems": 1, "items": { "bsonType": "objectId" } },
+    "remainingUnits": { "bsonType": "int", "minimum": 0 }
+  }
+}
