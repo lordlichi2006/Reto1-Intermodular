@@ -80,3 +80,6 @@ nbdist/
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/java,visualstudiocode,netbeans,maven
+
+# Lock files created by java.util.logging FileHandler
+*.lck

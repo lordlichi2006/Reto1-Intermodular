@@ -1,4 +1,4 @@
-package com.reto1.controllers;
+package com.reto1.dao;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -9,7 +9,12 @@ import com.mongodb.client.MongoDatabase;
 import com.reto1.models.Product;
 import com.reto1.models.Supplier;
 
+/**
+ * Temporary connection check: inserts one product and reads it back.
+ * It will be replaced in Fase 5 by the schema initializer and sample data.
+ */
 public class QuickStart {
+
     public static void main(String[] args) {
         try {
             MongoDatabase database = Database.getDatabase();
