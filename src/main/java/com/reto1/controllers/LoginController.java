@@ -31,7 +31,7 @@ public class LoginController extends BaseController {
     @FXML
     private void initialize() {
         initializeLogger();
-        logger.log(Level.FINE, "{0} Initialized", getClass().getName());
+        logger.log(Level.INFO, "Application Initialized");
 
         lblError.setText("");
     }
@@ -44,13 +44,24 @@ public class LoginController extends BaseController {
         String email = txtEmail.getText();
         String password = txtPassword.getText();
 
-        // Añadir condicion de login
-        if (!true) {
+        // temporary login condition
+        boolean correctLogin = true;
+        
+        if (!correctLogin) {
             lblError.setText("Incorrect Password or Username.");
             logger.log(Level.INFO, "Unsuccessful login attempt with email: {0}", email);
             return;
         }
         logger.log(Level.INFO, "Successful login attempt with email: {0}", email);
+
+        // temporary until we actually have functionality here
+        boolean isWorker = false;
+
+        if (isWorker) {
+            switchScene("workerHome", 860, 540);
+        } else {
+            switchScene("shopHome", 860, 540);
+        }
 
     }
 
