@@ -9,10 +9,8 @@ import javafx.scene.layout.HBox;
 
 public class ShopTemplateController extends BaseController{
 
-    @FXML
-    private BorderPane mainPanel;
-    @FXML
-    private HBox titleBar;
+
+
     @FXML
     private Button btnHome;
     @FXML
@@ -22,25 +20,11 @@ public class ShopTemplateController extends BaseController{
     @FXML
     private Button btnProfile;
 
-    @FXML
-    private void minimizeWindow(ActionEvent event) {
-    }
 
-    @FXML
-    private void maximizeWindow(ActionEvent event) {
-    }
 
-    @FXML
-    private void closeWindow(ActionEvent event) {
-    }
-
-    @FXML
-    private void onDrag(MouseEvent event) {
-    }
-
-    @FXML
-    private void onDragStart(MouseEvent event) {
-    }
     
+
+
+
  
 }

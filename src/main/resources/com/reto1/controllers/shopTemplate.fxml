@@ -12,22 +12,22 @@
             <children>
                 <HBox alignment="CENTER" spacing="15.0">
                     <children>
-                        <Button fx:id="btnHome" disable="true" mnemonicParsing="false" styleClass="menuButton" stylesheets="@main.css" text="SHOP HOME" textFill="#cccccc">
+                        <Button fx:id="btnHome" mnemonicParsing="false" onAction="#menuHome" styleClass="menuButton" stylesheets="@main.css" text="SHOP HOME" textFill="#cccccc">
                             <font>
                                 <Font name="Comic Sans MS Bold" size="13.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnCart" mnemonicParsing="false" styleClass="menuButton" stylesheets="@main.css" text="MY CART" textFill="WHITE">
+                        <Button fx:id="btnCart" mnemonicParsing="false" onAction="#menuCart" styleClass="menuButton" stylesheets="@main.css" text="MY CART" textFill="WHITE">
                             <font>
                                 <Font name="Comic Sans MS Bold" size="13.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnDelivers" mnemonicParsing="false" styleClass="menuButton" stylesheets="@main.css" text="DELIVERIES" textFill="WHITE">
+                        <Button fx:id="btnDelivers" mnemonicParsing="false" onAction="#menuDeliveries" styleClass="menuButton" stylesheets="@main.css" text="DELIVERIES" textFill="WHITE">
                             <font>
                                 <Font name="Comic Sans MS Bold" size="13.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnProfile" mnemonicParsing="false" styleClass="menuButton" stylesheets="@main.css" text="MY PROFILE" textFill="WHITE">
+                        <Button fx:id="btnProfile" mnemonicParsing="false" onAction="#menuProfile" styleClass="menuButton" stylesheets="@main.css" text="MY PROFILE" textFill="WHITE">
                             <font>
                                 <Font name="Comic Sans MS Bold" size="13.0" />
                             </font>
