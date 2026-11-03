@@ -56,10 +56,10 @@ public class LoginController extends BaseController {
         logger.log(Level.INFO, "Successful login attempt with email: {0}", email);
 
         // temporary until we actually have functionality here
-        boolean isWorker = false;
+        boolean isWorker = true;
 
         if (isWorker) {
-            switchScene("workerHome", 860, 540,true);
+            switchScene("adminShipments", 1280, 720,true);
         } else {
             switchScene("shopHome", 860, 540,true);
         }

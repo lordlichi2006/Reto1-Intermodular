@@ -99,13 +99,44 @@ public class BaseController {
 
     // handle menu buttons
     @FXML
-    private void menuHome() {switchScene("shopHome", 860, 540,false);}
+    private void menuHome() {
+        switchScene("shopHome", 860, 540, false);
+    }
+
     @FXML
-    private void menuCart() {switchScene("shopCart", 860, 540,false);}
+    private void menuCart() {
+        switchScene("shopCart", 860, 540, false);
+    }
+
     @FXML
-    private void menuDeliveries() {switchScene("shopDeliveries", 860, 540,false);}
+    private void menuDeliveries() {
+        switchScene("shopDeliveries", 860, 540, false);
+    }
+
     @FXML
-    private void menuProfile() {switchScene("shopProfile", 860, 540,false);}
+    private void menuProfile() {
+        switchScene("shopProfile", 860, 540, false);
+    }
+
+    @FXML
+    private void adminMenuShipments() {
+        switchScene("adminShipments", 1280, 720, false);
+    }
+
+    @FXML
+    private void adminMenuProducts() {
+        switchScene("adminProducts", 1280, 720, false);
+    }
+
+    @FXML
+    private void adminMenuOffers() {
+        switchScene("adminOffers", 1280, 720, false);
+    }
+
+    @FXML
+    private void adminMenuUsers() {
+        switchScene("adminUsers", 1280, 720, false);
+    }
 
     // Window Controls (moving, minimize,maximize and close)
     @FXML

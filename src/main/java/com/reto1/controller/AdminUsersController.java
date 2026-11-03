@@ -7,13 +7,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
-public class ShopHomeController extends BaseController {
+public class AdminUsersController extends BaseController {
 
     @FXML
-    private Button btnHome;
+    private Button btnProducts;
 
     private void initialize() {
-        btnHome.setDisable(true); // Disable on start
+        btnProducts.setDisable(true); // Disable on start
     }
 
 }
