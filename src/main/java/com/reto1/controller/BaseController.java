@@ -1,5 +1,6 @@
 package com.reto1.controller;
 
+import com.reto1.util.LoggerManager;
 import java.io.IOException;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -10,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -31,7 +31,10 @@ public class BaseController {
 
     @FXML
     private BorderPane mainPanel;
-    protected static Logger logger;
+    
+    // Logger for all the controllers to use
+    protected static final Logger logger = LoggerManager.getLogger();
+    
     protected boolean unsavedChanges = false;
 
     protected void switchScene(String fxml, int resolutionX, int resolutionY, boolean center) {
@@ -68,33 +71,6 @@ public class BaseController {
 
         stage.setX(x);
         stage.setY(y);
-    }
-
-    protected void initializeLogger() {
-        logger = Logger.getLogger(getClass().getName());
-
-        try {
-            FileHandler file = new FileHandler("application.log", true);
-            ConsoleHandler console = new ConsoleHandler();
-
-            // Formats the log output so its easier to read
-            file.setFormatter(new SimpleFormatter());
-            console.setFormatter(new SimpleFormatter());
-
-            logger.addHandler(file);
-            logger.addHandler(console);
-
-            // Remove default handlers since we have our custom ones
-            logger.setUseParentHandlers(false);
-
-            // Sets the levels of the logger
-            logger.setLevel(Level.ALL); // set to all so each handler can choose which logging level you want
-            file.setLevel(Level.INFO); // only SEVERE, WARNING and INFO
-            console.setLevel(Level.ALL); // ALL includes Debug
-
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
     }
 
     // handle menu buttons
@@ -136,6 +112,17 @@ public class BaseController {
     @FXML
     private void adminMenuUsers() {
         switchScene("adminUsers", 1280, 720, false);
+    }
+
+    @FXML
+    private void adminMenuLog() {
+        switchScene("adminLog", 1280, 720, false);
+    }
+
+    @FXML
+    private void logOut() {
+        //TODO: Make logout actually log out
+        switchScene("loginView", 270, 340, true);
     }
 
     // Window Controls (moving, minimize,maximize and close)
