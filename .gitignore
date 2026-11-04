@@ -1,6 +1,6 @@
 # Done by Us
 application.log
-
+application.log.*
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,visualstudiocode,netbeans,maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,visualstudiocode,netbeans,maven

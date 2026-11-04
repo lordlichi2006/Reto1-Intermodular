@@ -16,16 +16,19 @@ import javafx.stage.StageStyle;
  */
 public class App extends Application {
 
-    /** Folder (inside resources) where all the FXML views are stored. */
-    private static final String VIEWS_PATH = "/com/reto1/controller/";
-
-    private static Scene scene;
-
+    /**
+     * Opens the login window (view/loginView.fxml).
+     *
+     * @param stage main window created by JavaFX
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("loginView"), 270, 340);
+        Parent root;
+
+        root = FXMLLoader.load(App.class.getResource("/com/reto1/view/loginView.fxml"));
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(scene);
+        stage.setScene(new Scene(root, 270, 340));
         stage.show();
     }
 
@@ -38,20 +41,10 @@ public class App extends Application {
     }
 
     /**
-     * Replaces the content of the current window with another view.
+     * Starts JavaFX. Launcher calls this method.
      *
-     * @param fxml name of the FXML file without extension, e.g. "shopTemplate"
-     * @throws IOException if the FXML file cannot be loaded
+     * @param args not used
      */
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(VIEWS_PATH + fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
-
     public static void main(String[] args) {
         launch();
     }

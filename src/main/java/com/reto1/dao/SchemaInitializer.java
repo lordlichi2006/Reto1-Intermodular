@@ -37,7 +37,7 @@ public final class SchemaInitializer {
      * @param db database where the collections are created
      */
     public static void init(MongoDatabase db) {
-        List<String> existing = db.listCollectionNames().into(new ArrayList<>());
+        ArrayList<String> existing = db.listCollectionNames().into(new ArrayList<>());
 
         for (String name : COLLECTIONS) {
             Document schema = loadSchema(name);

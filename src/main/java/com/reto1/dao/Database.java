@@ -14,17 +14,20 @@ import com.mongodb.client.MongoDatabase;
 import com.reto1.model.Customer;
 import com.reto1.model.User;
 import com.reto1.model.Worker;
-import com.reto1.util.AppConfig;
 
 /**
- * Single access point to the MongoDB deployment.
- * Maps the classes of com.reto1.models to documents automatically (POJO codec).
- * Connection data is read from config.properties.
+ * Single access point to MongoDB. There is only one connection (MongoClient)
+ * for the whole application; it is closed in App.stop().
+ * <p>
+ * The POJO codec converts the model classes (com.reto1.model) to MongoDB
+ * documents and back automatically.
  */
-public class Database {
+public final class Database {
 
-    private static final String URI = AppConfig.get("mongo.uri", "mongodb://localhost:27017");
-    private static final String DB_NAME = AppConfig.get("mongo.database", "reto1");
+    /** Address of the MongoDB server. */
+    private static final String URI = "mongodb://localhost:27017";
+    /** Name of the application database. */
+    private static final String DB_NAME = "reto1";
 
     private static MongoClient client;
 
@@ -40,21 +43,24 @@ public class Database {
 
     /**
      * Returns a database by name using the shared connection.
-     * Used by tests to work on a separate database.
+     * Only used by tests, to work on a separate database.
      *
      * @param name database name
      * @return the database
      */
     static synchronized MongoDatabase getDatabase(String name) {
+        PojoCodecProvider pojoProvider;
+        CodecRegistry registry;
+
         if (client == null) {
             // User, Customer and Worker are registered explicitly so the codec can
             // read the "_t" discriminator and build the right subclass.
-            PojoCodecProvider pojoProvider = PojoCodecProvider.builder()
+            pojoProvider = PojoCodecProvider.builder()
                     .register(User.class, Customer.class, Worker.class)
                     .automatic(true)
                     .build();
 
-            CodecRegistry registry = fromRegistries(
+            registry = fromRegistries(
                     MongoClientSettings.getDefaultCodecRegistry(),
                     fromProviders(pojoProvider));
 
