@@ -14,32 +14,32 @@
                     <children>
                         <Button fx:id="btnShipments" disable="true" mnemonicParsing="false" onAction="#adminMenuShipments" styleClass="menuButton" stylesheets="@main.css" text="SHIPMENTS" textFill="#cccccc">
                             <font>
-                                <Font name="Comic Sans MS Bold" size="13.0" />
+                                <Font name="Cooper Black" size="13.0" />
                             </font>
                         </Button>
                         <Button fx:id="btnProducts" mnemonicParsing="false" onAction="#adminMenuProducts" styleClass="menuButton" stylesheets="@main.css" text="PRODUCTS" textFill="WHITE">
                             <font>
-                                <Font name="Comic Sans MS Bold" size="13.0" />
+                                <Font name="Cooper Black" size="13.0" />
                             </font>
                         </Button>
                         <Button fx:id="btnOffers" mnemonicParsing="false" onAction="#adminMenuOffers" styleClass="menuButton" stylesheets="@main.css" text="OFFERS" textFill="WHITE">
                             <font>
-                                <Font name="Comic Sans MS Bold" size="13.0" />
+                                <Font name="Cooper Black" size="13.0" />
                             </font>
                         </Button>
                         <Button fx:id="btnUsers" mnemonicParsing="false" onAction="#adminMenuUsers" styleClass="menuButton" stylesheets="@main.css" text="USERS" textFill="WHITE">
                             <font>
-                                <Font name="Comic Sans MS Bold" size="13.0" />
+                                <Font name="Cooper Black" size="13.0" />
                             </font>
                         </Button>
                   <Button fx:id="btnLog" mnemonicParsing="false" onAction="#adminMenuLog" styleClass="menuButton" stylesheets="@main.css" text="LOG" textFill="WHITE">
                      <font>
-                        <Font name="Comic Sans MS Bold" size="13.0" />
+                        <Font name="Cooper Black" size="13.0" />
                      </font>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#logOut" styleClass="menuButton" stylesheets="@main.css" text="LOGOUT" textFill="WHITE">
                      <font>
-                        <Font name="Comic Sans MS Bold" size="13.0" />
+                        <Font name="Cooper Black" size="13.0" />
                      </font>
                   </Button>
                     </children>

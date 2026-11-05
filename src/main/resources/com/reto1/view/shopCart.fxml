@@ -14,22 +14,22 @@
                     <children>
                         <Button fx:id="btnHome" mnemonicParsing="false" onAction="#menuHome" styleClass="menuButton" stylesheets="@main.css" text="SHOP HOME" textFill="#cccccc">
                             <font>
-                                <Font name="Comic Sans MS Bold" size="13.0" />
+                                <Font name="Cooper Black" size="13.0" />
                             </font>
                         </Button>
                         <Button fx:id="btnCart" disable="true" mnemonicParsing="false" onAction="#menuCart" styleClass="menuButton" stylesheets="@main.css" text="MY CART" textFill="WHITE">
                             <font>
-                                <Font name="Comic Sans MS Bold" size="13.0" />
+                                <Font name="Cooper Black" size="13.0" />
                             </font>
                         </Button>
                         <Button fx:id="btnDelivers" mnemonicParsing="false" onAction="#menuDeliveries" styleClass="menuButton" stylesheets="@main.css" text="DELIVERIES" textFill="WHITE">
                             <font>
-                                <Font name="Comic Sans MS Bold" size="13.0" />
+                                <Font name="Cooper Black" size="13.0" />
                             </font>
                         </Button>
                         <Button fx:id="btnProfile" mnemonicParsing="false" onAction="#menuProfile" styleClass="menuButton" stylesheets="@main.css" text="MY PROFILE" textFill="WHITE">
                             <font>
-                                <Font name="Comic Sans MS Bold" size="13.0" />
+                                <Font name="Cooper Black" size="13.0" />
                             </font>
                         </Button>
                     </children>

@@ -1,15 +1,18 @@
 package com.reto1.util;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.logging.Formatter;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 /**
- * Creates the only logger of the application. It writes to the console and
- * to the file application.log, which admins can read in the Admin Log window.
+ * Creates the only logger of the application. It writes to the console and to
+ * the file application.log, which admins can read in the Admin Log window.
  *
  * @author Ekaitz.Rivero
  */
@@ -29,6 +32,22 @@ public final class LoggerManager {
         FileHandler file;
         ConsoleHandler console;
 
+        Formatter customFormatter = new Formatter() {
+            @Override
+            public String format(LogRecord record) {
+
+                // [ERROR LEVEL] DATE | CLASS&METHOD | MESSAGE
+                return String.format(
+                        "[ %2$s ] %1$tF %1$tT | %3$s.%4$s | %5$s%n",
+                        new Date(record.getMillis()),
+                        record.getLevel(),
+                        record.getSourceClassName(),
+                        record.getSourceMethodName(),
+                        formatMessage(record)// Formats the message so it can accept extra arguments
+                );
+            }
+        };
+
         if (logger == null) {
             logger = Logger.getLogger("ApplicationLogger");
 
@@ -39,8 +58,8 @@ public final class LoggerManager {
                     console = new ConsoleHandler();
 
                     // Formats the log output so it is easier to read
-                    file.setFormatter(new SimpleFormatter());
-                    console.setFormatter(new SimpleFormatter());
+                    file.setFormatter(customFormatter);
+                    console.setFormatter(customFormatter);
                     logger.addHandler(file);
                     logger.addHandler(console);
 

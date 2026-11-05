@@ -1,3 +1,4 @@
+
 .mainPanel {
     -fx-background-image: url("/images/bg.png");
     -fx-background-color:#A22D68;
@@ -28,6 +29,7 @@
     -fx-effect: dropshadow(gaussian, #FF59B1, 7, 0.3, 0, 0);
 
 }
+
 .menuButton,
 .uiButton{
     -fx-text-fill:white;
@@ -39,20 +41,24 @@
 }
 .menuButton:hover,
 .menuButton:disabled,
-.uiButton:hover,
-.uiButton:disabled{
+.uiButton:hover{
     -fx-background-color: #ff3791;
     -fx-scale-x: 1.05;
     -fx-scale-y:1.05;
     -fx-effect: dropshadow(gaussian, #FF82C0CC, 10, 0.3, 0, 0);
 }
-.menuButton:disabled,
-.uiButton:disabled{
+.menuButton:disabled{
     -fx-text-fill:white;
     -fx-opacity:1;
     -fx-border-color:white;
     -fx-border-style:solid;
     -fx-effect: dropshadow(gaussian, #FFAADDBB, 14, 0.3, 0, 0);
+
+}
+.uiButton:disabled{
+    -fx-background-color: #ff3791;
+    -fx-text-fill:lightgray;
+    -fx-border-color:lightgray;
 
 }
 .menuButton{
@@ -78,4 +84,29 @@
     -fx-scale-y:1.2;
     -fx-text-fill:#ff3791;
 
+}
+
+.text-area {
+    -fx-background-color: #C93E83;
+    -fx-border-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-text-fill:white;
+
+}
+
+.text-area .content {
+    -fx-background-color: #C93E83;
+    -fx-background-radius: 5px;
+}
+
+.text-area .text {
+    -fx-fill: white;
+    -fx-text-fill:white;
+
+}
+
+.text-area .content {
+    -fx-padding: 5px;
 }
