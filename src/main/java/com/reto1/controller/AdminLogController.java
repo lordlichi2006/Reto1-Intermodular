@@ -1,4 +1,4 @@
-package com.reto1.view;
+package com.reto1.controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

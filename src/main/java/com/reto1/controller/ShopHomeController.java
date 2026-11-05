@@ -1,4 +1,4 @@
-package com.reto1.view;
+package com.reto1.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
