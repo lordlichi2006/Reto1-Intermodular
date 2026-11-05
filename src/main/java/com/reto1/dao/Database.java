@@ -3,6 +3,8 @@ package com.reto1.dao;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+import java.util.concurrent.TimeUnit;
+
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
@@ -67,6 +69,8 @@ public final class Database {
             client = MongoClients.create(MongoClientSettings.builder()
                     .applyConnectionString(new ConnectionString(URI))
                     .codecRegistry(registry)
+                    // If MongoDB is not running, fail after 5 s instead of 30 s
+                    .applyToClusterSettings(cluster -> cluster.serverSelectionTimeout(5, TimeUnit.SECONDS))
                     .build());
         }
         return client.getDatabase(name);

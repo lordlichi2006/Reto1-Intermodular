@@ -1,4 +1,4 @@
-package com.reto1.view;
+package com.reto1.controller;
 
 import java.util.logging.Level;
 
@@ -44,7 +44,7 @@ public class LoginController extends BaseController {
         lblError.setText("");
         email = txtEmail.getText();
 
-        // TODO: temporary values until the login uses UserController.login(...)
+        // TODO: temporary values until the login uses userDao.login(email, password)
         correctLogin = true;
         isWorker = true;
 

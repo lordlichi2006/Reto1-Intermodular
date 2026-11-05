@@ -1,4 +1,4 @@
-package com.reto1.view;
+package com.reto1.controller;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -22,6 +22,9 @@ import javafx.stage.Stage;
  * maximize, close), so the child controllers do not repeat it.
  */
 public class BaseController {
+
+    /** Folder (inside resources) where all the FXML views are stored. */
+    protected static final String VIEWS_PATH = "/com/reto1/view/";
 
     /** Logger shared by all the windows (writes to application.log). */
     protected static final Logger logger = LoggerManager.getLogger();
@@ -52,8 +55,8 @@ public class BaseController {
 
         try {
             stage = (Stage) mainPanel.getScene().getWindow();
-            // The FXML files are in the same package as this class (com/reto1/view)
-            fxmlLoader = new FXMLLoader(BaseController.class.getResource(fxml + ".fxml"));
+            // The FXML files (the views) are in resources/com/reto1/view
+            fxmlLoader = new FXMLLoader(BaseController.class.getResource(VIEWS_PATH + fxml + ".fxml"));
             scene = new Scene(fxmlLoader.load(), resolutionX, resolutionY);
             stage.setScene(scene);
             stage.show();

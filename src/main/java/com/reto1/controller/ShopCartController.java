@@ -1,4 +1,4 @@
-package com.reto1.view;
+package com.reto1.controller;
 
 /**
  * Controller of the window Cart View (shopCart.fxml).
