@@ -92,10 +92,10 @@
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
                   <Label alignment="BOTTOM_LEFT" text="Amount:" textFill="WHITE" />
-                  <TextField prefWidth="30.0" styleClass="textField" text="1" />
+                  <TextField fx:id="txtAmount" prefWidth="30.0" styleClass="textField" text="1" />
                </children>
             </HBox>
-            <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" styleClass="uiButton" text="_Add To Cart" />
+            <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#addToCart" styleClass="uiButton" text="_Add To Cart" />
          </children>
          <padding>
             <Insets right="15.0" />

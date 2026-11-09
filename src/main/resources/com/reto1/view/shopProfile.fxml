@@ -2,8 +2,14 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="" styleClass="mainPanel" stylesheets="@main.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reto1.controller.ShopProfileController">
@@ -65,4 +71,46 @@
             </padding>
         </HBox>
     </top>
+   <right>
+      <VBox alignment="BOTTOM_RIGHT" prefWidth="150.0" spacing="10.0" BorderPane.alignment="BOTTOM_RIGHT">
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#removeFromCart" styleClass="uiButton" text="_Remove From Cart" />
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Label alignment="BOTTOM_LEFT" text="Edit Amount:" textFill="WHITE" />
+                  <TextField fx:id="txtAmount" prefWidth="30.0" styleClass="textField" text="1" />
+               </children>
+            </HBox>
+            <ChoiceBox fx:id="cmbSendTo" prefWidth="150.0" />
+            <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#purchase" styleClass="uiButton" text="_Purchase" />
+         </children>
+         <padding>
+            <Insets right="15.0" />
+         </padding>
+      </VBox>
+   </right>
+   <bottom>
+      <Label styleClass="errorText" text="sample error" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Consolas" size="12.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
+      </Label>
+   </bottom>
+   <center>
+      <TableView fx:id="tblCart" maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets left="15.0" right="15.0" />
+         </BorderPane.margin>
+      </TableView>
+   </center>
 </BorderPane>
