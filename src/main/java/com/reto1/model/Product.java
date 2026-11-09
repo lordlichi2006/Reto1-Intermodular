@@ -9,7 +9,7 @@ import org.bson.types.ObjectId;
  * Product of the shop (collection "products").
  * Embeds a summary of its suppliers ({@link ProductSupplier}).
  *
- * @author 20ala
+ * @author Ekaitz
  */
 public class Product {
 

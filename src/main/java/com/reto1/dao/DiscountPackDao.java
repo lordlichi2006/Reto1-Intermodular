@@ -54,4 +54,13 @@ public interface DiscountPackDao {
      * @return {@code true} if a pack was deleted
      */
     boolean delete(ObjectId id);
+
+    /**
+     * Checks if a product is included in any pack. A product that is in a
+     * pack cannot be deleted.
+     *
+     * @param productId _id of the product
+     * @return {@code true} if at least one pack contains the product
+     */
+    boolean existsByProduct(ObjectId productId);
 }

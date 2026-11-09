@@ -13,7 +13,7 @@ import org.bson.types.ObjectId;
  * <li>Embedded: the purchased lines and the delivery address.</li>
  * </ul>
  *
- * @author 20ala
+ * @author Ivan
  */
 public class Shipment {
 

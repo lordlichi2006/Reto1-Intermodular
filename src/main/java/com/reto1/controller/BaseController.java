@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.reto1.model.User;
 import com.reto1.util.LoggerManager;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -28,6 +30,12 @@ public class BaseController {
 
     /** Logger shared by all the windows (writes to application.log). */
     protected static final Logger logger = LoggerManager.getLogger();
+
+    /**
+     * User that has logged in ({@code null} if nobody). It is saved in the
+     * login and every window can read it (cart, shipments, permissions, log).
+     */
+    protected static User loggedUser;
 
     /** Custom title bar, used to move the window. */
     @FXML
@@ -140,9 +148,55 @@ public class BaseController {
      */
     @FXML
     private void logOut() {
-        // TODO: also forget the logged user when there is a session
+        // TODO: ask for confirmation (confirm(...)) and set loggedUser = null
         logger.log(Level.INFO, "User has logged out.");
         switchScene("loginView", 270, 340, true);
+    }
+
+    // ---- Shared helpers (used by every window) ----
+
+    /**
+     * Hides the admin-only buttons (USERS and LOG) when the logged user is a
+     * worker and not an admin. Called from initialize() of every admin window.
+     *
+     * @param btnUsers USERS button of the window
+     * @param btnLog   LOG button of the window
+     */
+    protected void applyAdminPermissions(Button btnUsers, Button btnLog) {
+        // TODO: isAdmin = loggedUser is a Worker with Role.ADMIN;
+        //       setVisible(isAdmin) and setManaged(isAdmin) on both buttons
+    }
+
+    /**
+     * Shows an error popup (Alert of type ERROR).
+     *
+     * @param message text shown to the user
+     */
+    protected void showError(String message) {
+        // TODO: new Alert(Alert.AlertType.ERROR, message) and showAndWait()
+    }
+
+    /**
+     * Shows an information popup (Alert of type INFORMATION).
+     *
+     * @param message text shown to the user
+     */
+    protected void showInfo(String message) {
+        // TODO: new Alert(Alert.AlertType.INFORMATION, message) and showAndWait()
+    }
+
+    /**
+     * Asks the user to confirm an action (for example, before deleting).
+     *
+     * @param message question shown to the user
+     * @return {@code true} if the user pressed OK
+     */
+    protected boolean confirm(String message) {
+        boolean accepted;
+
+        // TODO: Alert of type CONFIRMATION; accepted = the user pressed OK
+        accepted = false;
+        return accepted;
     }
 
     // ---- Title bar: move, minimize, maximize and close ----

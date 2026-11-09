@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
  * The price is copied at purchase time, so later price changes
  * do not modify old orders.
  *
- * @author 20ala
+ * @author Alain
  */
 public class ShipmentLine {
 

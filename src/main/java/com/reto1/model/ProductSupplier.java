@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
  * Keeps the reference (supplierId) plus the name and CIF, so the product
  * table can show who supplies it without querying "suppliers".
  *
- * @author 20ala
+ * @author Ivan
  */
 public class ProductSupplier {
 

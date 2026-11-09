@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
@@ -25,6 +26,10 @@ public class AdminLogController extends BaseController {
     private Label lblError;
     @FXML
     private TextArea txtLog;
+    @FXML
+    private Button btnUsers;
+    @FXML
+    private Button btnLog;
 
     /**
      * Runs when the window opens: reads the log file and shows it.
@@ -33,6 +38,8 @@ public class AdminLogController extends BaseController {
     private void initialize() {
         List<String> logContents;
 
+        // TODO: applyAdminPermissions(btnUsers, btnLog); move the reading of
+        //       the file below to refresh() and call it from here
         lblError.setText("");
         try {
             logContents = Files.readAllLines(Paths.get(LOG_FILE), StandardCharsets.UTF_8);
@@ -43,5 +50,13 @@ public class AdminLogController extends BaseController {
             logger.log(Level.WARNING, "Unable to open log file: {0}", e.getMessage());
             lblError.setText("Unable to open log file: " + e.getMessage());
         }
+    }
+
+    /**
+     * Refresh button: reads the log file again and shows it.
+     */
+    @FXML
+    private void refresh() {
+        // TODO: read application.log and show it in txtLog
     }
 }

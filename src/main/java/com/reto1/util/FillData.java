@@ -1,7 +1,6 @@
 package com.reto1.util;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,8 +60,8 @@ public final class FillData {
      *
      * @return 3 admins, 2 workers and 5 customers
      */
-    private static List<User> createUsers() {
-        List<User> users;
+    private static ArrayList<User> createUsers() {
+        ArrayList<User> users;
 
         users = new ArrayList<>();
 
@@ -102,7 +101,7 @@ public final class FillData {
      */
     private static Customer createCustomer(String name, String email, String idDocument,
             String address, CustomerType type) {
-        List<String> addresses;
+        ArrayList<String> addresses;
         Customer customer;
 
         addresses = new ArrayList<>();

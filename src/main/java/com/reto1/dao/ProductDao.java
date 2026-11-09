@@ -67,6 +67,17 @@ public interface ProductDao {
     boolean updateStock(ObjectId id, int stock);
 
     /**
+     * Subtracts units from the stock, but only if there is enough stock.
+     * Used when a customer purchases the cart.
+     *
+     * @param id    _id of the product
+     * @param units units bought (1 or more)
+     * @return {@code true} if the stock was decreased, {@code false} if there
+     *         was not enough stock or the product does not exist
+     */
+    boolean decreaseStock(ObjectId id, int units);
+
+    /**
      * Deletes a product.
      *
      * @param id _id of the product

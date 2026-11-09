@@ -74,6 +74,18 @@ public class ShipmentImplementacionBD implements ShipmentDao {
     }
 
     @Override
+    public boolean existsInProgressByCustomer(ObjectId customerId) {
+        boolean exists;
+
+        // TODO: countDocuments with the filter
+        //       Filters.and(Filters.eq("customerId", customerId),
+        //                   Filters.in("status", "IN_PROGRESS", "IN_SHIPMENT"))
+        //       exists = count > 0
+        exists = false;
+        return exists;
+    }
+
+    @Override
     public boolean updateStatus(ObjectId id, ShipmentStatus status) {
         UpdateResult result;
 

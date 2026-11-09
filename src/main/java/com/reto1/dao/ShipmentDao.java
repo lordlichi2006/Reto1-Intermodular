@@ -55,4 +55,13 @@ public interface ShipmentDao {
      * @return {@code true} if a shipment with that _id was found
      */
     boolean updateStatus(ObjectId id, ShipmentStatus status);
+
+    /**
+     * Checks if a customer has shipments that are not finished yet
+     * (IN_PROGRESS or IN_SHIPMENT). Used before deleting a user.
+     *
+     * @param customerId _id of the customer
+     * @return {@code true} if the customer has unfinished shipments
+     */
+    boolean existsInProgressByCustomer(ObjectId customerId);
 }

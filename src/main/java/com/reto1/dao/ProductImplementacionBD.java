@@ -95,6 +95,18 @@ public class ProductImplementacionBD implements ProductDao {
     }
 
     @Override
+    public boolean decreaseStock(ObjectId id, int units) {
+        boolean decreased;
+
+        // TODO: updateOne with the filter
+        //       Filters.and(Filters.eq("_id", id), Filters.gte("stock", units))
+        //       and the update Updates.inc("stock", -units).
+        //       decreased = result.getModifiedCount() > 0
+        decreased = false;
+        return decreased;
+    }
+
+    @Override
     public boolean delete(ObjectId id) {
         DeleteResult result;
 

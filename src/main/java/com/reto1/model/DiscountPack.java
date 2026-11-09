@@ -9,7 +9,7 @@ import org.bson.types.ObjectId;
  * Offer pack (collection "discountPacks").
  * References its products with an array of _id (productIds).
  *
- * @author 20ala
+ * @author Alain
  */
 public class DiscountPack {
 

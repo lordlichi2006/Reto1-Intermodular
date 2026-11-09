@@ -4,7 +4,7 @@ import org.bson.types.ObjectId;
 
 /**
  *
- * @author 20ala
+ * @author Ekaitz
  */
 public class Supplier {
     private ObjectId id;

@@ -1,7 +1,6 @@
 package com.reto1.dao;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.bson.types.ObjectId;
 
@@ -41,8 +40,8 @@ public class DiscountPackImplementacionBD implements DiscountPackDao {
     }
 
     @Override
-    public List<DiscountPack> findAll() {
-        List<DiscountPack> packs;
+    public ArrayList<DiscountPack> findAll() {
+        ArrayList<DiscountPack> packs;
 
         packs = collection.find().sort(Sorts.ascending("name")).into(new ArrayList<>());
         return packs;
@@ -75,5 +74,16 @@ public class DiscountPackImplementacionBD implements DiscountPackDao {
 
         result = collection.deleteOne(Filters.eq("_id", id));
         return result.getDeletedCount() > 0;
+    }
+
+    @Override
+    public boolean existsByProduct(ObjectId productId) {
+        boolean exists;
+
+        // TODO: countDocuments(Filters.eq("productIds", productId))
+        //       (eq on an array field finds the packs whose array contains it)
+        //       exists = count > 0
+        exists = false;
+        return exists;
     }
 }

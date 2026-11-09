@@ -2,7 +2,7 @@ package com.reto1.model;
 
 /**
  *
- * @author 20ala
+ * @author Ekaitz
  */
 public enum ShipmentStatus {
     IN_PROGRESS, IN_SHIPMENT, ARRIVED, CANCELLED
