@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import com.reto1.dao.UserDao;
 import com.reto1.dao.UserImplementacionBD;
+import com.reto1.exceptions.DatabaseException;
 import com.reto1.model.Customer;
 import com.reto1.model.CustomerType;
 import com.reto1.model.Role;
@@ -22,7 +23,7 @@ import com.reto1.model.Worker;
  */
 public final class FillData {
 
-    /** Password of every initial user (it will be hashed in the BCrypt phase). */
+    /** Password of every initial user. */
     public static final String DEFAULT_PASSWORD = "1234";
 
     private static final Logger LOGGER = LoggerManager.getLogger();
@@ -35,9 +36,9 @@ public final class FillData {
      *
      * @return {@code true} if the data was inserted, {@code false} if the
      *         database already had users
-     * @throws com.mongodb.MongoException if MongoDB is not available
+     * @throws DatabaseException if MongoDB is not available
      */
-    public static boolean fillIfEmpty() {
+    public static boolean fillIfEmpty() throws DatabaseException {
         UserDao userDao;
         boolean isEmpty;
 

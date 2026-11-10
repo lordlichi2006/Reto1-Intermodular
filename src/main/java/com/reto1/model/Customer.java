@@ -3,11 +3,10 @@ package com.reto1.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.types.ObjectId;
 
 /**
- * Shop customer (stored in "users" with _t = "customer").
+ * Shop customer (stored in "users" with userType = "customer").
  * <ul>
  * <li>Embedded: addresses and cart (always read together with the
  * customer).</li>
@@ -17,7 +16,6 @@ import org.bson.types.ObjectId;
  *
  * @author Ekaitz.Rivero
  */
-@BsonDiscriminator(key = "_t", value = "customer")
 public class Customer extends User {
 
     private List<String> addresses = new ArrayList<>();

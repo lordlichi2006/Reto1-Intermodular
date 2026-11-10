@@ -148,7 +148,8 @@ public class BaseController {
      */
     @FXML
     private void logOut() {
-        // TODO: ask for confirmation (confirm(...)) and set loggedUser = null
+        // TODO: ask for confirmation (confirm(...)), set loggedUser = null and
+        //       LoggerManager.setCurrentUser("-")
         logger.log(Level.INFO, "User has logged out.");
         switchScene("loginView", 270, 340, true);
     }

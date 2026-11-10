@@ -1,9 +1,9 @@
 {
   "bsonType": "object",
-  "title": "users: customers and workers (discriminator _t)",
-  "required": ["_t", "name", "email", "password", "idDocument"],
+  "title": "users: customers and workers (field userType)",
+  "required": ["userType", "name", "email", "password", "idDocument"],
   "properties": {
-    "_t": { "enum": ["customer", "worker"] },
+    "userType": { "enum": ["customer", "worker"] },
     "name": { "bsonType": "string", "minLength": 1 },
     "email": { "bsonType": "string", "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" },
     "password": { "bsonType": "string", "minLength": 1 },
@@ -29,7 +29,7 @@
     "shipmentIds": { "bsonType": "array", "items": { "bsonType": "objectId" } }
   },
   "anyOf": [
-    { "properties": { "_t": { "enum": ["worker"] } }, "required": ["role"] },
-    { "properties": { "_t": { "enum": ["customer"] } }, "required": ["type"] }
+    { "properties": { "userType": { "enum": ["worker"] } }, "required": ["role"] },
+    { "properties": { "userType": { "enum": ["customer"] } }, "required": ["type"] }
   ]
 }

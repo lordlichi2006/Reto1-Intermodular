@@ -45,6 +45,9 @@ public class LoginController extends BaseController {
         email = txtEmail.getText();
 
         // TODO: temporary values until the login uses userDao.login(email, password)
+        //       inside try/catch (DatabaseException e) -> lblError.setText(e.getMessage()).
+        //       If the user is correct: loggedUser = user and
+        //       LoggerManager.setCurrentUser(email) (so the log says who does each operation)
         correctLogin = true;
         isWorker = true;
 

@@ -20,7 +20,24 @@ public final class LoggerManager {
 
     private static Logger logger;
 
+    /**
+     * Email of the user that is using the program. It is written in every
+     * line of the log ("-" while nobody has logged in).
+     */
+    private static String currentUser = "-";
+
     private LoggerManager() {
+    }
+
+    /**
+     * Saves who is using the program, so every line of the log says which
+     * user did each operation. Called after the login (with the email) and
+     * after the logout (with "-").
+     *
+     * @param user email of the logged user, or "-" if nobody
+     */
+    public static void setCurrentUser(String user) {
+        currentUser = user;
     }
 
     /**
@@ -36,14 +53,15 @@ public final class LoggerManager {
             @Override
             public String format(LogRecord record) {
 
-                // [ERROR LEVEL] DATE | CLASS&METHOD | MESSAGE
+                // [ERROR LEVEL] DATE | USER | CLASS&METHOD | MESSAGE
                 return String.format(
-                        "[ %2$s ] %1$tF %1$tT | %3$s.%4$s | %5$s%n",
+                        "[ %2$s ] %1$tF %1$tT | %6$s | %3$s.%4$s | %5$s%n",
                         new Date(record.getMillis()),
                         record.getLevel(),
                         record.getSourceClassName(),
                         record.getSourceMethodName(),
-                        formatMessage(record)// Formats the message so it can accept extra arguments
+                        formatMessage(record), // Formats the message so it can accept extra arguments
+                        currentUser
                 );
             }
         };

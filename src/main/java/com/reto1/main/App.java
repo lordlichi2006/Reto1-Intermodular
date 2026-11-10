@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import com.mongodb.MongoException;
 import com.reto1.dao.Database;
 import com.reto1.dao.SchemaInitializer;
+import com.reto1.exceptions.DatabaseException;
 import com.reto1.util.FillData;
 import com.reto1.util.LoggerManager;
 
@@ -54,7 +55,11 @@ public class App extends Application {
             SchemaInitializer.init(Database.getDatabase());
             FillData.fillIfEmpty();
         } catch (MongoException e) {
+            // Thrown by SchemaInitializer
             LOGGER.log(Level.SEVERE, "MongoDB is not available: {0}", e.getMessage());
+        } catch (DatabaseException e) {
+            // Thrown by FillData (through the DAO)
+            LOGGER.log(Level.SEVERE, "Initial data not loaded: {0}", e.getMessage());
         }
     }
 
