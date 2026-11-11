@@ -23,6 +23,7 @@ public class AdminProductsController extends BaseController {
      */
     @FXML
     private void initialize() {
+        applyAdminPermissions(btnUsers, btnLog);
         // TODO: applyAdminPermissions(btnUsers, btnLog), loadProducts()
         //       and loadSuppliers()
     }

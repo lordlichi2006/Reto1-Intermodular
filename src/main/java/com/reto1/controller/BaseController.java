@@ -5,7 +5,9 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.reto1.model.Role;
 import com.reto1.model.User;
+import com.reto1.model.Worker;
 import com.reto1.util.LoggerManager;
 
 import javafx.fxml.FXML;
@@ -52,6 +54,7 @@ public class BaseController {
     /** Distance between the mouse and the window corner while dragging. */
     private double xOffset;
     private double yOffset;
+
 
     /**
      * Replaces the current window content with another FXML view.
@@ -170,8 +173,15 @@ public class BaseController {
      * @param btnLog   LOG button of the window
      */
     protected void applyAdminPermissions(Button btnUsers, Button btnLog) {
-        // TODO: isAdmin = loggedUser is a Worker with Role.ADMIN;
-        // setVisible(isAdmin) and setManaged(isAdmin) on both buttons
+        if (loggedUser == null || !(loggedUser instanceof Worker)) {
+            return;
+        }
+        Worker worker = (Worker) loggedUser;
+        boolean isAdmin = worker.getRole().equals(Role.ADMIN);
+        btnLog.setVisible(isAdmin);
+        btnLog.setManaged(isAdmin);
+        btnUsers.setVisible(isAdmin);
+        btnUsers.setManaged(isAdmin);
     }
 
     /**

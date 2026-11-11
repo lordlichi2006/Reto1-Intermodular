@@ -20,6 +20,7 @@ public class AdminUsersController extends BaseController {
      */
     @FXML
     private void initialize() {
+        applyAdminPermissions(btnUsers, btnLog);
         // TODO: applyAdminPermissions(btnUsers, btnLog) and loadUsers()
     }
 

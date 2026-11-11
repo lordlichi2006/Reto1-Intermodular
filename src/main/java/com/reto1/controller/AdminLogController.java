@@ -37,8 +37,8 @@ public class AdminLogController extends BaseController {
     @FXML
     private void initialize() {
         List<String> logContents;
-
-        // TODO: applyAdminPermissions(btnUsers, btnLog); move the reading of
+        applyAdminPermissions(btnUsers, btnLog);
+        // TODO: ; move the reading of
         //       the file below to refresh() and call it from here
         lblError.setText("");
         try {

@@ -20,6 +20,7 @@ public class AdminOffersController extends BaseController {
      */
     @FXML
     private void initialize() {
+        applyAdminPermissions(btnUsers, btnLog);
         // TODO: applyAdminPermissions(btnUsers, btnLog), loadOffers()
         //       and fill tblOfferProducts with productDao.findAll()
     }

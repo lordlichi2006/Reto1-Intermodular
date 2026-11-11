@@ -20,6 +20,7 @@ public class AdminShipmentsController extends BaseController {
      */
     @FXML
     private void initialize() {
+        applyAdminPermissions(btnUsers, btnLog);
         // TODO: applyAdminPermissions(btnUsers, btnLog) and loadShipments()
     }
 

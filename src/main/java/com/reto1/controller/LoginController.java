@@ -2,6 +2,13 @@ package com.reto1.controller;
 
 import java.util.logging.Level;
 
+import com.reto1.dao.UserImplementacionBD;
+import com.reto1.exceptions.DatabaseException;
+import com.reto1.model.User;
+import com.reto1.model.Worker;
+import com.reto1.util.LoggerManager;
+import com.reto1.dao.UserDao;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -37,31 +44,38 @@ public class LoginController extends BaseController {
     @FXML
     private void login(ActionEvent event) {
         String email;
-        boolean correctLogin;
-        boolean isWorker;
+        String password;
 
         logger.fine("Login button pressed.");
         lblError.setText("");
+
         email = txtEmail.getText();
+        password = txtPassword.getText();
 
-        // TODO: temporary values until the login uses userDao.login(email, password)
-        //       inside try/catch (DatabaseException e) -> lblError.setText(e.getMessage()).
-        //       If the user is correct: loggedUser = user and
-        //       LoggerManager.setCurrentUser(email) (so the log says who does each operation)
-        correctLogin = true;
-        isWorker = true;
+        UserDao userDao = new UserImplementacionBD();
+        User user = null;
 
-        if (!correctLogin) {
-            lblError.setText("Incorrect Password or Username.");
-            logger.log(Level.INFO, "Unsuccessful login attempt with email: {0}", email);
-        } else {
-            logger.log(Level.INFO, "Successful login attempt with email: {0}", email);
-            if (isWorker) {
-                switchScene("adminShipments", 1280, 720, true);
-            } else {
-                switchScene("shopHome", 860, 540, true);
-            }
+        try {
+            user = userDao.login(email, password);
+        } catch (DatabaseException e) {
+            lblError.setText("Server Error, please try again later.");
         }
+        if (user == null) {
+            lblError.setText("Incorrect Password or Email.");
+            logger.log(Level.INFO, "Unsuccessful login attempt with email: {0}", email);
+            return;
+        }
+
+        loggedUser = user;
+        LoggerManager.setCurrentUser(email);
+        logger.log(Level.INFO, "Successful login attempt with email: {0}", email);
+
+        if (user instanceof Worker) {
+            switchScene("adminShipments", 1280, 720, true);
+        } else {
+            switchScene("shopHome", 860, 540, true);
+        }
+
     }
 
     /**
