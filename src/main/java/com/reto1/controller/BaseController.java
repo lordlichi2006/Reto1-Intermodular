@@ -1,6 +1,7 @@
 package com.reto1.controller;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,12 +12,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Parent class of every window controller. Holds what all the windows share:
@@ -63,7 +68,7 @@ public class BaseController {
 
         try {
             stage = (Stage) mainPanel.getScene().getWindow();
-            // The FXML files (the views) are in resources/com/reto1/view
+
             fxmlLoader = new FXMLLoader(BaseController.class.getResource(VIEWS_PATH + fxml + ".fxml"));
             scene = new Scene(fxmlLoader.load(), resolutionX, resolutionY);
             stage.setScene(scene);
@@ -94,8 +99,6 @@ public class BaseController {
         stage.setY(y);
     }
 
-    // ---- Menu buttons of the shop (customer) ----
-
     @FXML
     private void menuHome() {
         switchScene("shopHome", 860, 540, false);
@@ -115,8 +118,6 @@ public class BaseController {
     private void menuProfile() {
         switchScene("shopProfile", 860, 540, false);
     }
-
-    // ---- Menu buttons of the management windows (worker / admin) ----
 
     @FXML
     private void adminMenuShipments() {
@@ -148,13 +149,18 @@ public class BaseController {
      */
     @FXML
     private void logOut() {
-        // TODO: ask for confirmation (confirm(...)), set loggedUser = null and
-        //       LoggerManager.setCurrentUser("-")
+
+        if (!confirm("Are you sure you want to log out?", "Log Out")) {
+            return;
+        }
+
+        loggedUser = null;
+        LoggerManager.setCurrentUser("-");
+
         logger.log(Level.INFO, "User has logged out.");
+
         switchScene("loginView", 270, 340, true);
     }
-
-    // ---- Shared helpers (used by every window) ----
 
     /**
      * Hides the admin-only buttons (USERS and LOG) when the logged user is a
@@ -165,42 +171,66 @@ public class BaseController {
      */
     protected void applyAdminPermissions(Button btnUsers, Button btnLog) {
         // TODO: isAdmin = loggedUser is a Worker with Role.ADMIN;
-        //       setVisible(isAdmin) and setManaged(isAdmin) on both buttons
+        // setVisible(isAdmin) and setManaged(isAdmin) on both buttons
+    }
+
+    /**
+     * Creates an stylized alert
+     * 
+     * @param type    {@link AlertType} of the alert
+     * @param message text shown to the user
+     * @param header  title of the alert
+     */
+    private Alert prettyAlert(AlertType type, String message, String header) {
+        Alert alert = new Alert(type, message);
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/com/reto1/view/main.css").toExternalForm());
+        alert.setTitle(header);
+        alert.setHeaderText(header);
+
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.initStyle(StageStyle.UNDECORATED);
+        return alert;
     }
 
     /**
      * Shows an error popup (Alert of type ERROR).
      *
      * @param message text shown to the user
+     * @param header  title of the alert
      */
-    protected void showError(String message) {
-        // TODO: new Alert(Alert.AlertType.ERROR, message) and showAndWait()
+    protected void showError(String message, String header) {
+        Alert alert = prettyAlert(AlertType.ERROR, message, header);
+        alert.showAndWait();
     }
 
     /**
      * Shows an information popup (Alert of type INFORMATION).
      *
      * @param message text shown to the user
+     * @param header  title of the alert
+     * 
      */
-    protected void showInfo(String message) {
-        // TODO: new Alert(Alert.AlertType.INFORMATION, message) and showAndWait()
+    protected void showInfo(String message, String header) {
+        Alert alert = prettyAlert(AlertType.INFORMATION, message, header);
+        alert.showAndWait();
     }
 
     /**
      * Asks the user to confirm an action (for example, before deleting).
      *
      * @param message question shown to the user
+     * @param header  title of the alert
      * @return {@code true} if the user pressed OK
      */
-    protected boolean confirm(String message) {
-        boolean accepted;
+    protected boolean confirm(String message, String header) {
+        Alert alert = prettyAlert(AlertType.CONFIRMATION, message, header);
 
-        // TODO: Alert of type CONFIRMATION; accepted = the user pressed OK
-        accepted = false;
-        return accepted;
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            return true;
+        }
+        return false;
     }
-
-    // ---- Title bar: move, minimize, maximize and close ----
 
     @FXML
     protected void onDragStart(MouseEvent event) {
