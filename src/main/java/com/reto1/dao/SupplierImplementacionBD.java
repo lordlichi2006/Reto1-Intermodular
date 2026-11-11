@@ -40,7 +40,7 @@ public class SupplierImplementacionBD implements SupplierDao {
 
         suppliers = new ArrayList<>();
         try {
-            // sort { name: 1 }  ->  ORDER BY name ASC
+
             for (Document doc : collection.find().sort(new Document("name", 1))) {
                 suppliers.add(toSupplier(doc));
             }
@@ -97,7 +97,7 @@ public class SupplierImplementacionBD implements SupplierDao {
         doc = toDocument(supplier);
         try {
             collection.insertOne(doc);
-            // MongoDB has added the generated _id to the document
+
             supplier.setId(doc.getObjectId("_id"));
             LOGGER.info("INSERT suppliers: " + supplier.getCif());
         } catch (MongoException e) {
@@ -167,14 +167,14 @@ public class SupplierImplementacionBD implements SupplierDao {
         Document doc;
 
         doc = new Document();
-        // A new supplier has no _id yet: MongoDB generates it when inserting
+
         if (supplier.getId() != null) {
             doc.append("_id", supplier.getId());
         }
         doc.append("name", supplier.getName());
         doc.append("cif", supplier.getCif());
         doc.append("email", supplier.getEmail());
-        // The telephone is optional: only saved if it has a value
+
         if (supplier.getTelephone() != null) {
             doc.append("telephone", supplier.getTelephone());
         }

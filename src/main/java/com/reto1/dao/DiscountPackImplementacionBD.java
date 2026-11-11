@@ -40,7 +40,7 @@ public class DiscountPackImplementacionBD implements DiscountPackDao {
 
         packs = new ArrayList<>();
         try {
-            // sort { name: 1 }  ->  ORDER BY name ASC
+
             for (Document doc : collection.find().sort(new Document("name", 1))) {
                 packs.add(toPack(doc));
             }
@@ -78,7 +78,7 @@ public class DiscountPackImplementacionBD implements DiscountPackDao {
         doc = toDocument(pack);
         try {
             collection.insertOne(doc);
-            // MongoDB has added the generated _id to the document
+
             pack.setId(doc.getObjectId("_id"));
             LOGGER.info("INSERT discountPacks: " + pack.getName());
         } catch (MongoException e) {
@@ -159,7 +159,7 @@ public class DiscountPackImplementacionBD implements DiscountPackDao {
         Document doc;
 
         doc = new Document();
-        // A new pack has no _id yet: MongoDB generates it when inserting
+
         if (pack.getId() != null) {
             doc.append("_id", pack.getId());
         }

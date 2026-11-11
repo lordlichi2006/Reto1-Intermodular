@@ -42,7 +42,7 @@ public class ProductImplementacionBD implements ProductDao {
 
         products = new ArrayList<>();
         try {
-            // sort { name: 1 }  ->  ORDER BY name ASC
+
             for (Document doc : collection.find().sort(new Document("name", 1))) {
                 products.add(toProduct(doc));
             }
@@ -79,9 +79,9 @@ public class ProductImplementacionBD implements ProductDao {
         ArrayList<Product> products;
 
         products = new ArrayList<>();
-        // { name: { $regex: "text", $options: "i" } }  ->  WHERE name LIKE '%text%'
-        // Pattern.quote: characters like "." or "*" are searched as normal text.
-        // "i" = ignore upper/lower case.
+
+
+
         filter = new Document("name", new Document("$regex", Pattern.quote(text)).append("$options", "i"));
         try {
             for (Document doc : collection.find(filter).sort(new Document("name", 1))) {
@@ -102,7 +102,7 @@ public class ProductImplementacionBD implements ProductDao {
         doc = toDocument(product);
         try {
             collection.insertOne(doc);
-            // MongoDB has added the generated _id to the document
+
             product.setId(doc.getObjectId("_id"));
             LOGGER.info("INSERT products: " + product.getName());
         } catch (MongoException e) {
@@ -133,8 +133,8 @@ public class ProductImplementacionBD implements ProductDao {
         UpdateResult result;
         boolean updated;
 
-        // { $set: { stock: 5 } }  ->  UPDATE products SET stock = 5
-        // Only "stock" changes; the rest of the document stays the same
+
+
         update = new Document("$set", new Document("stock", stock));
         try {
             result = collection.updateOne(new Document("_id", id), update);
@@ -196,7 +196,7 @@ public class ProductImplementacionBD implements ProductDao {
         product.setPrice(doc.getDouble("price"));
         product.setStock(doc.getInteger("stock"));
         product.setDescription(doc.getString("description"));
-        // The suppliers are an array of documents inside the product
+
         suppliers = new ArrayList<>();
         for (Document line : doc.getList("suppliers", Document.class)) {
             supplier = new ProductSupplier();
@@ -227,7 +227,7 @@ public class ProductImplementacionBD implements ProductDao {
         }
 
         doc = new Document();
-        // A new product has no _id yet: MongoDB generates it when inserting
+
         if (product.getId() != null) {
             doc.append("_id", product.getId());
         }
@@ -235,7 +235,7 @@ public class ProductImplementacionBD implements ProductDao {
         doc.append("brand", product.getBrand());
         doc.append("price", product.getPrice());
         doc.append("stock", product.getStock());
-        // The description is optional: if it is empty it is not saved
+
         if (product.getDescription() != null) {
             doc.append("description", product.getDescription());
         }

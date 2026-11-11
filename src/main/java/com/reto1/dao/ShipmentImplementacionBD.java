@@ -42,7 +42,7 @@ public class ShipmentImplementacionBD implements ShipmentDao {
         doc = toDocument(shipment);
         try {
             collection.insertOne(doc);
-            // MongoDB has added the generated _id to the document
+
             shipment.setId(doc.getObjectId("_id"));
             LOGGER.info("INSERT shipments: " + shipment.getId());
         } catch (MongoException e) {
@@ -76,7 +76,7 @@ public class ShipmentImplementacionBD implements ShipmentDao {
 
         shipments = new ArrayList<>();
         try {
-            // sort { createdAt: -1 }  ->  ORDER BY createdAt DESC (newest first)
+
             for (Document doc : collection.find().sort(new Document("createdAt", -1))) {
                 shipments.add(toShipment(doc));
             }
@@ -124,7 +124,7 @@ public class ShipmentImplementacionBD implements ShipmentDao {
         UpdateResult result;
         boolean updated;
 
-        // The enum is saved as its name ("IN_SHIPMENT"...), as the schema expects
+
         update = new Document("$set", new Document("status", status.name()));
         try {
             result = collection.updateOne(new Document("_id", id), update);
@@ -158,7 +158,7 @@ public class ShipmentImplementacionBD implements ShipmentDao {
         shipment.setTrackingId(doc.getString("trackingId"));
         shipment.setShipmentCompany(doc.getString("shipmentCompany"));
         shipment.setStatus(ShipmentStatus.valueOf(doc.getString("status")));
-        // The lines are an array of documents inside the shipment
+
         lines = new ArrayList<>();
         for (Document lineDoc : doc.getList("lines", Document.class)) {
             line = new ShipmentLine();
@@ -191,7 +191,7 @@ public class ShipmentImplementacionBD implements ShipmentDao {
         }
 
         doc = new Document();
-        // A new shipment has no _id yet: MongoDB generates it when inserting
+
         if (shipment.getId() != null) {
             doc.append("_id", shipment.getId());
         }
@@ -201,7 +201,7 @@ public class ShipmentImplementacionBD implements ShipmentDao {
         doc.append("lines", lines);
         doc.append("total", shipment.getTotal());
         doc.append("status", shipment.getStatus().name());
-        // trackingId and shipmentCompany are optional: only saved if they have a value
+
         if (shipment.getTrackingId() != null) {
             doc.append("trackingId", shipment.getTrackingId());
         }

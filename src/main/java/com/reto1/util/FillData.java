@@ -66,16 +66,13 @@ public final class FillData {
 
         users = new ArrayList<>();
 
-        // ---- Admins (the team) ----
         users.add(new Worker("Alain", "alain@gozoshop.com", DEFAULT_PASSWORD, "10000000Z", Role.ADMIN));
         users.add(new Worker("Ekaitz", "ekaitz@gozoshop.com", DEFAULT_PASSWORD, "10000001S", Role.ADMIN));
         users.add(new Worker("Ivan", "ivan@gozoshop.com", DEFAULT_PASSWORD, "10000002Q", Role.ADMIN));
 
-        // ---- Workers ----
         users.add(new Worker("Jon", "jon@gozoshop.com", DEFAULT_PASSWORD, "10000003V", Role.WORKER));
         users.add(new Worker("Julen", "julen@gozoshop.com", DEFAULT_PASSWORD, "10000004H", Role.WORKER));
 
-        // ---- Customers ----
         users.add(createCustomer("Mikel", "mikel@gozoshop.com", "10000005L",
                 "Calle Mayor 1, Bilbao", CustomerType.INDIVIDUAL));
         users.add(createCustomer("Izai", "izai@gozoshop.com", "10000006C",

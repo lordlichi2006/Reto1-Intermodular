@@ -42,7 +42,6 @@ public final class SchemaInitializer {
             Document schema = loadSchema(name);
 
             if (existing.contains(name)) {
-                // The collection exists: replace its validator with the current schema
                 db.runCommand(new Document("collMod", name)
                         .append("validator", new Document("$jsonSchema", schema))
                         .append("validationLevel", "strict")

@@ -55,10 +55,8 @@ public class App extends Application {
             SchemaInitializer.init(Database.getDatabase());
             FillData.fillIfEmpty();
         } catch (MongoException e) {
-            // Thrown by SchemaInitializer
             LOGGER.log(Level.SEVERE, "MongoDB is not available: {0}", e.getMessage());
         } catch (DatabaseException e) {
-            // Thrown by FillData (through the DAO)
             LOGGER.log(Level.SEVERE, "Initial data not loaded: {0}", e.getMessage());
         }
     }

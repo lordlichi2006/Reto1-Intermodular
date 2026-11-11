@@ -8,8 +8,6 @@ package com.reto1.main;
  * @author Ekaitz.Rivero
  */
 public class Launcher {
-        //Cuando ejecutas un .jar con java -jar, Java mira la clase principal antes de arrancar. 
-        // Si esa clase hereda de Application, como App, Java exige que JavaFX esté instalado como módulo del sistema.
     public static void main(String[] args) {
         App.main(args);
     }

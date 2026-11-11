@@ -52,7 +52,7 @@ public class UserImplementacionBD implements UserDao {
         User user;
 
         user = null;
-        // { email: "...", password: "..." }  ->  WHERE email = ? AND password = ?
+
         filter = new Document("email", email).append("password", password);
         try {
             doc = collection.find(filter).first();
@@ -91,7 +91,7 @@ public class UserImplementacionBD implements UserDao {
         boolean exists;
 
         try {
-            // first() returns null if there is no document with that email
+
             exists = collection.find(new Document("email", email)).first() != null;
             LOGGER.info("SELECT users exists email: " + email);
         } catch (MongoException e) {
@@ -107,7 +107,7 @@ public class UserImplementacionBD implements UserDao {
 
         users = new ArrayList<>();
         try {
-            // sort { name: 1 }  ->  ORDER BY name ASC
+
             for (Document doc : collection.find().sort(new Document("name", 1))) {
                 users.add(toUser(doc));
             }
@@ -145,7 +145,7 @@ public class UserImplementacionBD implements UserDao {
         doc = toDocument(user);
         try {
             collection.insertOne(doc);
-            // MongoDB has added the generated _id to the document
+
             user.setId(doc.getObjectId("_id"));
             LOGGER.info("INSERT users: " + user.getEmail());
         } catch (MongoException e) {
@@ -206,7 +206,7 @@ public class UserImplementacionBD implements UserDao {
             customer.setTotalSpent(doc.getDouble("totalSpent"));
             customer.setAddresses(doc.getList("addresses", String.class));
             customer.setShipmentIds(doc.getList("shipmentIds", ObjectId.class));
-            // The cart is an array of documents inside the customer
+
             cart = new ArrayList<>();
             for (Document line : doc.getList("cart", Document.class)) {
                 item = new CartItem();
@@ -224,7 +224,7 @@ public class UserImplementacionBD implements UserDao {
             worker.setRole(Role.valueOf(doc.getString("role")));
             user = worker;
         }
-        // Fields that customers and workers have in common
+
         user.setId(doc.getObjectId("_id"));
         user.setName(doc.getString("name"));
         user.setEmail(doc.getString("email"));
@@ -246,7 +246,7 @@ public class UserImplementacionBD implements UserDao {
         ArrayList<Document> cart;
 
         doc = new Document();
-        // A new user has no _id yet: MongoDB generates it when inserting
+
         if (user.getId() != null) {
             doc.append("_id", user.getId());
         }
