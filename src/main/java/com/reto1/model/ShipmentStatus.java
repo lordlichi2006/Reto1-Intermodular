@@ -1,7 +1,7 @@
 package com.reto1.model;
 
 /**
- *
+ * Enum for the status of shipments
  * @author Ekaitz
  */
 public enum ShipmentStatus {

@@ -1,3 +1,4 @@
+
 package com.reto1.model;
 
 import org.bson.types.ObjectId;
@@ -20,6 +21,9 @@ public class User {
     /** DNI / NIE / CIF of the user. */
     private String idDocument;
 
+    /**
+     * Creates an empty user with all string attributes initialized to empty strings.
+     */
     public User() {
         this.name = "";
         this.email = "";
@@ -27,6 +31,14 @@ public class User {
         this.idDocument = "";
     }
 
+    /**
+     * Creates a user with the specified personal and login information.
+     *
+     * @param name       the user's name
+     * @param email      the user's email address
+     * @param password   the user's password
+     * @param idDocument the user's identification document (DNI, NIE or CIF)
+     */
     public User(String name, String email, String password, String idDocument) {
         this.name = name;
         this.email = email;
@@ -34,46 +46,101 @@ public class User {
         this.idDocument = idDocument;
     }
 
+    /**
+     * Returns the MongoDB identifier of the user.
+     *
+     * @return the user's ObjectId, or {@code null} if it has not been assigned
+     */
     public ObjectId getId() {
         return id;
     }
 
+    /**
+     * Sets the MongoDB identifier of the user.
+     *
+     * @param id the ObjectId to assign to the user
+     */
     public void setId(ObjectId id) {
         this.id = id;
     }
 
+    /**
+     * Returns the user's name.
+     *
+     * @return the user's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the user's name.
+     *
+     * @param name the name to assign to the user
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Returns the user's email address.
+     *
+     * @return the user's email address
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets the user's email address.
+     *
+     * @param email the email address to assign to the user
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Returns the user's password.
+     *
+     * @return the user's password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Sets the user's password.
+     *
+     * @param password the password to assign to the user
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Returns the user's identification document.
+     *
+     * @return the user's DNI, NIE or CIF
+     */
     public String getIdDocument() {
         return idDocument;
     }
 
+    /**
+     * Sets the user's identification document.
+     *
+     * @param idDocument the DNI, NIE or CIF to assign to the user
+     */
     public void setIdDocument(String idDocument) {
         this.idDocument = idDocument;
     }
 
+    /**
+     * Returns a string representation of the user.
+     *
+     * @return a string containing the user's identifier, name, email and identification document
+     */
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", name=" + name + ", email=" + email + ", idDocument=" + idDocument + '}';
