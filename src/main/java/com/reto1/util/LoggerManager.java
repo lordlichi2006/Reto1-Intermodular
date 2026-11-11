@@ -8,7 +8,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 /**
  * Creates the only logger of the application. It writes to the console and to
@@ -20,10 +19,6 @@ public final class LoggerManager {
 
     private static Logger logger;
 
-    /**
-     * Email of the user that is using the program. It is written in every
-     * line of the log ("-" while nobody has logged in).
-     */
     private static String currentUser = "-";
 
     private LoggerManager() {
@@ -39,6 +34,26 @@ public final class LoggerManager {
     public static void setCurrentUser(String user) {
         currentUser = user;
     }
+    /**
+     * Custom Formatter used to more easily read logs
+     * @return custom formatter with the following format: [ERROR LEVEL] DATE | USER | CLASS&METHOD | MESSAGE
+     */
+    public static Formatter customFormatter() {
+        return new Formatter() {
+            @Override
+            public String format(LogRecord record) {
+                 
+                return String.format(
+                        "[ %2$s ] %1$tF %1$tT | %6$s | %3$s.%4$s | %5$s%n",
+                        new Date(record.getMillis()),
+                        record.getLevel(),
+                        record.getSourceClassName(),
+                        record.getSourceMethodName(),
+                        formatMessage(record),
+                        currentUser);
+            }
+        };
+    }
 
     /**
      * Returns the application logger, creating it the first time.
@@ -49,49 +64,29 @@ public final class LoggerManager {
         FileHandler file;
         ConsoleHandler console;
 
-        Formatter customFormatter = new Formatter() {
-            @Override
-            public String format(LogRecord record) {
-
-                // [ERROR LEVEL] DATE | USER | CLASS&METHOD | MESSAGE
-                return String.format(
-                        "[ %2$s ] %1$tF %1$tT | %6$s | %3$s.%4$s | %5$s%n",
-                        new Date(record.getMillis()),
-                        record.getLevel(),
-                        record.getSourceClassName(),
-                        record.getSourceMethodName(),
-                        formatMessage(record), // Formats the message so it can accept extra arguments
-                        currentUser
-                );
-            }
-        };
+        final Formatter customFormatter = customFormatter();
 
         if (logger == null) {
             logger = Logger.getLogger("ApplicationLogger");
 
-            // Do not add handlers twice, it would create a duplicate log file
             if (logger.getHandlers().length == 0) {
                 try {
                     file = new FileHandler("application.log", true);
                     console = new ConsoleHandler();
 
-                    // Formats the log output so it is easier to read
                     file.setFormatter(customFormatter);
                     console.setFormatter(customFormatter);
                     logger.addHandler(file);
                     logger.addHandler(console);
 
-                    // Remove default handlers since we have our custom ones
                     logger.setUseParentHandlers(false);
 
-                    // ALL in the logger so each handler chooses its own level
                     logger.setLevel(Level.ALL);
-                    file.setLevel(Level.INFO); // only SEVERE, WARNING and INFO
-                    console.setLevel(Level.ALL); // ALL includes debug messages
+                    file.setLevel(Level.INFO);
+                    console.setLevel(Level.ALL);
                 } catch (IOException e) {
                     System.err.println(e.getMessage());
                 }
-                // The logger is created only once, so the start message goes here
                 logger.log(Level.INFO, "========= Application Initialized =========");
             }
         }
