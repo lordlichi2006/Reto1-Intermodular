@@ -29,6 +29,21 @@ public class LoginController extends BaseController {
     private Label lblError;
 
     /**
+     * Data access object used to check the credentials.
+     */
+    private UserDao userDao;
+
+    /**
+     * Sets the data access object used to check the credentials.
+     * The tests use it to pass a fake implementation that does not need MongoDB.
+     *
+     * @param userDao the data access object to use
+     */
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    /**
      * Runs when the window opens: clears the error text.
      */
     @FXML
@@ -52,17 +67,23 @@ public class LoginController extends BaseController {
         email = txtEmail.getText();
         password = txtPassword.getText();
 
-        UserDao userDao = new UserImplementacionBD();
+        if (userDao == null) {
+            userDao = new UserImplementacionBD();
+        }
         User user = null;
+        boolean serverError = false;
 
         try {
             user = userDao.login(email, password);
         } catch (DatabaseException e) {
             lblError.setText("Server Error, please try again later.");
+            serverError = true;
         }
         if (user == null) {
-            lblError.setText("Incorrect Password or Email.");
-            logger.log(Level.INFO, "Unsuccessful login attempt with email: {0}", email);
+            if (!serverError) {
+                lblError.setText("Incorrect Password or Email.");
+                logger.log(Level.INFO, "Unsuccessful login attempt with email: {0}", email);
+            }
             return;
         }
 
