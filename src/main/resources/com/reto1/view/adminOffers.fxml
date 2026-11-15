@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.SelectionMode?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -90,11 +89,7 @@
             <children>
                 <HBox spacing="30.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <TableView fx:id="productsTable" prefWidth="380.0">
-                            <selectionModel>
-                                <SelectionMode fx:constant="MULTIPLE" />
-                            </selectionModel>
-                        </TableView>
+                        <TableView fx:id="productsTable" prefWidth="380.0" />
                         <TableView fx:id="offersTable" prefWidth="380.0" />
                         <VBox alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
                             <children>
