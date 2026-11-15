@@ -85,6 +85,5 @@ public class LoginController extends BaseController {
      */
     @FXML
     private void register(ActionEvent event) {
-        // TODO register functionality
     }
 }

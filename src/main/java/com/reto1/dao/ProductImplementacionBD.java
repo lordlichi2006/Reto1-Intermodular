@@ -151,12 +151,6 @@ public class ProductImplementacionBD implements ProductDao {
     public boolean decreaseStock(ObjectId id, int units) throws DatabaseException {
         boolean decreased;
 
-        // TODO: updateOne with
-        //       filter: new Document("_id", id).append("stock", new Document("$gte", units))
-        //               (only if stock >= units)
-        //       update: new Document("$inc", new Document("stock", -units))
-        //       decreased = result.getModifiedCount() > 0
-        //       (try/catch MongoException + log, like the other methods)
         decreased = false;
         return decreased;
     }

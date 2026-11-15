@@ -14,14 +14,12 @@ public class ShopProfileController extends BaseController {
      */
     @FXML
     private void initialize() {
-        // TODO: loadProfile()
     }
 
     /**
      * Shows the data of loggedUser in txtName, txtEmail, cmbType and lstAddresses.
      */
     private void loadProfile() {
-        // TODO
     }
 
     /**
@@ -29,7 +27,6 @@ public class ShopProfileController extends BaseController {
      */
     @FXML
     private void addAddress() {
-        // TODO: text not empty? add it to the list (saved with saveChanges)
     }
 
     /**
@@ -37,7 +34,6 @@ public class ShopProfileController extends BaseController {
      */
     @FXML
     private void removeAddress() {
-        // TODO: address selected? remove it from the list (saved with saveChanges)
     }
 
     /**
@@ -45,7 +41,5 @@ public class ShopProfileController extends BaseController {
      */
     @FXML
     private void saveChanges() {
-        // TODO: name and email filled? valid email? email not used by another
-        //       user? userDao.update(customer), update loggedUser, showInfo(...)
     }
 }

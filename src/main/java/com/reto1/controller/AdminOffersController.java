@@ -21,15 +21,12 @@ public class AdminOffersController extends BaseController {
     @FXML
     private void initialize() {
         applyAdminPermissions(btnUsers, btnLog);
-        // TODO: applyAdminPermissions(btnUsers, btnLog), loadOffers()
-        //       and fill tblOfferProducts with productDao.findAll()
     }
 
     /**
      * Fills tblOffers with every pack.
      */
     private void loadOffers() {
-        // TODO: discountPackDao.findAll()
     }
 
     /**
@@ -37,7 +34,6 @@ public class AdminOffersController extends BaseController {
      */
     @FXML
     private void selectOffer() {
-        // TODO
     }
 
     /**
@@ -45,7 +41,6 @@ public class AdminOffersController extends BaseController {
      */
     @FXML
     private void addOffer() {
-        // TODO: clearForm()
     }
 
     /**
@@ -53,7 +48,6 @@ public class AdminOffersController extends BaseController {
      */
     @FXML
     private void editOffer() {
-        // TODO: pack selected?
     }
 
     /**
@@ -61,7 +55,6 @@ public class AdminOffersController extends BaseController {
      */
     @FXML
     private void removeOffer() {
-        // TODO: pack selected? confirm(...)? discountPackDao.delete(id), loadOffers()
     }
 
     /**
@@ -69,15 +62,12 @@ public class AdminOffersController extends BaseController {
      */
     @FXML
     private void saveOffer() {
-        // TODO: if validateForm(): "new" mode -> discountPackDao.insert(pack),
-        //       "edit" mode -> discountPackDao.update(pack); loadOffers()
     }
 
     /**
      * Empties every field of the form and the product selection.
      */
     private void clearForm() {
-        // TODO
     }
 
     /**
@@ -89,7 +79,6 @@ public class AdminOffersController extends BaseController {
     private boolean validateForm() {
         boolean valid;
 
-        // TODO
         valid = false;
         return valid;
     }

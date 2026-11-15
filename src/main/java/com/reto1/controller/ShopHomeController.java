@@ -25,14 +25,12 @@ public class ShopHomeController extends BaseController {
      */
     @FXML
     private void initialize() {
-        // TODO: loadProducts()
     }
 
     /**
      * Fills tblProducts with every product (name, brand, price, stock).
      */
     private void loadProducts() {
-        // TODO: productDao.findAll() and show the list in tblProducts
     }
 
     /**
@@ -42,7 +40,6 @@ public class ShopHomeController extends BaseController {
      */
     @FXML
     void search(KeyEvent event) {
-        // TODO: productDao.findByName(txtSearchbox.getText()) and show the result
     }
 
     /**
@@ -50,8 +47,5 @@ public class ShopHomeController extends BaseController {
      */
     @FXML
     private void addToCart() {
-        // TODO: product selected? units is a number between 1 and the stock?
-        //       add a CartItem to the cart of loggedUser (add units if it was
-        //       already there) and save it with userDao.update(customer)
     }
 }

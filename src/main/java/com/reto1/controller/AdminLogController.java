@@ -38,13 +38,10 @@ public class AdminLogController extends BaseController {
     private void initialize() {
         List<String> logContents;
         applyAdminPermissions(btnUsers, btnLog);
-        // TODO: ; move the reading of
-        //       the file below to refresh() and call it from here
         lblError.setText("");
         try {
             logContents = Files.readAllLines(Paths.get(LOG_FILE), StandardCharsets.UTF_8);
             txtLog.setText(String.join(System.lineSeparator(), logContents));
-            // Scroll to the end: the newest lines are the most interesting ones
             txtLog.positionCaret(txtLog.getLength());
         } catch (IOException e) {
             logger.log(Level.WARNING, "Unable to open log file: {0}", e.getMessage());
@@ -57,6 +54,5 @@ public class AdminLogController extends BaseController {
      */
     @FXML
     private void refresh() {
-        // TODO: read application.log and show it in txtLog
     }
 }

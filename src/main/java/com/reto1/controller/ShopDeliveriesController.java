@@ -14,7 +14,6 @@ public class ShopDeliveriesController extends BaseController {
      */
     @FXML
     private void initialize() {
-        // TODO: loadShipments()
     }
 
     /**
@@ -22,7 +21,6 @@ public class ShopDeliveriesController extends BaseController {
      * company, status).
      */
     private void loadShipments() {
-        // TODO: shipmentDao.findByCustomer(loggedUser.getId())
     }
 
     /**
@@ -30,6 +28,5 @@ public class ShopDeliveriesController extends BaseController {
      */
     @FXML
     private void showShipmentLines() {
-        // TODO: if it is a double click, show product, price and units of each line
     }
 }

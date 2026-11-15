@@ -75,7 +75,6 @@
 
 }
 .windowControls{
-    /*overridea el de defecto*/
     -fx-effect: dropshadow(gaussian, #0000, 0, 0, 0, 0);
 
 }

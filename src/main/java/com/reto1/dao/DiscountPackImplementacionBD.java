@@ -123,9 +123,6 @@ public class DiscountPackImplementacionBD implements DiscountPackDao {
     public boolean existsByProduct(ObjectId productId) throws DatabaseException {
         boolean exists;
 
-        // TODO: exists = collection.find(new Document("productIds", productId)).first() != null
-        //       (searching a value in an array field finds the packs whose array contains it)
-        //       (try/catch MongoException + log, like the other methods)
         exists = false;
         return exists;
     }

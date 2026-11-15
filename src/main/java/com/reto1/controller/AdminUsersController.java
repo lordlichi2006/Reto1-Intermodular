@@ -21,14 +21,12 @@ public class AdminUsersController extends BaseController {
     @FXML
     private void initialize() {
         applyAdminPermissions(btnUsers, btnLog);
-        // TODO: applyAdminPermissions(btnUsers, btnLog) and loadUsers()
     }
 
     /**
      * Fills tblUsers with every user (name, email, customer/worker, role/type).
      */
     private void loadUsers() {
-        // TODO: userDao.findAll()
     }
 
     /**
@@ -36,8 +34,6 @@ public class AdminUsersController extends BaseController {
      */
     @FXML
     private void editUser() {
-        // TODO: user selected? enable cmbRole if it is a Worker, or cmbType and
-        //       lstAddresses if it is a Customer
     }
 
     /**
@@ -45,8 +41,6 @@ public class AdminUsersController extends BaseController {
      */
     @FXML
     private void saveUser() {
-        // TODO: if validateForm(): email not used by another user?
-        //       userDao.update(user), loadUsers() and showInfo(...)
     }
 
     /**
@@ -54,9 +48,6 @@ public class AdminUsersController extends BaseController {
      */
     @FXML
     private void deleteUser() {
-        // TODO: user selected? not loggedUser? if it is a customer,
-        //       shipmentDao.existsInProgressByCustomer(id) is false?
-        //       confirm(...)? userDao.delete(id) and loadUsers()
     }
 
     /**
@@ -64,14 +55,12 @@ public class AdminUsersController extends BaseController {
      */
     @FXML
     private void removeAddress() {
-        // TODO: address selected? remove it from the list (saved with saveUser)
     }
 
     /**
      * Empties every field of the form.
      */
     private void clearForm() {
-        // TODO
     }
 
     /**
@@ -82,7 +71,6 @@ public class AdminUsersController extends BaseController {
     private boolean validateForm() {
         boolean valid;
 
-        // TODO
         valid = false;
         return valid;
     }

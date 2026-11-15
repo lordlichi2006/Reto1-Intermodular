@@ -21,14 +21,12 @@ public class AdminShipmentsController extends BaseController {
     @FXML
     private void initialize() {
         applyAdminPermissions(btnUsers, btnLog);
-        // TODO: applyAdminPermissions(btnUsers, btnLog) and loadShipments()
     }
 
     /**
      * Fills the table with the shipments that are not finished.
      */
     private void loadShipments() {
-        // TODO: shipmentDao.findAll() (only IN_PROGRESS and IN_SHIPMENT)
     }
 
     /**
@@ -36,7 +34,6 @@ public class AdminShipmentsController extends BaseController {
      */
     @FXML
     private void selectShipment() {
-        // TODO
     }
 
     /**
@@ -44,8 +41,6 @@ public class AdminShipmentsController extends BaseController {
      */
     @FXML
     private void confirmChanges() {
-        // TODO: shipment selected? status changed?
-        //       shipmentDao.updateStatus(id, status) and loadShipments()
     }
 
     /**
@@ -53,7 +48,5 @@ public class AdminShipmentsController extends BaseController {
      */
     @FXML
     private void cancelShipment() {
-        // TODO: shipment selected? can it be cancelled (not ARRIVED)? confirm(...)?
-        //       shipmentDao.updateStatus(id, ShipmentStatus.CANCELLED)
     }
 }

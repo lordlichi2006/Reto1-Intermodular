@@ -110,10 +110,6 @@ public class ShipmentImplementacionBD implements ShipmentDao {
     public boolean existsInProgressByCustomer(ObjectId customerId) throws DatabaseException {
         boolean exists;
 
-        // TODO: filter new Document("customerId", customerId)
-        //           .append("status", new Document("$in", Arrays.asList("IN_PROGRESS", "IN_SHIPMENT")))
-        //       exists = collection.find(filter).first() != null
-        //       (try/catch MongoException + log, like the other methods)
         exists = false;
         return exists;
     }

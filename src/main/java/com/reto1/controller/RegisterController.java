@@ -14,7 +14,6 @@ public class RegisterController extends BaseController {
      */
     @FXML
     private void initialize() {
-        // TODO: clear the error label
     }
 
     /**
@@ -22,8 +21,6 @@ public class RegisterController extends BaseController {
      */
     @FXML
     private void register() {
-        // TODO: if validateForm(): userDao.existsByEmail(email)? if not,
-        //       userDao.insert(new Customer(...)), showInfo(...) and backToLogin()
     }
 
     /**
@@ -31,7 +28,6 @@ public class RegisterController extends BaseController {
      */
     @FXML
     private void backToLogin() {
-        // TODO: switchScene("loginView", 270, 340, true)
     }
 
     /**
@@ -43,7 +39,6 @@ public class RegisterController extends BaseController {
     private boolean validateForm() {
         boolean valid;
 
-        // TODO
         valid = false;
         return valid;
     }

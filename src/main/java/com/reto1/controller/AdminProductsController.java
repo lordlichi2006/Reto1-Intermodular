@@ -24,22 +24,18 @@ public class AdminProductsController extends BaseController {
     @FXML
     private void initialize() {
         applyAdminPermissions(btnUsers, btnLog);
-        // TODO: applyAdminPermissions(btnUsers, btnLog), loadProducts()
-        //       and loadSuppliers()
     }
 
     /**
      * Fills tblProducts with every product and its suppliers.
      */
     private void loadProducts() {
-        // TODO: productDao.findAll()
     }
 
     /**
      * Fills cmbSupplier with every supplier.
      */
     private void loadSuppliers() {
-        // TODO: supplierDao.findAll()
     }
 
     /**
@@ -49,7 +45,6 @@ public class AdminProductsController extends BaseController {
      */
     @FXML
     private void editPrice(CellEditEvent<Product, Double> event) {
-        // TODO: new value >= 0? productDao.update(product); if not, restore the cell
     }
 
     /**
@@ -59,7 +54,6 @@ public class AdminProductsController extends BaseController {
      */
     @FXML
     private void editStock(CellEditEvent<Product, Integer> event) {
-        // TODO: new value >= 0? productDao.updateStock(id, stock); if not, restore
     }
 
     /**
@@ -67,7 +61,6 @@ public class AdminProductsController extends BaseController {
      */
     @FXML
     private void addProduct() {
-        // TODO: clearForm()
     }
 
     /**
@@ -75,7 +68,6 @@ public class AdminProductsController extends BaseController {
      */
     @FXML
     private void editProduct() {
-        // TODO: product selected?
     }
 
     /**
@@ -83,8 +75,6 @@ public class AdminProductsController extends BaseController {
      */
     @FXML
     private void removeProduct() {
-        // TODO: product selected? discountPackDao.existsByProduct(id) is false?
-        //       confirm(...)? productDao.delete(id) and loadProducts()
     }
 
     /**
@@ -92,15 +82,12 @@ public class AdminProductsController extends BaseController {
      */
     @FXML
     private void saveProduct() {
-        // TODO: if validateForm(): "new" mode -> productDao.insert(product),
-        //       "edit" mode -> productDao.update(product); loadProducts()
     }
 
     /**
      * Empties every field of the form.
      */
     private void clearForm() {
-        // TODO
     }
 
     /**
@@ -112,7 +99,6 @@ public class AdminProductsController extends BaseController {
     private boolean validateForm() {
         boolean valid;
 
-        // TODO
         valid = false;
         return valid;
     }
