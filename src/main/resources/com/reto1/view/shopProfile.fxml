@@ -2,12 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -71,46 +74,65 @@
             </padding>
         </HBox>
     </top>
-   <right>
-      <VBox alignment="BOTTOM_RIGHT" prefWidth="150.0" spacing="10.0" BorderPane.alignment="BOTTOM_RIGHT">
-         <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#removeFromCart" styleClass="uiButton" text="_Remove From Cart" />
-            <HBox alignment="CENTER_RIGHT" spacing="15.0">
-               <children>
-                  <Label alignment="BOTTOM_LEFT" text="Edit Amount:" textFill="WHITE" />
-                  <TextField fx:id="txtAmount" prefWidth="30.0" styleClass="textField" text="1" />
-               </children>
-            </HBox>
-            <ChoiceBox fx:id="cmbSendTo" prefWidth="150.0" />
-            <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#purchase" styleClass="uiButton" text="_Purchase" />
-         </children>
-         <padding>
-            <Insets right="15.0" />
-         </padding>
-      </VBox>
-   </right>
-   <bottom>
-      <Label styleClass="errorText" text="sample error" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="Consolas" size="12.0" />
-         </font>
-         <padding>
-            <Insets bottom="5.0" top="5.0" />
-         </padding>
-      </Label>
-   </bottom>
-   <center>
-      <TableView fx:id="tblCart" maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <BorderPane.margin>
-            <Insets left="15.0" right="15.0" />
-         </BorderPane.margin>
-      </TableView>
-   </center>
+    <center>
+        <VBox spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+                <GridPane hgap="15.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="60.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="160.0" />
+                        <ColumnConstraints halignment="RIGHT" minWidth="60.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="120.0" />
+                    </columnConstraints>
+                    <children>
+                        <Label text="Name:" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtName" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Type:" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <ComboBox fx:id="cmbType" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        <Label text="Email:" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtEmail" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    </children>
+                </GridPane>
+                <Label text="Addresses:" textFill="WHITE" />
+                <ListView fx:id="lstAddresses" VBox.vgrow="ALWAYS">
+                    <contextMenu>
+                        <ContextMenu>
+                            <items>
+                                <MenuItem fx:id="menuAddAddress" mnemonicParsing="false" onAction="#addAddress" text="Add address" />
+                                <MenuItem fx:id="menuRemoveAddress" mnemonicParsing="false" onAction="#removeAddress" text="Remove address" />
+                            </items>
+                        </ContextMenu>
+                    </contextMenu>
+                    <placeholder>
+                        <Label text="No addresses saved" />
+                    </placeholder>
+                </ListView>
+                <TextField fx:id="txtNewAddress" promptText="New address (right click on the list to add it)" styleClass="textField" />
+            </children>
+            <padding>
+                <Insets left="15.0" right="25.0" top="10.0" />
+            </padding>
+        </VBox>
+    </center>
+    <right>
+        <VBox alignment="BOTTOM_RIGHT" prefWidth="150.0" spacing="10.0" BorderPane.alignment="BOTTOM_RIGHT">
+            <children>
+                <Button fx:id="btnSave" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#saveChanges" styleClass="uiButton" text="_Save Changes" />
+                <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#logOut" styleClass="uiButton" text="_Log Out" />
+            </children>
+            <padding>
+                <Insets right="15.0" />
+            </padding>
+        </VBox>
+    </right>
+    <bottom>
+        <Label fx:id="lblError" styleClass="errorText" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="Consolas" size="12.0" />
+            </font>
+            <padding>
+                <Insets bottom="5.0" top="5.0" />
+            </padding>
+        </Label>
+    </bottom>
 </BorderPane>
