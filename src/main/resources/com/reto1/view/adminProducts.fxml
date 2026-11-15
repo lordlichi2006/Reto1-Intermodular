@@ -2,8 +2,18 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.SelectionMode?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="" styleClass="mainPanel" stylesheets="@main.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reto1.controller.AdminProductsController">
@@ -22,26 +32,26 @@
                                 <Font name="Cooper Black" size="13.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnOffers" mnemonicParsing="false" onAction="#adminMenuOffers" styleClass="menuButton" stylesheets="@main.css" text="OFFERS" textFill="WHITE">
+                        <Button fx:id="btnOffers" mnemonicParsing="false" onAction="#adminMenuOffers" styleClass="menuButton" stylesheets="@main.css" text="OFFERS" textFill="#cccccc">
                             <font>
                                 <Font name="Cooper Black" size="13.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnUsers" mnemonicParsing="false" onAction="#adminMenuUsers" styleClass="menuButton" stylesheets="@main.css" text="USERS" textFill="WHITE">
+                        <Button fx:id="btnUsers" mnemonicParsing="false" onAction="#adminMenuUsers" styleClass="menuButton" stylesheets="@main.css" text="USERS" textFill="#cccccc">
                             <font>
                                 <Font name="Cooper Black" size="13.0" />
                             </font>
                         </Button>
-                  <Button fx:id="btnLog" mnemonicParsing="false" onAction="#adminMenuLog" styleClass="menuButton" stylesheets="@main.css" text="LOG" textFill="WHITE">
-                     <font>
-                        <Font name="Cooper Black" size="13.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#logOut" styleClass="menuButton" stylesheets="@main.css" text="LOGOUT" textFill="WHITE">
-                     <font>
-                        <Font name="Cooper Black" size="13.0" />
-                     </font>
-                  </Button>
+                        <Button fx:id="btnLog" mnemonicParsing="false" onAction="#adminMenuLog" styleClass="menuButton" stylesheets="@main.css" text="LOG" textFill="#cccccc">
+                            <font>
+                                <Font name="Cooper Black" size="13.0" />
+                            </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#logOut" styleClass="menuButton" stylesheets="@main.css" text="LOGOUT" textFill="#cccccc">
+                            <font>
+                                <Font name="Cooper Black" size="13.0" />
+                            </font>
+                        </Button>
                     </children>
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -75,4 +85,51 @@
             </padding>
         </HBox>
     </top>
+    <center>
+        <HBox spacing="40.0">
+            <children>
+                <TableView fx:id="productTable" prefWidth="460.0" />
+                <VBox spacing="30.0" HBox.hgrow="ALWAYS">
+                    <children>
+                    <GridPane hgap="15.0" vgap="22.0">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" minWidth="90.0" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="160.0" prefWidth="200.0" />
+                            <ColumnConstraints halignment="RIGHT" minWidth="90.0" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="160.0" prefWidth="200.0" />
+                        </columnConstraints>
+                        <children>
+                            <Label styleClass="formLabel" text="Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <TextField fx:id="tfName" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <Label styleClass="formLabel" text="Desc." GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <TextArea fx:id="taDesc" prefRowCount="2" styleClass="formField" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.rowSpan="2" />
+                            <Label styleClass="formLabel" text="Brand" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <TextField fx:id="tfBrand" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <Label styleClass="formLabel" text="Price" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <TextField fx:id="tfPrice" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <Label styleClass="formLabel" text="Supplier" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                            <TextField fx:id="tfSupplier" styleClass="formField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                            <Label styleClass="formLabel" text="Stock" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                            <TextField fx:id="tfStock" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                            <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#confirm" styleClass="actionButton" text="Confirm" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                        </children>
+                    </GridPane>
+                    <HBox alignment="CENTER_LEFT" spacing="25.0">
+                        <children>
+                            <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addProduct" styleClass="actionButton" text="Add product" />
+                            <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#editProduct" styleClass="actionButton" text="Edit product" />
+                            <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#removeProduct" styleClass="actionButton" text="Remove product" />
+                        </children>
+                        <VBox.margin>
+                            <Insets top="10.0" />
+                        </VBox.margin>
+                    </HBox>
+                    </children>
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
+            </padding>
+        </HBox>
+    </center>
 </BorderPane>
