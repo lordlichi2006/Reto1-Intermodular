@@ -53,6 +53,7 @@ public class BaseController {
 
     /** Distance between the mouse and the window corner while dragging. */
     private double xOffset;
+    /** Vertical distance between the mouse and the window corner while dragging. */
     private double yOffset;
 
 
@@ -102,46 +103,55 @@ public class BaseController {
         stage.setY(y);
     }
 
+    /** Opens the shop home view. */
     @FXML
     private void menuHome() {
         switchScene("shopHome", 860, 540, false);
     }
 
+    /** Opens the cart view. */
     @FXML
     private void menuCart() {
         switchScene("shopCart", 860, 540, false);
     }
 
+    /** Opens the deliveries view. */
     @FXML
     private void menuDeliveries() {
         switchScene("shopDeliveries", 860, 540, false);
     }
 
+    /** Opens the profile view. */
     @FXML
     private void menuProfile() {
         switchScene("shopProfile", 860, 540, false);
     }
 
+    /** Opens the admin shipments view. */
     @FXML
     private void adminMenuShipments() {
         switchScene("adminShipments", 1280, 720, false);
     }
 
+    /** Opens the admin products view. */
     @FXML
     private void adminMenuProducts() {
         switchScene("adminProducts", 1280, 720, false);
     }
 
+    /** Opens the admin offers view. */
     @FXML
     private void adminMenuOffers() {
         switchScene("adminOffers", 1280, 720, false);
     }
 
+    /** Opens the admin users view. */
     @FXML
     private void adminMenuUsers() {
         switchScene("adminUsers", 1280, 720, false);
     }
 
+    /** Opens the admin log view. */
     @FXML
     private void adminMenuLog() {
         switchScene("adminLog", 1280, 720, false);
@@ -242,6 +252,11 @@ public class BaseController {
         return false;
     }
 
+    /**
+     * Starts moving the window.
+     *
+     * @param event mouse event that started the drag
+     */
     @FXML
     protected void onDragStart(MouseEvent event) {
         Stage stage;
@@ -251,6 +266,11 @@ public class BaseController {
         yOffset = event.getScreenY() - stage.getY();
     }
 
+    /**
+     * Moves the window with the mouse.
+     *
+     * @param event mouse drag event
+     */
     @FXML
     protected void onDrag(MouseEvent event) {
         Stage stage;
@@ -260,6 +280,7 @@ public class BaseController {
         stage.setY(event.getScreenY() - yOffset);
     }
 
+    /** Minimizes the window. */
     @FXML
     protected void minimizeWindow() {
         Stage stage;
@@ -269,6 +290,7 @@ public class BaseController {
         logger.log(Level.INFO, "User has minimized the window.");
     }
 
+    /** Toggles the maximized state of the window. */
     @FXML
     protected void maximizeWindow() {
         Stage stage;
@@ -278,6 +300,7 @@ public class BaseController {
         logger.log(Level.FINE, "User has maximized the window");
     }
 
+    /** Closes the window. */
     @FXML
     protected void closeWindow() {
         Stage stage;

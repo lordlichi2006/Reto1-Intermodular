@@ -159,6 +159,10 @@ public class ShopHomeController extends BaseController {
         }
     }
 
+    /**
+     * Checks if the amount in the txtAmount textfield is valid
+     * @return true if txtAmount is a number > 0
+     */
     @FXML
     private boolean checkAmountValid() {
         String amount = txtAmount.getText();
