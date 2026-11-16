@@ -149,9 +149,24 @@ public class ProductImplementacionBD implements ProductDao {
 
     @Override
     public boolean decreaseStock(ObjectId id, int units) throws DatabaseException {
+        Document filter;
+        Document update;
+        UpdateResult result;
         boolean decreased;
 
         decreased = false;
+        if (units > 0) {
+            filter = new Document("_id", id).append("stock", new Document("$gte", units));
+            update = new Document("$inc", new Document("stock", -units));
+            try {
+                result = collection.updateOne(filter, update);
+                decreased = result.getModifiedCount() > 0;
+                LOGGER.info("UPDATE products decrease stock: " + id + " -" + units + " -> " + decreased);
+            } catch (MongoException e) {
+                LOGGER.severe("Error in UPDATE products decrease stock: " + e.getMessage());
+                throw new DatabaseException("Unable to decrease the stock.");
+            }
+        }
         return decreased;
     }
 

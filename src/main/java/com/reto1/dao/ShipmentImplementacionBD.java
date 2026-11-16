@@ -108,9 +108,23 @@ public class ShipmentImplementacionBD implements ShipmentDao {
 
     @Override
     public boolean existsInProgressByCustomer(ObjectId customerId) throws DatabaseException {
+        ArrayList<String> unfinished;
+        Document filter;
+        Document doc;
         boolean exists;
 
-        exists = false;
+        unfinished = new ArrayList<>();
+        unfinished.add(ShipmentStatus.IN_PROGRESS.name());
+        unfinished.add(ShipmentStatus.IN_SHIPMENT.name());
+        filter = new Document("customerId", customerId).append("status", new Document("$in", unfinished));
+        try {
+            doc = collection.find(filter).first();
+            exists = doc != null;
+            LOGGER.info("SELECT shipments in progress by customer: " + customerId + " -> " + exists);
+        } catch (MongoException e) {
+            LOGGER.severe("Error in SELECT shipments in progress by customer: " + e.getMessage());
+            throw new DatabaseException("Unable to check the shipments of the customer.");
+        }
         return exists;
     }
 

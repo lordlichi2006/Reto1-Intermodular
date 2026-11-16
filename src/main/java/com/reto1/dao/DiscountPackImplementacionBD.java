@@ -121,9 +121,17 @@ public class DiscountPackImplementacionBD implements DiscountPackDao {
 
     @Override
     public boolean existsByProduct(ObjectId productId) throws DatabaseException {
+        Document doc;
         boolean exists;
 
-        exists = false;
+        try {
+            doc = collection.find(new Document("productIds", productId)).first();
+            exists = doc != null;
+            LOGGER.info("SELECT discountPacks by product: " + productId + " -> " + exists);
+        } catch (MongoException e) {
+            LOGGER.severe("Error in SELECT discountPacks by product: " + e.getMessage());
+            throw new DatabaseException("Unable to check the offers of the product.");
+        }
         return exists;
     }
 
