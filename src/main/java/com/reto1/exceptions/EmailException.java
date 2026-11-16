@@ -2,7 +2,7 @@ package com.reto1.exceptions;
 
 /**
  * The email typed in a form does not have a valid format (name@domain.com).
- * Thrown by the validations of the windows (register, profile, users).
+ * Thrown by the validations of the windows (profile, users).
  */
 public class EmailException extends Exception {
 
