@@ -50,8 +50,6 @@ public final class FillData {
         UserDao userDao = new UserImplementacionBD();
         ProductDao productDao = new ProductImplementacionBD();
 
-        // TODO Upload suppliers to db!
-
         // Check each collection independently
         boolean usersEmpty = userDao.findAll().isEmpty();
         boolean productsEmpty = productDao.findAll().isEmpty();
@@ -67,11 +65,10 @@ public final class FillData {
             LOGGER.log(Level.INFO, "FillData: users collection already has data");
         }
 
-        // Create suppliers 
-        List<ProductSupplier> suppliers = createSuppliers();
-
         // Insert products if empty
         if (productsEmpty) {
+            // Create suppliers and products
+            List<ProductSupplier> suppliers = createSuppliers();
             List<Product> products = createProducts(suppliers);
 
             for (Product product : products) {
