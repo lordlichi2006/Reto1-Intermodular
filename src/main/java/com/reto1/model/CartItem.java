@@ -41,6 +41,17 @@ public class CartItem {
         this.price = price;
         this.units = units;
     }
+    /**
+     * @author Ekaitz Cart Item constructor
+     * @param product
+     */
+    public CartItem(Product product,int units) {
+        this.productId = product.getId();
+        this.name = product.getName();
+        this.brand = product.getBrand();
+        this.price = product.getPrice();
+        this.units = units;
+    }
 
     /**
      * @return mongoDb objectId of the product associated with this CartProduct
@@ -127,6 +138,7 @@ public class CartItem {
 
     /**
      * Default toString for the CartProduct
+     * 
      * @return
      */
     @Override

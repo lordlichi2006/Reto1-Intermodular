@@ -1,14 +1,21 @@
 package com.reto1.util;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bson.types.ObjectId;
+
+import com.reto1.dao.ProductDao;
+import com.reto1.dao.ProductImplementacionBD;
 import com.reto1.dao.UserDao;
 import com.reto1.dao.UserImplementacionBD;
 import com.reto1.exceptions.DatabaseException;
 import com.reto1.model.Customer;
 import com.reto1.model.CustomerType;
+import com.reto1.model.Product;
+import com.reto1.model.ProductSupplier;
 import com.reto1.model.Role;
 import com.reto1.model.User;
 import com.reto1.model.Worker;
@@ -39,21 +46,44 @@ public final class FillData {
      * @throws DatabaseException if MongoDB is not available
      */
     public static boolean fillIfEmpty() throws DatabaseException {
-        UserDao userDao;
-        boolean isEmpty;
 
-        userDao = new UserImplementacionBD();
-        isEmpty = userDao.findAll().isEmpty();
+        UserDao userDao = new UserImplementacionBD();
+        ProductDao productDao = new ProductImplementacionBD();
 
-        if (isEmpty) {
+        // TODO Upload suppliers to db!
+
+        // Check each collection independently
+        boolean usersEmpty = userDao.findAll().isEmpty();
+        boolean productsEmpty = productDao.findAll().isEmpty();
+
+        // Insert users if empty
+        if (usersEmpty) {
             for (User user : createUsers()) {
                 userDao.insert(user);
             }
+
             LOGGER.log(Level.INFO, "FillData: initial users inserted");
         } else {
-            LOGGER.log(Level.INFO, "FillData: the database already has data, nothing inserted");
+            LOGGER.log(Level.INFO, "FillData: users collection already has data");
         }
-        return isEmpty;
+
+        // Create suppliers 
+        List<ProductSupplier> suppliers = createSuppliers();
+
+        // Insert products if empty
+        if (productsEmpty) {
+            List<Product> products = createProducts(suppliers);
+
+            for (Product product : products) {
+                productDao.insert(product);
+            }
+
+            LOGGER.log(Level.INFO, "FillData: initial products inserted");
+        } else {
+            LOGGER.log(Level.INFO, "FillData: products collection already has data");
+        }
+
+        return usersEmpty || productsEmpty;
     }
 
     /**
@@ -85,6 +115,50 @@ public final class FillData {
                 "Calle San Juan 7, Getxo", CustomerType.INDIVIDUAL));
 
         return users;
+    }
+
+    private static ArrayList<Product> createProducts(List<ProductSupplier> suppliers) {
+        ArrayList<Product> products = new ArrayList<>();
+
+        products.add(
+                new Product("Salted Chips", "Lays", 3.0, 9, "Classic salted potato chips", List.of(suppliers.get(0))));
+
+        products.add(new Product("Pringles Original", "Pringles", 2.5, 15, "Original flavored potato crisps",
+                List.of(suppliers.get(0))));
+
+        products.add(new Product("KitKat", "Nestle", 1.5, 30, "Chocolate wafer bar", List.of(suppliers.get(1))));
+
+        products.add(new Product("Nesquik", "Nestle", 4.2, 12, "Chocolate milk powder", List.of(suppliers.get(1))));
+
+        products.add(new Product("Coca-Cola", "Coca-Cola", 2.0, 25, "Classic carbonated soft drink",
+                List.of(suppliers.get(2))));
+
+        products.add(new Product("Fanta Orange", "Coca-Cola", 1.8, 20, "Orange flavored soft drink",
+                List.of(suppliers.get(2))));
+
+        products.add(new Product("Oreo", "Mondelez", 2.2, 18, "Chocolate sandwich cookies", List.of(suppliers.get(3))));
+
+        products.add(
+                new Product("Milka Chocolate", "Milka", 2.8, 14, "Alpine milk chocolate", List.of(suppliers.get(3))));
+
+        products.add(new Product("Dove Soap", "Dove", 3.5, 10, "Moisturizing beauty bar", List.of(suppliers.get(4))));
+
+        products.add(new Product("Lipton Ice Tea", "Lipton", 2.4, 16, "Refreshing lemon iced tea",
+                List.of(suppliers.get(4))));
+
+        return products;
+    }
+
+    private static List<ProductSupplier> createSuppliers() {
+        List<ProductSupplier> suppliers = new ArrayList<>();
+
+        suppliers.add(new ProductSupplier(new ObjectId(), "PepsiCo", "A12345678"));
+        suppliers.add(new ProductSupplier(new ObjectId(), "Nestle", "B12345678"));
+        suppliers.add(new ProductSupplier(new ObjectId(), "Coca-Cola", "C12345678"));
+        suppliers.add(new ProductSupplier(new ObjectId(), "Mondelez", "D12345678"));
+        suppliers.add(new ProductSupplier(new ObjectId(), "Unilever", "E12345678"));
+
+        return suppliers;
     }
 
     /**
