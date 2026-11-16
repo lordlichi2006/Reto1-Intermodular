@@ -1,6 +1,7 @@
 module com.reto1 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.base;
     requires java.logging;
 
     requires org.mongodb.driver.sync.client;
