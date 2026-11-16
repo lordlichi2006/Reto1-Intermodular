@@ -98,13 +98,4 @@ public class LoginController extends BaseController {
         }
 
     }
-
-    /**
-     * Register button.
-     *
-     * @param event button event
-     */
-    @FXML
-    private void register(ActionEvent event) {
-    }
 }
