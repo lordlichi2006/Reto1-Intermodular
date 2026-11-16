@@ -76,8 +76,10 @@
             <TextField fx:id="txtSearchbox" onKeyTyped="#search" promptText="Search for products" styleClass="textField" />
             <TableView fx:id="tblProducts" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="colName" prefWidth="150.0" text="Name" />
+                <TableColumn fx:id="colBrand" prefWidth="120.0" text="Brand" />
+                <TableColumn fx:id="colPrice" prefWidth="80.0" text="Price" />
+                <TableColumn fx:id="colStock" prefWidth="70.0" text="Stock" />
               </columns>
             </TableView>
          </children>
@@ -92,7 +94,7 @@
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
                   <Label alignment="BOTTOM_LEFT" text="Amount:" textFill="WHITE" />
-                  <TextField fx:id="txtAmount" prefWidth="30.0" styleClass="textField" text="1" />
+                  <TextField fx:id="txtAmount" onAction="#checkAmountValid" prefWidth="30.0" styleClass="textField" text="1" />
                </children>
             </HBox>
             <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#addToCart" styleClass="uiButton" text="_Add To Cart" />
@@ -103,7 +105,7 @@
       </VBox>
    </right>
    <bottom>
-      <Label styleClass="errorText" text="sample error" BorderPane.alignment="CENTER">
+      <Label fx:id="lblError" styleClass="errorText" BorderPane.alignment="CENTER">
          <font>
             <Font name="Consolas" size="12.0" />
          </font>
