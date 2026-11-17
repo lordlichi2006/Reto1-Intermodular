@@ -19,12 +19,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 /**
- * Controller of the window Profile View (shopProfile.fxml).
- * Customer data and saved addresses; log out.
- * The title bar and the menu buttons are handled by {@link BaseController}.
+ * Controls the customer profile view defined in {@code shopProfile.fxml}.
+ * Loads and updates customer details and manages the customer's saved addresses.
+ * The title bar and menu buttons are handled by {@link BaseController}.
  */
 public class ShopProfileController extends BaseController {
 
+    /** Regular expression used to validate the email address entered in the profile. */
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
 
     @FXML
@@ -44,6 +45,10 @@ public class ShopProfileController extends BaseController {
 
     private UserDao userDao;
 
+    /**
+     * Initializes the customer type choices and loads the logged-in customer's profile.
+     * If no DAO has been injected, a database-backed implementation is created.
+     */
     @FXML
     private void initialize() {
         cmbType.getItems().setAll(CustomerType.values());
@@ -53,10 +58,19 @@ public class ShopProfileController extends BaseController {
         loadProfile();
     }
 
+    /**
+     * Sets the DAO used to look up and update customer accounts.
+     *
+     * @param userDao the DAO to use
+     */
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
+    /**
+     * Populates the profile controls from the logged-in customer.
+     * If the logged-in user is not a customer, displays an error and disables saving.
+     */
     private void loadProfile() {
         if (!(loggedUser instanceof Customer)) {
             lblError.setText("A customer profile is not available.");
@@ -72,6 +86,10 @@ public class ShopProfileController extends BaseController {
         lblError.setText("");
     }
 
+    /**
+     * Adds the trimmed address from the input field unless it is empty or already present.
+     * Displays a validation message when the address cannot be added.
+     */
     @FXML
     private void addAddress() {
         String address = txtNewAddress.getText() == null ? "" : txtNewAddress.getText().trim();
@@ -88,6 +106,9 @@ public class ShopProfileController extends BaseController {
         lblError.setText("");
     }
 
+    /**
+     * Removes the currently selected address from the address list, if one is selected.
+     */
     @FXML
     private void removeAddress() {
         int selectedIndex = lstAddresses.getSelectionModel().getSelectedIndex();
@@ -97,6 +118,10 @@ public class ShopProfileController extends BaseController {
         }
     }
 
+    /**
+     * Validates the profile form and persists the updated customer details.
+     * The current customer's account ID and other account state are retained.
+     */
     @FXML
     private void saveChanges() {
         if (!(loggedUser instanceof Customer)) {

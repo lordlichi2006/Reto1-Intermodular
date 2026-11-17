@@ -63,6 +63,9 @@ public class AdminUsersController extends BaseController {
     private ShipmentDao shipmentDao;
     private User editingUser;
 
+    /**
+     * Runs when the window opens.
+     */
     @FXML
     private void initialize() {
         applyAdminPermissions(btnUsers, btnLog);
@@ -114,6 +117,9 @@ public class AdminUsersController extends BaseController {
         userTable.getColumns().setAll(name, email, userType, customerType);
     }
 
+    /**
+     * Fills tblUsers with every user (name, email, customer/worker, role/type).
+     */
     private void loadUsers() {
         try {
             userTable.setItems(FXCollections.observableArrayList(userDao.findAll()));
@@ -123,6 +129,9 @@ public class AdminUsersController extends BaseController {
         }
     }
 
+    /**
+     * Edit user button: loads the selected user in the form.
+     */
     @FXML
     private void editUser() {
         User selected = userTable.getSelectionModel().getSelectedItem();
@@ -144,7 +153,8 @@ public class AdminUsersController extends BaseController {
             Customer customer = (Customer) selected;
             cmbType.getSelectionModel().select(customer.getType());
             lstAddresses.getItems().setAll(customer.getAddresses() == null
-                    ? new ArrayList<>() : customer.getAddresses());
+                    ? new ArrayList<>()
+                    : customer.getAddresses());
             cmbRole.getSelectionModel().clearSelection();
         } else {
             Worker worker = (Worker) selected;
@@ -154,6 +164,9 @@ public class AdminUsersController extends BaseController {
         }
     }
 
+    /**
+     * Save changes button: saves the user of the form.
+     */
     @FXML
     private void saveUser() {
         if (editingUser == null || editingUser != userTable.getSelectionModel().getSelectedItem()) {
@@ -196,6 +209,9 @@ public class AdminUsersController extends BaseController {
         }
     }
 
+    /**
+     * Delete user button: deletes the selected user.
+     */
     @FXML
     private void deleteUser() {
         User selected = userTable.getSelectionModel().getSelectedItem();
@@ -234,6 +250,9 @@ public class AdminUsersController extends BaseController {
                 || (loggedUser.getId() != null && loggedUser.getId().equals(user.getId())));
     }
 
+    /**
+     * Context menu of lstAddresses: removes the selected address.
+     */
     @FXML
     private void removeAddress() {
         int selectedIndex = lstAddresses.getSelectionModel().getSelectedIndex();
@@ -241,7 +260,9 @@ public class AdminUsersController extends BaseController {
             lstAddresses.getItems().remove(selectedIndex);
         }
     }
-
+    /**
+     * Empties every field of the form.
+     */
     private void clearForm() {
         editingUser = null;
         tfName.clear();
@@ -255,7 +276,11 @@ public class AdminUsersController extends BaseController {
         lstAddresses.setDisable(false);
         lstAddresses.getItems().clear();
     }
-
+    /**
+     * Checks the form: name, email and idDocument filled and a valid email.
+     *
+     * @return {@code true} if the form is valid
+     */
     private boolean validateForm() {
         if (tfName.getText() == null || tfName.getText().trim().isEmpty()
                 || tfEmail.getText() == null || !EMAIL_PATTERN.matcher(tfEmail.getText().trim()).matches()

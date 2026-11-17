@@ -49,6 +49,9 @@ public class AdminOffersController extends BaseController {
     private ProductDao productDao;
     private DiscountPack editingOffer;
 
+    /**
+     * Runs when the window opens.
+     */
     @FXML
     private void initialize() {
         applyAdminPermissions(btnUsers, btnLog);
@@ -93,6 +96,7 @@ public class AdminOffersController extends BaseController {
         offersTable.getColumns().setAll(offerName, discount, units);
     }
 
+    
     private void loadProducts() {
         try {
             productsTable.setItems(FXCollections.observableArrayList(productDao.findAll()));
@@ -101,7 +105,9 @@ public class AdminOffersController extends BaseController {
             showError(e.getMessage(), "Products");
         }
     }
-
+    /**
+     * Fills tblOffers with every pack.
+     */
     private void loadOffers() {
         try {
             offersTable.setItems(FXCollections.observableArrayList(discountPackDao.findAll()));
@@ -111,6 +117,9 @@ public class AdminOffersController extends BaseController {
         }
     }
 
+    /**
+     * Click on a pack: selects its products in tblOfferProducts.
+     */
     @FXML
     private void selectOffer() {
         DiscountPack selected = offersTable.getSelectionModel().getSelectedItem();
@@ -125,6 +134,9 @@ public class AdminOffersController extends BaseController {
         }
     }
 
+    /**
+     * Add offer button: clears the form and changes to "new" mode.
+     */
     @FXML
     private void addOffer() {
         editingOffer = null;
@@ -132,6 +144,9 @@ public class AdminOffersController extends BaseController {
         clearForm();
     }
 
+    /**
+     * Edit offer button: loads the selected pack in the form.
+     */
     @FXML
     private void editOffer() {
         DiscountPack selected = offersTable.getSelectionModel().getSelectedItem();
@@ -151,6 +166,9 @@ public class AdminOffersController extends BaseController {
         }
     }
 
+    /**
+     * Remove offer button: deletes the selected pack.
+     */
     @FXML
     private void removeOffer() {
         DiscountPack selected = offersTable.getSelectionModel().getSelectedItem();
@@ -175,6 +193,9 @@ public class AdminOffersController extends BaseController {
         }
     }
 
+     /**
+     * Confirm button: inserts or updates the pack of the form.
+     */
     @FXML
     private void saveOffer() {
         if (!validateForm()) {
@@ -204,6 +225,9 @@ public class AdminOffersController extends BaseController {
         }
     }
 
+    /**
+     * Empties every field of the form and the product selection.
+     */
     private void clearForm() {
         tfName.clear();
         tfUnits.clear();
@@ -212,6 +236,12 @@ public class AdminOffersController extends BaseController {
         editingOffer = null;
     }
 
+    /**
+     * Checks the form: name filled, discount between 0 and 100, units a whole
+     * number >= 0, at least one product selected.
+     *
+     * @return {@code true} if the form is valid
+     */
     private boolean validateForm() {
         if (tfName.getText() == null || tfName.getText().trim().isEmpty()) {
             showError("Enter an offer name.", "Invalid offer");
