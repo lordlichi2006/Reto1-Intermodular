@@ -9,6 +9,7 @@ package com.reto1.model;
  */
 public class Worker extends User {
 
+    /** Role of the worker: WORKER or ADMIN. */
     private Role role;
 
     /**

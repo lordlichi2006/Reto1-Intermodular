@@ -18,10 +18,15 @@ import org.bson.types.ObjectId;
  */
 public class Customer extends User {
 
+    /** Delivery addresses saved by the customer (embedded). */
     private List<String> addresses = new ArrayList<>();
+    /** Money spent by the customer in every purchase. */
     private double totalSpent;
+    /** Type of customer: individual or business. */
     private CustomerType type;
+    /** Lines of the cart (embedded). */
     private List<CartItem> cart = new ArrayList<>();
+    /** _id of the shipments of the customer in the "shipments" collection. */
     private List<ObjectId> shipmentIds = new ArrayList<>();
 
     /**
@@ -34,12 +39,12 @@ public class Customer extends User {
     /**
      * Constructor of the customer object
      *
-     * @param name
-     * @param email
-     * @param password
-     * @param idDocument
-     * @param addresses
-     * @param type
+     * @param name name of the customer
+     * @param email email of the customer
+     * @param password password of the customer
+     * @param idDocument DNI, NIE or CIF of the customer
+     * @param addresses delivery addresses of the customer
+     * @param type type of customer
      */
     public Customer(String name, String email, String password, String idDocument,
             List<String> addresses, CustomerType type) {
@@ -49,6 +54,7 @@ public class Customer extends User {
     }
 
     /**
+     * Returns list of the addresses the customer has.
      *
      * @return List of the addresses the customer has
      */
@@ -59,13 +65,14 @@ public class Customer extends User {
     /**
      * Sets the list of the addresses the customer has
      *
-     * @param addresses
+     * @param addresses delivery addresses of the customer
      */
     public void setAddresses(List<String> addresses) {
         this.addresses = addresses;
     }
 
     /**
+     * Returns total amount of money the customer has spent.
      *
      * @return total amount of money the customer has spent
      */
@@ -76,13 +83,14 @@ public class Customer extends User {
     /**
      * Sets the total amount of money the customer has spent
      *
-     * @param totalSpent
+     * @param totalSpent money spent by the customer
      */
     public void setTotalSpent(double totalSpent) {
         this.totalSpent = totalSpent;
     }
 
     /**
+     * Returns gets the {@link com.reto1.model.CustomerType} of this customer.
      *
      * @return gets the {@link com.reto1.model.CustomerType} of this customer
      */
@@ -93,13 +101,14 @@ public class Customer extends User {
     /**
      * sets the {@link com.reto1.model.CustomerType} of this customer
      *
-     * @param type
+     * @param type type of customer
      */
     public void setType(CustomerType type) {
         this.type = type;
     }
 
     /**
+     * Returns list of all the cartProducts of this customer.
      *
      * @return list of all the cartProducts of this customer
      */
@@ -110,13 +119,14 @@ public class Customer extends User {
     /**
      * sets the list of all the cartProducts of this customer
      *
-     * @param cart
+     * @param cart lines of the cart
      */
     public void setCart(List<CartItem> cart) {
         this.cart = cart;
     }
 
     /**
+     * Returns the list of shipmentIds of this customer.
      *
      * @return the list of shipmentIds of this customer
      */
@@ -127,7 +137,7 @@ public class Customer extends User {
     /**
      * sets the list of shipmentIds of this customer
      *
-     * @param shipmentIds
+     * @param shipmentIds _id of the shipments of the customer
      */
     public void setShipmentIds(List<ObjectId> shipmentIds) {
         this.shipmentIds = shipmentIds;
@@ -136,7 +146,7 @@ public class Customer extends User {
     /**
      * Default tostring of the customer object
      *
-     * @return
+     * @return the text with the fields of the customer
      */
     @Override
     public String toString() {

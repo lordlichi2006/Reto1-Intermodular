@@ -9,9 +9,12 @@ package com.reto1.exceptions;
  */
 public class DatabaseException extends Exception {
 
+    /** Version of the class for serialization. */
     private static final long serialVersionUID = 1L;
 
     /**
+     * Creates the exception with the message to show.
+     *
      * @param message text that the window shows to the user
      */
     public DatabaseException(String message) {

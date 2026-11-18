@@ -14,12 +14,15 @@ import org.bson.types.ObjectId;
  */
 public class DiscountPack {
 
+    /** MongoDB _id of the pack. */
     private ObjectId id;
+    /** Name of the pack. */
     private String name;
     /** Discount between 0 and 100. */
     private double discountPercentage;
     /** _id of the products of the "products" collection included in the pack. */
     private List<ObjectId> productIds = new ArrayList<>();
+    /** Units of the pack that can still be sold. */
     private int remainingUnits;
 
     /**

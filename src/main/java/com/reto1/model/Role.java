@@ -5,6 +5,8 @@ package com.reto1.model;
  * @author Ekaitz.Rivero
  */
 public enum Role {
+    /** Worker: manages products, offers and shipments. */
     WORKER,
+    /** Administrator: can also manage the users and see the log. */
     ADMIN;
 }

@@ -24,6 +24,7 @@ public class ProductImplementacionBD implements ProductDao {
     /** Name of the collection in MongoDB. */
     private static final String COLLECTION = "products";
 
+    /** Logger of the application, used to write every operation in the log. */
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     /** The "products" collection. Each document is like a row of a table. */

@@ -31,8 +31,10 @@ public class UserImplementacionBD implements UserDao {
     private static final String COLLECTION = "users";
     /** Values of the field "userType". */
     private static final String CUSTOMER = "customer";
+    /** Value of the field "userType" for workers. */
     private static final String WORKER = "worker";
 
+    /** Logger of the application, used to write every operation in the log. */
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     /** The "users" collection. Each document is like a row of a table. */

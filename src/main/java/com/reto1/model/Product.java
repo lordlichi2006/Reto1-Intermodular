@@ -14,12 +14,19 @@ import org.bson.types.ObjectId;
  */
 public class Product {
 
+    /** MongoDB _id of the product. */
     private ObjectId id;
+    /** Name of the product. */
     private String name;
+    /** Brand of the product. */
     private String brand;
+    /** Price of one unit. */
     private double price;
+    /** Units in stock. */
     private int stock;
+    /** Description of the product. */
     private String description;
+    /** Suppliers of the product, with a copy of their name and CIF (embedded). */
     private List<ProductSupplier> suppliers = new ArrayList<>();
 
     /**

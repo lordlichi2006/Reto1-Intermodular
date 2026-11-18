@@ -12,9 +12,13 @@ import org.bson.types.ObjectId;
  */
 public class ShipmentLine {
 
+    /** _id of the product in the "products" collection. */
     private ObjectId productId;
+    /** Name of the product (copy). */
     private String name;
+    /** Price of one unit at the time of the purchase. */
     private double price;
+    /** Units bought. */
     private int units;
 
     /**

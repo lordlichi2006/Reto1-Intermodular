@@ -5,6 +5,8 @@ package com.reto1.model;
  * @author Ekaitz.Rivero
  */
 public enum CustomerType {
+    /** Private person. */
     INDIVIDUAL,
+    /** Company or shop. */
     BUSINESS;
 }

@@ -10,15 +10,22 @@ import com.reto1.exceptions.EmailException;
  */
 public final class UserValidation {
 
+    /** Format of an email: name, @ and a domain with at least one dot. */
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
             "^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
                     + "(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z]{2,63}$");
+    /** Format of a DNI: 8 digits and a letter. */
     private static final Pattern DNI_PATTERN = Pattern.compile("^\\d{8}[A-Z]$");
+    /** Format of a NIE: X, Y or Z, 7 digits and a letter. */
     private static final Pattern NIE_PATTERN = Pattern.compile("^[XYZ]\\d{7}[A-Z]$");
+    /** Format of a CIF: a letter, 7 digits and a control digit or letter. */
     private static final Pattern CIF_PATTERN = Pattern.compile("^[ABCDEFGHJNPQRSUVW]\\d{7}[0-9A-J]$");
+    /** Control letters of the DNI and the NIE, by the remainder of dividing by 23. */
     private static final String DNI_CONTROL_LETTERS = "TRWAGMYFPDXBNJZSQVHLCKE";
+    /** Control letters of the CIF, by the control digit. */
     private static final String CIF_CONTROL_LETTERS = "JABCDEFGHI";
 
+    /** Not used: the class only has static methods. */
     private UserValidation() {
     }
 
@@ -62,6 +69,12 @@ public final class UserValidation {
         throw new DniException("Enter a valid DNI, NIE or CIF.");
     }
 
+    /**
+     * Checks the control digit or letter of a CIF.
+     *
+     * @param cif CIF with the right format, in capital letters
+     * @return true if the control character is right
+     */
     private static boolean isValidCif(String cif) {
         int evenPositionSum = 0;
         int oddPositionSum = 0;

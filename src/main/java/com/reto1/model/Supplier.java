@@ -10,10 +10,15 @@ import org.bson.types.ObjectId;
  * @author Ekaitz.Rivero
  */
 public class Supplier {
+    /** MongoDB _id of the supplier. */
     private ObjectId id;
+    /** Name of the supplier. */
     private String name;
+    /** CIF of the supplier (unique). */
     private String cif;
+    /** Contact email of the supplier. */
     private String email;
+    /** Telephone of the supplier. */
     private String telephone;
 
     /**

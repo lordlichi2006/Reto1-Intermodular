@@ -53,8 +53,10 @@ public final class FillData {
     /** Milliseconds in one day, used to date the initial shipments in the past. */
     private static final long DAY_MILLIS = 86400000L;
 
+    /** Logger of the application, used to write every operation in the log. */
     private static final Logger LOGGER = LoggerManager.getLogger();
 
+    /** Not used: the class only has static methods. */
     private FillData() {
     }
 

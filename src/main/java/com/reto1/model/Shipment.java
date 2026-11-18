@@ -18,14 +18,23 @@ import org.bson.types.ObjectId;
  */
 public class Shipment {
 
+    /** MongoDB _id of the shipment. */
     private ObjectId id;
+    /** _id of the customer in the "users" collection. */
     private ObjectId customerId;
+    /** Date and time of the purchase. */
     private Date createdAt;
+    /** Delivery address. */
     private String address;
+    /** Products of the shipment with their price at the time of the purchase (embedded). */
     private List<ShipmentLine> lines = new ArrayList<>();
+    /** Total price of the shipment. */
     private double total;
+    /** Tracking code of the shipment. */
     private String trackingId;
+    /** Shipping company. */
     private String shipmentCompany;
+    /** Status of the shipment. */
     private ShipmentStatus status;
 
     /**

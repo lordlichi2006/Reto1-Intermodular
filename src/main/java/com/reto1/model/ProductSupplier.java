@@ -14,7 +14,9 @@ public class ProductSupplier {
 
     /** _id of the supplier in the "suppliers" collection. */
     private ObjectId supplierId;
+    /** Name of the supplier (copy). */
     private String name;
+    /** CIF of the supplier (copy). */
     private String cif;
 
     /**

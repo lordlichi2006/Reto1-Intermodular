@@ -24,6 +24,7 @@ import javafx.stage.StageStyle;
  */
 public class App extends Application {
 
+    /** Logger of the application, used to write every operation in the log. */
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     /**

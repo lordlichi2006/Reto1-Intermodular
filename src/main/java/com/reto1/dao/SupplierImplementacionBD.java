@@ -22,6 +22,7 @@ public class SupplierImplementacionBD implements SupplierDao {
     /** Name of the collection in MongoDB. */
     private static final String COLLECTION = "suppliers";
 
+    /** Logger of the application, used to write every operation in the log. */
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     /** The "suppliers" collection. Each document is like a row of a table. */

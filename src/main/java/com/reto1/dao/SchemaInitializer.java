@@ -27,6 +27,7 @@ public final class SchemaInitializer {
     /** Collection names; each one has a schemas/&lt;name&gt;.json file. */
     public static final String[] COLLECTIONS = {"users", "products", "suppliers", "discountPacks", "shipments"};
 
+    /** Not used: the class only has static methods. */
     private SchemaInitializer() {
     }
 
@@ -60,6 +61,8 @@ public final class SchemaInitializer {
     /**
      * Unique indexes avoid duplicated users and suppliers;
      * the customerId index speeds up "my shipments".
+     *
+     * @param db database of the application
      */
     private static void createIndexes(MongoDatabase db) {
         db.getCollection("users").createIndex(Indexes.ascending("email"), new IndexOptions().unique(true));
@@ -67,6 +70,13 @@ public final class SchemaInitializer {
         db.getCollection("shipments").createIndex(Indexes.ascending("customerId"));
     }
 
+    /**
+     * Reads the $jsonSchema of a collection from resources/schemas.
+     *
+     * @param collection name of the collection
+     * @return the schema as a document
+     * @throws IllegalStateException if the file does not exist or cannot be read
+     */
     private static Document loadSchema(String collection) {
         String path = "/schemas/" + collection + ".json";
         try (InputStream in = SchemaInitializer.class.getResourceAsStream(path)) {

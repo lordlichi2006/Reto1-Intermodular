@@ -20,6 +20,7 @@ public final class Database {
     /** Database of the application ({@code null} until it is opened). */
     private static MongoDatabase database;
 
+    /** Not used: the class only has static methods. */
     private Database() {
     }
 

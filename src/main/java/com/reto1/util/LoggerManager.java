@@ -17,10 +17,13 @@ import java.util.logging.Logger;
  */
 public final class LoggerManager {
 
+    /** The only logger of the application, created the first time it is asked for. */
     private static Logger logger;
 
+    /** Email of the logged-in user, or "-" if nobody is logged in. */
     private static String currentUser = "-";
 
+    /** Not used: the class only has static methods. */
     private LoggerManager() {
     }
 
