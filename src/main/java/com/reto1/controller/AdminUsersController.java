@@ -18,6 +18,8 @@ import com.reto1.model.Worker;
 import com.reto1.util.UserValidation;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,6 +30,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 /**
  * Controller of the window Admin Users (adminUsers.fxml).
@@ -73,10 +76,13 @@ public class AdminUsersController extends BaseController {
         cmbRole.getItems().setAll(Role.values());
         configureTable();
         btnDelete.setDisable(true);
-        userTable.getSelectionModel().selectedItemProperty().addListener((observable, oldUser, user) -> {
-            btnDelete.setDisable(user == null || isLoggedInUser(user));
-            if (user == null) {
-                clearForm();
+        userTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
+            @Override
+            public void changed(ObservableValue<? extends User> observable, User oldUser, User user) {
+                btnDelete.setDisable(user == null || isLoggedInUser(user));
+                if (user == null) {
+                    clearForm();
+                }
             }
         });
         if (userDao == null) {
@@ -102,18 +108,27 @@ public class AdminUsersController extends BaseController {
         TableColumn<User, String> email = new TableColumn<>("Email");
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
         TableColumn<User, String> userType = new TableColumn<>("User type");
-        userType.setCellValueFactory(cell -> new ReadOnlyStringWrapper(
-                cell.getValue() instanceof Customer ? "Customer" : "Worker"));
-        TableColumn<User, String> customerType = new TableColumn<>("Type / Role");
-        customerType.setCellValueFactory(cell -> {
-            User user = cell.getValue();
-            if (user instanceof Customer) {
-                CustomerType type = ((Customer) user).getType();
-                return new ReadOnlyStringWrapper(type == null ? "" : type.name());
+        userType.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<User, String> cell) {
+                return new ReadOnlyStringWrapper(
+                        cell.getValue() instanceof Customer ? "Customer" : "Worker");
             }
-            Role role = ((Worker) user).getRole();
-            return new ReadOnlyStringWrapper(role == null ? "" : role.name());
         });
+        TableColumn<User, String> customerType = new TableColumn<>("Type / Role");
+        customerType.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<User, String> cell) {
+                        User user = cell.getValue();
+                        if (user instanceof Customer) {
+                            CustomerType type = ((Customer) user).getType();
+                            return new ReadOnlyStringWrapper(type == null ? "" : type.name());
+                        }
+                        Role role = ((Worker) user).getRole();
+                        return new ReadOnlyStringWrapper(role == null ? "" : role.name());
+                    }
+                });
         userTable.getColumns().setAll(name, email, userType, customerType);
     }
 
