@@ -98,11 +98,11 @@
                             </columnConstraints>
                             <children>
                                 <Label styleClass="formLabel" text="Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                <TextField fx:id="tfName" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <TextField fx:id="tfName" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                 <Label styleClass="formLabel" text="Units" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                <TextField fx:id="tfUnits" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField fx:id="tfUnits" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label styleClass="formLabel" text="Discount %" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                <TextField fx:id="tfDiscount" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField fx:id="tfDiscount" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                 <Button fx:id="btnConfirm" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveOffer" styleClass="uiButton" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                             </children>
                            <rowConstraints>

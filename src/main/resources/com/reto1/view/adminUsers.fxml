@@ -102,15 +102,15 @@
                         </columnConstraints>
                         <children>
                             <Label styleClass="formLabel" text="Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                            <TextField fx:id="tfName" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <TextField fx:id="tfName" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                             <Label styleClass="formLabel" text="Type" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                             <ComboBox fx:id="cmbType" maxWidth="1.7976931348623157E308" styleClass="formField" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                             <Label styleClass="formLabel" text="Email" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                            <TextField fx:id="tfEmail" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <TextField fx:id="tfEmail" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             <Label styleClass="formLabel" text="Role" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                             <ComboBox fx:id="cmbRole" maxWidth="1.7976931348623157E308" styleClass="formField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                             <Label styleClass="formLabel" text="Password" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                            <PasswordField fx:id="pfPasswd" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <PasswordField fx:id="pfPasswd" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             <Label styleClass="formLabel" text="Addresses" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                             <ListView fx:id="lstAddresses" prefHeight="120.0" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.rowSpan="2">
                                 <contextMenu>
@@ -122,7 +122,7 @@
                                 </contextMenu>
                             </ListView>
                             <Label styleClass="formLabel" text="ID document" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                            <TextField fx:id="tfIdDocument" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                            <TextField fx:id="tfIdDocument" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         </children>
                      <rowConstraints>
                         <RowConstraints />
@@ -134,18 +134,18 @@
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <children>
                             <Label styleClass="formLabel" text="New address" />
-                            <TextField fx:id="tfNewAddress" promptText="Enter address" styleClass="formField" HBox.hgrow="ALWAYS" />
-                            <Button fx:id="btnAddAddress" mnemonicParsing="false" onAction="#addAddress" styleClass="actionButton" text="Add address" />
+                            <TextField fx:id="tfNewAddress" promptText="Enter address" styleClass="textField" HBox.hgrow="ALWAYS" />
+                            <Button fx:id="btnAddAddress" mnemonicParsing="false" onAction="#addAddress" styleClass="uiButton" text="Add address" />
                         </children>
                     </HBox>
                     <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="523.0" spacing="25.0">
                         <children>
-                            <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#editUser" styleClass="actionButton" text="Edit user">
+                            <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#editUser" styleClass="uiButton" text="Edit user">
                            <HBox.margin>
                               <Insets left="105.0" />
                            </HBox.margin></Button>
-                            <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteUser" styleClass="actionButton" text="Delete user" />
-                            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveUser" styleClass="actionButton" text="Save changes" />
+                            <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteUser" styleClass="uiButton" text="Delete user" />
+                            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveUser" styleClass="uiButton" text="Save changes" />
                         </children>
                         <VBox.margin>
                             <Insets top="10.0" />
