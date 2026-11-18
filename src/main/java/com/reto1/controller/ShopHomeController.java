@@ -2,8 +2,6 @@ package com.reto1.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import com.reto1.dao.ProductImplementacionBD;
 import com.reto1.dao.UserDao;
@@ -83,10 +81,13 @@ public class ShopHomeController extends BaseController {
         }
         ArrayList<Product> filteredProducts;
         if (!query.isEmpty()) {
-            filteredProducts = new ArrayList<>(
-                    products.stream()
-                            .filter(c -> c.getName().toLowerCase().contains(query.toLowerCase()))
-                            .collect(Collectors.toList()));
+            filteredProducts = new ArrayList<>();
+            String lowerCaseQuery = query.toLowerCase();
+            for (Product product : products) {
+                if (product.getName().toLowerCase().contains(lowerCaseQuery)) {
+                    filteredProducts.add(product);
+                }
+            }
         } else {
             filteredProducts = products;
         }

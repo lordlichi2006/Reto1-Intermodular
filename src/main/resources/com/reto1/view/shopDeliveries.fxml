@@ -74,8 +74,9 @@
             <columns>
                 <TableColumn fx:id="colDate" prefWidth="120.0" text="Date" />
                 <TableColumn fx:id="colTotal" prefWidth="90.0" text="Total" />
-                <TableColumn fx:id="colCompany" prefWidth="150.0" text="Company" />
-                <TableColumn fx:id="colStatus" prefWidth="120.0" text="Status" />
+                <TableColumn fx:id="colCompany" prefWidth="100.0" text="Company" />
+                <TableColumn fx:id="colAddress" prefWidth="130.0" text="Delivery address" />
+                <TableColumn fx:id="colStatus" prefWidth="100.0" text="Status" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

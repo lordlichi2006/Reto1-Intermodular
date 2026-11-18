@@ -1,13 +1,16 @@
 package com.reto1.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import com.reto1.dao.ProductDao;
+import com.reto1.dao.ProductImplementacionBD;
 import com.reto1.dao.ShipmentDao;
 import com.reto1.dao.ShipmentImplementacionBD;
 import com.reto1.dao.UserDao;
 import com.reto1.dao.UserImplementacionBD;
 import com.reto1.exceptions.DatabaseException;
+import com.reto1.exceptions.StockException;
 import com.reto1.model.CartItem;
 import com.reto1.model.Customer;
 import com.reto1.model.Shipment;
@@ -119,9 +122,10 @@ public class ShopCartController extends BaseController {
 
         tblCart.getItems().setAll(customer.getCart());
 
-        totalPrice = customer.getCart().stream()
-                .mapToDouble(item -> item.getPrice() * item.getUnits())
-                .sum();
+        totalPrice = 0.0;
+        for (CartItem item : customer.getCart()) {
+            totalPrice += item.getPrice() * item.getUnits();
+        }
 
         lblTotal.setText(String.format("Total: %.2f€", totalPrice));
     }
@@ -210,13 +214,14 @@ public class ShopCartController extends BaseController {
         }
 
         // create shipment and shipmentline
-        List<ShipmentLine> lines = customer.getCart().stream()
-                .map(item -> new ShipmentLine(
-                        item.getProductId(),
-                        item.getName(),
-                        item.getPrice(),
-                        item.getUnits()))
-                .collect(Collectors.toList());
+        List<ShipmentLine> lines = new ArrayList<>();
+        for (CartItem item : customer.getCart()) {
+            lines.add(new ShipmentLine(
+                    item.getProductId(),
+                    item.getName(),
+                    item.getPrice(),
+                    item.getUnits()));
+        }
 
         Shipment shipment = new Shipment(
                 customer.getId(),
@@ -226,6 +231,13 @@ public class ShopCartController extends BaseController {
                 "Mikelon Envios SA");
 
         try {
+            ProductDao productDao = new ProductImplementacionBD();
+            for (CartItem item : customer.getCart()) {
+                if (!productDao.decreaseStock(item.getProductId(), item.getUnits())) {
+                    throw new StockException("Not enough stock for " + item.getName() + ".");
+                }
+            }
+
             ShipmentDao shipmentDao = new ShipmentImplementacionBD();
             UserDao userDao = new UserImplementacionBD();
 
@@ -243,6 +255,8 @@ public class ShopCartController extends BaseController {
                         "Database Error");
             }
 
+        } catch (StockException e) {
+            showError(e.getMessage(), "Insufficient Stock");
         } catch (DatabaseException e) {
             showError("Could not complete the purchase: " + e.getMessage(), "Database Error");
         }
