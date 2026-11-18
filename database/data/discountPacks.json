@@ -1,0 +1,3 @@
+{"_id": {"$oid": "6afdde7bb3655404449830a8"}, "name": "Snack Pack", "discountPercentage": {"$numberDouble": "15.0"}, "productIds": [{"$oid": "6afdde7bb36554044498309e"}, {"$oid": "6afdde7bb36554044498309f"}], "remainingUnits": 20}
+{"_id": {"$oid": "6afdde7bb3655404449830a9"}, "name": "Chocolate Lovers", "discountPercentage": {"$numberDouble": "20.0"}, "productIds": [{"$oid": "6afdde7bb3655404449830a0"}, {"$oid": "6afdde7bb3655404449830a5"}, {"$oid": "6afdde7bb3655404449830a4"}], "remainingUnits": 15}
+{"_id": {"$oid": "6afdde7bb3655404449830aa"}, "name": "Party Drinks", "discountPercentage": {"$numberDouble": "10.0"}, "productIds": [{"$oid": "6afdde7bb3655404449830a2"}, {"$oid": "6afdde7bb3655404449830a3"}], "remainingUnits": 30}

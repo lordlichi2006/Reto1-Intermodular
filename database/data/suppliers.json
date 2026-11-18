@@ -1,0 +1,5 @@
+{"_id": {"$oid": "6afdde7bb365540444983099"}, "name": "PepsiCo", "cif": "A12345678", "email": "orders@pepsico.com", "telephone": "944000001"}
+{"_id": {"$oid": "6afdde7bb36554044498309a"}, "name": "Nestle", "cif": "B12345678", "email": "orders@nestle.com", "telephone": "944000002"}
+{"_id": {"$oid": "6afdde7bb36554044498309b"}, "name": "Coca-Cola", "cif": "C12345678", "email": "orders@cocacola.com", "telephone": "944000003"}
+{"_id": {"$oid": "6afdde7bb36554044498309c"}, "name": "Mondelez", "cif": "D12345678", "email": "orders@mondelez.com", "telephone": "944000004"}
+{"_id": {"$oid": "6afdde7bb36554044498309d"}, "name": "Unilever", "cif": "E12345678", "email": "orders@unilever.com", "telephone": "944000005"}
