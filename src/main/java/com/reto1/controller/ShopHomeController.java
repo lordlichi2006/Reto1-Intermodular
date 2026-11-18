@@ -26,30 +26,39 @@ import javafx.scene.input.KeyEvent;
  */
 public class ShopHomeController extends BaseController {
 
+    /** Table with the products of the shop. */
     @FXML
     private TableView<Product> tblProducts;
 
+    /** Column with the name of the product. */
     @FXML
     private TableColumn<Product, String> colName;
 
+    /** Column with the brand of the product. */
     @FXML
     private TableColumn<Product, String> colBrand;
 
+    /** Column with the price of one unit. */
     @FXML
     private TableColumn<Product, Double> colPrice;
 
+    /** Column with the units in stock. */
     @FXML
     private TableColumn<Product, Integer> colStock;
 
+    /** Search field: filters the products by name while the user types. */
     @FXML
     private TextField txtSearchbox;
 
+    /** Label that shows the errors of the window. */
     @FXML
     private Label lblError;
 
+    /** Field for the units to add to the cart. */
     @FXML
     private TextField txtAmount;
 
+    /** Every product of the database, loaded when the window opens. */
     ArrayList<Product> products;
 
     /**
@@ -72,7 +81,10 @@ public class ShopHomeController extends BaseController {
     }
 
     /**
-     * Fills tblProducts with every product (name, brand, price, stock).
+     * Fills tblProducts with the products whose name contains the query.
+     *
+     * @param products products of the database
+     * @param query    text typed in txtSearchbox, or "" to show every product
      */
     private void loadProducts(ArrayList<Product> products, String query) {
         if (products.isEmpty()) {
@@ -96,6 +108,9 @@ public class ShopHomeController extends BaseController {
 
     /**
      * gets the products from the database.
+     *
+     * @return every product of the database
+     * @throws DatabaseException if the database fails
      */
     private ArrayList<Product> getProducts() throws DatabaseException {
         ProductImplementacionBD productsDb = new ProductImplementacionBD();

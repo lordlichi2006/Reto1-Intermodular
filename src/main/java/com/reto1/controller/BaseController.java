@@ -200,6 +200,7 @@ public class BaseController {
      * @param type    {@link AlertType} of the alert
      * @param message text shown to the user
      * @param header  title of the alert
+     * @return the alert, ready to be shown
      */
     private Alert prettyAlert(AlertType type, String message, String header) {
         Alert alert = new Alert(type, message);

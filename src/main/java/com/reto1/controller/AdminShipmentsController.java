@@ -29,29 +29,41 @@ import javafx.util.Callback;
  */
 public class AdminShipmentsController extends BaseController {
 
+    /** Menu button USERS, hidden for workers that are not admins. */
     @FXML
     private Button btnUsers;
+    /** Menu button LOG, hidden for workers that are not admins. */
     @FXML
     private Button btnLog;
+    /** Table with the shipments in progress or in shipment. */
     @FXML
     private TableView<Shipment> shipmentTable;
+    /** Column with the date of the shipment (dd/MM/yyyy). */
     @FXML
     private TableColumn<Shipment, String> colDate;
+    /** Column with the delivery address. */
     @FXML
     private TableColumn<Shipment, String> colAddress;
+    /** Column with the total of the shipment, with two decimals. */
     @FXML
     private TableColumn<Shipment, String> colTotal;
+    /** Column with the shipping company. */
     @FXML
     private TableColumn<Shipment, String> colCompany;
+    /** Column with the status of the shipment. */
     @FXML
     private TableColumn<Shipment, String> colStatus;
+    /** Combo with the new status for the selected shipment. */
     @FXML
     private ComboBox<ShipmentStatus> cmbStatus;
+    /** Button Confirm changes, disabled while no shipment is selected. */
     @FXML
     private Button btnConfirm;
+    /** Button Cancel shipment, disabled while no shipment is selected. */
     @FXML
     private Button btnCancel;
 
+    /** Data access object of the "shipments" collection. */
     private ShipmentDao shipmentDao;
 
     /**
@@ -86,6 +98,7 @@ public class AdminShipmentsController extends BaseController {
         this.shipmentDao = shipmentDao;
     }
 
+    /** Sets how each column of shipmentTable gets its text from the shipment. */
     private void configureTable() {
         colDate.setCellValueFactory(new Callback<CellDataFeatures<Shipment, String>, ObservableValue<String>>() {
             @Override
@@ -124,6 +137,8 @@ public class AdminShipmentsController extends BaseController {
 
     /**
      * Fills the table with shipments that are still in progress or in shipment.
+     *
+     * @return true if the shipments were loaded, false if the database failed
      */
     private boolean loadShipments() {
         try {
@@ -151,6 +166,12 @@ public class AdminShipmentsController extends BaseController {
         selectShipment(shipmentTable.getSelectionModel().getSelectedItem());
     }
 
+    /**
+     * Enables the status combo and the buttons when a shipment is selected and
+     * shows its status in the combo; disables them when nothing is selected.
+     *
+     * @param shipment selected shipment, or null if there is none
+     */
     private void selectShipment(Shipment shipment) {
         boolean hasSelection = shipment != null;
         btnConfirm.setDisable(!hasSelection);
@@ -193,6 +214,14 @@ public class AdminShipmentsController extends BaseController {
         saveStatus(selected, ShipmentStatus.CANCELLED);
     }
 
+    /**
+     * Saves the new status with {@link ShipmentDao#updateStatus} and reloads
+     * the table. Shows an error if the shipment no longer exists or the
+     * database fails.
+     *
+     * @param shipment shipment to change
+     * @param status   new status of the shipment
+     */
     private void saveStatus(Shipment shipment, ShipmentStatus status) {
         try {
             if (!shipmentDao.updateStatus(shipment.getId(), status)) {

@@ -25,21 +25,29 @@ import javafx.scene.control.TextField;
  */
 public class ShopProfileController extends BaseController {
 
+    /** Field for the name of the customer. */
     @FXML
     private TextField txtName;
+    /** Field for the email of the customer. */
     @FXML
     private TextField txtEmail;
+    /** Label with the customer type, which the customer cannot change. */
     @FXML
     private Label lblType;
+    /** List with the saved addresses of the customer. */
     @FXML
     private ListView<String> lstAddresses;
+    /** Field for a new address, added to the list from its context menu. */
     @FXML
     private TextField txtNewAddress;
+    /** Label that shows the errors of the form. */
     @FXML
     private Label lblError;
+    /** Button Save Changes, disabled if the logged-in user is not a customer. */
     @FXML
     private Button btnSave;
 
+    /** Data access object of the "users" collection. */
     private UserDao userDao;
 
     /**

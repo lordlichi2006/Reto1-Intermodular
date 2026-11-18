@@ -24,27 +24,35 @@ import javafx.scene.input.MouseEvent;
  */
 public class ShopDeliveriesController extends BaseController {
 
+    /** Table with the shipments of the customer. */
     @FXML
     private TableView<Shipment> tblShipments;
 
+    /** Column with the date of the shipment. */
     @FXML
     private TableColumn<Shipment, Date> colDate;
 
+    /** Column with the total of the shipment. */
     @FXML
     private TableColumn<Shipment, Double> colTotal;
 
+    /** Column with the shipping company. */
     @FXML
     private TableColumn<Shipment, String> colCompany;
 
+    /** Column with the delivery address. */
     @FXML
     private TableColumn<Shipment, String> colAddress;
 
+    /** Column with the status of the shipment. */
     @FXML
     private TableColumn<Shipment, ShipmentStatus> colStatus;
 
+    /** Label that shows the errors of the window. */
     @FXML
     private Label lblError;
 
+    /** Logged-in customer whose shipments are shown. */
     private Customer customer;
 
     /**
@@ -84,6 +92,8 @@ public class ShopDeliveriesController extends BaseController {
 
     /**
      * Double click on a shipment (onMouseClicked): shows its lines.
+     *
+     * @param event mouse event of the click
      */
     @FXML
     private void showShipmentLines(MouseEvent event) {

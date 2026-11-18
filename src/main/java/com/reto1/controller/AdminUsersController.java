@@ -39,35 +39,54 @@ import javafx.util.Callback;
  */
 public class AdminUsersController extends BaseController {
 
+    /** Menu button USERS, hidden for workers that are not admins. */
     @FXML
     private Button btnUsers;
+    /** Menu button LOG, hidden for workers that are not admins. */
     @FXML
     private Button btnLog;
+    /** Button Delete user, disabled when no user or the logged-in user is selected. */
     @FXML
     private Button btnDelete;
+    /** Table with every user, customers and workers. */
     @FXML
     private TableView<User> userTable;
+    /** Field for the name of the user. */
     @FXML
     private TextField tfName;
+    /** Field for the email of the user. */
     @FXML
     private TextField tfEmail;
+    /** Field for the DNI, NIE or CIF of the user. */
     @FXML
     private TextField tfIdDocument;
+    /** Field for a new password; if it is left empty, the password does not change. */
     @FXML
     private PasswordField pfPasswd;
+    /** Combo with the customer type, enabled only for customers. */
     @FXML
     private ComboBox<CustomerType> cmbType;
+    /** Combo with the worker role, enabled only for workers. */
     @FXML
     private ComboBox<Role> cmbRole;
+    /** List with the addresses of the customer being edited. */
     @FXML
     private ListView<String> lstAddresses;
+    /** Field for a new address of the customer being edited. */
     @FXML
     private TextField tfNewAddress;
+    /** Button Add address, enabled only while a customer is being edited. */
     @FXML
     private Button btnAddAddress;
 
+    /** Data access object of the "users" collection. */
     private UserDao userDao;
+    /**
+     * Data access object of the "shipments" collection, used to check the
+     * shipments in progress before deleting a customer.
+     */
     private ShipmentDao shipmentDao;
+    /** User loaded in the form with Edit user, or null if there is none. */
     private User editingUser;
 
     /**
@@ -100,14 +119,28 @@ public class AdminUsersController extends BaseController {
         loadUsers();
     }
 
+    /**
+     * Sets the DAO of the users. The tests use it to pass a fake DAO.
+     *
+     * @param userDao the DAO to use
+     */
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
+    /**
+     * Sets the DAO of the shipments. The tests use it to pass a fake DAO.
+     *
+     * @param shipmentDao the DAO to use
+     */
     public void setShipmentDao(ShipmentDao shipmentDao) {
         this.shipmentDao = shipmentDao;
     }
 
+    /**
+     * Creates the columns of userTable: name, email, user type and customer
+     * type or role.
+     */
     private void configureTable() {
         TableColumn<User, String> name = new TableColumn<>("Name");
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -270,6 +303,12 @@ public class AdminUsersController extends BaseController {
         }
     }
 
+    /**
+     * Checks if a user is the logged-in user, comparing the object and its _id.
+     *
+     * @param user user to check
+     * @return true if it is the logged-in user
+     */
     private boolean isLoggedInUser(User user) {
         return loggedUser != null && (loggedUser == user
                 || (loggedUser.getId() != null && loggedUser.getId().equals(user.getId())));

@@ -22,12 +22,16 @@ public class AdminLogController extends BaseController {
     /** Name of the log file written by {@link com.reto1.util.LoggerManager}. */
     private static final String LOG_FILE = "application.log";
 
+    /** Label that shows the error when the log cannot be read. */
     @FXML
     private Label lblError;
+    /** Read-only text area with the lines of the log file. */
     @FXML
     private TextArea txtLog;
+    /** Menu button USERS, hidden for workers that are not admins. */
     @FXML
     private Button btnUsers;
+    /** Menu button LOG, hidden for workers that are not admins. */
     @FXML
     private Button btnLog;
 

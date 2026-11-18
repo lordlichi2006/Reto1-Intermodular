@@ -21,10 +21,13 @@ import javafx.scene.control.TextField;
  */
 public class LoginController extends BaseController {
 
+    /** Field for the email of the user. */
     @FXML
     private TextField txtEmail;
+    /** Field for the password of the user. */
     @FXML
     private PasswordField txtPassword;
+    /** Label that shows the login errors. */
     @FXML
     private Label lblError;
 

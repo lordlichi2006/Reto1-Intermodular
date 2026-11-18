@@ -38,37 +38,49 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class ShopCartController extends BaseController {
 
+    /** Table with the lines of the cart of the customer. */
     @FXML
     private TableView<CartItem> tblCart;
 
+    /** Button Purchase, disabled while the cart is empty. */
     @FXML
     private Button btnPurchase;
 
+    /** Column with the name of the product. */
     @FXML
     private TableColumn<CartItem, String> colName;
 
+    /** Column with the brand of the product. */
     @FXML
     private TableColumn<CartItem, String> colBrand;
 
+    /** Column with the price of one unit. */
     @FXML
     private TableColumn<CartItem, Double> colPrice;
 
+    /** Column with the units in the cart. */
     @FXML
     private TableColumn<CartItem, Integer> colUnits;
 
+    /** Spinner to change the units of the selected cart line. */
     @FXML
     private Spinner<Integer> spnAmount;
 
+    /** Label with the total price of the cart. */
     @FXML
     private Label lblTotal;
 
+    /** Combo with the addresses of the customer, to choose where the order is sent. */
     @FXML
     private ComboBox<String> cmbAddress;
 
+    /** Cart line selected in tblCart, or null if there is none. */
     private CartItem selectedCartItem;
 
+    /** Total price of every line of the cart. */
     private Double totalPrice;
 
+    /** Logged-in customer whose cart is shown. */
     private Customer customer;
 
     /**
@@ -111,7 +123,7 @@ public class ShopCartController extends BaseController {
     /**
      * Runs every time the user selects an item from the table
      * 
-     * @param newItem
+     * @param newItem cart line selected, or null if there is none
      */
     private void onCartSelectionChanged(CartItem newItem) {
         selectedCartItem = newItem;
@@ -147,6 +159,8 @@ public class ShopCartController extends BaseController {
 
     /**
      * Edit amount: changes the units of the selected cart line.
+     *
+     * @param newUnits units chosen in spnAmount
      */
     private void changeAmount(Integer newUnits) {
         if (selectedCartItem == null || newUnits == null || newUnits < 1

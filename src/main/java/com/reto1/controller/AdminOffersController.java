@@ -2,7 +2,6 @@ package com.reto1.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 
@@ -14,14 +13,18 @@ import com.reto1.exceptions.DatabaseException;
 import com.reto1.model.DiscountPack;
 import com.reto1.model.Product;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 /**
  * Controller of the window Admin Offers (adminOffers.fxml).
@@ -30,23 +33,33 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class AdminOffersController extends BaseController {
 
+    /** Menu button USERS, hidden for workers that are not admins. */
     @FXML
     private Button btnUsers;
+    /** Menu button LOG, hidden for workers that are not admins. */
     @FXML
     private Button btnLog;
+    /** Table with every product; the selected rows are the products of the pack. */
     @FXML
     private TableView<Product> productsTable;
+    /** Table with every discount pack. */
     @FXML
     private TableView<DiscountPack> offersTable;
+    /** Field for the name of the pack. */
     @FXML
     private TextField tfName;
+    /** Field for the units of the pack that can still be sold. */
     @FXML
     private TextField tfUnits;
+    /** Field for the discount percentage of the pack, from 0 to 100. */
     @FXML
     private TextField tfDiscount;
 
+    /** Data access object of the "discountPacks" collection. */
     private DiscountPackDao discountPackDao;
+    /** Data access object of the "products" collection. */
     private ProductDao productDao;
+    /** Pack loaded in the form with Edit offer, or null when a new pack is added. */
     private DiscountPack editingOffer;
 
     /**
@@ -66,21 +79,40 @@ public class AdminOffersController extends BaseController {
         loadOffers();
     }
 
+    /**
+     * Sets the DAO of the discount packs. The tests use it to pass a fake DAO.
+     *
+     * @param discountPackDao the DAO to use
+     */
     public void setDiscountPackDao(DiscountPackDao discountPackDao) {
         this.discountPackDao = discountPackDao;
     }
 
+    /**
+     * Sets the DAO of the products. The tests use it to pass a fake DAO.
+     *
+     * @param productDao the DAO to use
+     */
     public void setProductDao(ProductDao productDao) {
         this.productDao = productDao;
     }
 
+    /**
+     * Creates the columns of productsTable (name, brand, price and stock, with
+     * multiple selection) and of offersTable (name, discount and units).
+     */
     private void configureTables() {
         TableColumn<Product, String> productName = new TableColumn<>("Name");
         productName.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn<Product, String> brand = new TableColumn<>("Brand");
         brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         TableColumn<Product, String> price = new TableColumn<>("Price");
-        price.setCellValueFactory(cell -> javafx.beans.binding.Bindings.format("%.2f", cell.getValue().getPrice()));
+        price.setCellValueFactory(new Callback<CellDataFeatures<Product, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<Product, String> cell) {
+                return Bindings.format("%.2f", cell.getValue().getPrice());
+            }
+        });
         TableColumn<Product, Integer> stock = new TableColumn<>("Stock");
         stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productsTable.getColumns().setAll(productName, brand, price, stock);
@@ -89,14 +121,19 @@ public class AdminOffersController extends BaseController {
         TableColumn<DiscountPack, String> offerName = new TableColumn<>("Name");
         offerName.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn<DiscountPack, String> discount = new TableColumn<>("Discount");
-        discount.setCellValueFactory(
-                cell -> javafx.beans.binding.Bindings.format("%.2f%%", cell.getValue().getDiscountPercentage()));
+        discount.setCellValueFactory(new Callback<CellDataFeatures<DiscountPack, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<DiscountPack, String> cell) {
+                return Bindings.format("%.2f%%", cell.getValue().getDiscountPercentage());
+            }
+        });
         TableColumn<DiscountPack, Integer> units = new TableColumn<>("Units");
         units.setCellValueFactory(new PropertyValueFactory<>("remainingUnits"));
         offersTable.getColumns().setAll(offerName, discount, units);
     }
 
     
+    /** Fills productsTable with every product of the database. */
     private void loadProducts() {
         try {
             productsTable.setItems(FXCollections.observableArrayList(productDao.findAll()));
@@ -205,8 +242,10 @@ public class AdminOffersController extends BaseController {
         offer.setName(tfName.getText().trim());
         offer.setRemainingUnits(Integer.parseInt(tfUnits.getText().trim()));
         offer.setDiscountPercentage(Double.parseDouble(tfDiscount.getText().trim().replace(',', '.')));
-        List<ObjectId> productIds = productsTable.getSelectionModel().getSelectedItems().stream()
-                .map(Product::getId).collect(Collectors.toList());
+        List<ObjectId> productIds = new ArrayList<>();
+        for (Product product : productsTable.getSelectionModel().getSelectedItems()) {
+            productIds.add(product.getId());
+        }
         offer.setProductIds(new ArrayList<>(productIds));
         try {
             if (editingOffer == null) {
