@@ -87,13 +87,13 @@
     <center>
         <HBox spacing="40.0">
             <children>
-                <TableView fx:id="productTable" prefWidth="460.0">
+                <TableView fx:id="productTable" prefWidth="600.0">
                     <columns>
-                        <TableColumn fx:id="colName" prefWidth="120.0" text="Name" />
-                        <TableColumn fx:id="colBrand" prefWidth="90.0" text="Brand" />
-                        <TableColumn fx:id="colPrice" prefWidth="65.0" text="Price" />
-                        <TableColumn fx:id="colStock" prefWidth="60.0" text="Stock" />
-                        <TableColumn fx:id="colSupplier" prefWidth="120.0" text="Supplier" />
+                        <TableColumn fx:id="colName" prefWidth="160.0" text="Name" />
+                        <TableColumn fx:id="colBrand" prefWidth="120.0" text="Brand" />
+                        <TableColumn fx:id="colPrice" prefWidth="85.0" text="Price" />
+                        <TableColumn fx:id="colStock" prefWidth="80.0" text="Stock" />
+                        <TableColumn fx:id="colSupplier" prefWidth="153.0" text="Supplier" />
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -113,25 +113,57 @@
                         </columnConstraints>
                         <children>
                             <Label styleClass="formLabel" text="Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                            <TextField fx:id="tfName" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <TextField fx:id="tfName" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <font>
+                                    <Font name="Cooper Black" size="15.0" />
+                                </font>
+                            </TextField>
                             <Label styleClass="formLabel" text="Desc." GridPane.columnIndex="2" GridPane.rowIndex="0" />
                             <TextArea fx:id="taDesc" prefRowCount="2" styleClass="formField" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.rowSpan="2" />
                             <Label styleClass="formLabel" text="Brand" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                            <TextField fx:id="tfBrand" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <TextField fx:id="tfBrand" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <font>
+                                    <Font name="Cooper Black" size="15.0" />
+                                </font>
+                            </TextField>
                             <Label styleClass="formLabel" text="Price" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                            <TextField fx:id="tfPrice" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <TextField fx:id="tfPrice" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <font>
+                                    <Font name="Cooper Black" size="15.0" />
+                                </font>
+                            </TextField>
                             <Label styleClass="formLabel" text="Supplier" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                             <ComboBox fx:id="cmbSupplier" maxWidth="1.7976931348623157E308" promptText="Choose a supplier" styleClass="formField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                             <Label styleClass="formLabel" text="Stock" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                            <TextField fx:id="tfStock" styleClass="formField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                            <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#saveProduct" styleClass="actionButton" text="Confirm" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                            <TextField fx:id="tfStock" styleClass="textField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                <font>
+                                    <Font name="Cooper Black" size="15.0" />
+                                </font>
+                            </TextField>
+                            <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#saveProduct" styleClass="uiButton" text="Confirm" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                                <font>
+                                    <Font name="Cooper Black" size="13.0" />
+                                </font>
+                            </Button>
                         </children>
                     </GridPane>
                     <HBox alignment="CENTER_LEFT" spacing="25.0">
                         <children>
-                            <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addProduct" styleClass="actionButton" text="Add product" />
-                            <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#editProduct" styleClass="actionButton" text="Edit product" />
-                            <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#removeProduct" styleClass="actionButton" text="Remove product" />
+                            <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addProduct" styleClass="uiButton" text="Add product">
+                                <font>
+                                    <Font name="Cooper Black" size="13.0" />
+                                </font>
+                            </Button>
+                            <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#editProduct" styleClass="uiButton" text="Edit product">
+                                <font>
+                                    <Font name="Cooper Black" size="13.0" />
+                                </font>
+                            </Button>
+                            <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#removeProduct" styleClass="uiButton" text="Remove product">
+                                <font>
+                                    <Font name="Cooper Black" size="13.0" />
+                                </font>
+                            </Button>
                         </children>
                         <VBox.margin>
                             <Insets top="10.0" />

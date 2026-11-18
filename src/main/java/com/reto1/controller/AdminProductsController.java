@@ -17,26 +17,22 @@ import com.reto1.model.Supplier;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 /**
  * Controller of the window Admin Products (adminProducts.fxml).
  * Add, edit and remove products. A product can only be removed if it is
- * not in any discount pack. The price and the stock can also be edited in
- * the table: double click on the cell, type the new value and press Enter.
+ * not in any discount pack.
  * The title bar and the menu buttons are handled by {@link BaseController}.
  */
 public class AdminProductsController extends BaseController {
@@ -116,7 +112,6 @@ public class AdminProductsController extends BaseController {
                         return new SimpleStringProperty(supplierNames(data.getValue()));
                     }
                 });
-        configureEditableCells();
         cmbSupplier.setConverter(new StringConverter<Supplier>() {
             @Override
             public String toString(Supplier supplier) {
@@ -137,147 +132,6 @@ public class AdminProductsController extends BaseController {
 
         loadSuppliers();
         loadProducts();
-    }
-
-    /**
-     * Makes the price and stock cells of productTable editable with a
-     * TextFieldTableCell. When the user presses Enter, the onEditCommit
-     * event calls {@link #savePrice} or {@link #saveStock}.
-     */
-    private void configureEditableCells() {
-        productTable.setEditable(true);
-        colPrice.setCellFactory(TextFieldTableCell.<Product, Double>forTableColumn(new StringConverter<Double>() {
-            @Override
-            public String toString(Double value) {
-                String text;
-
-                text = "";
-                if (value != null) {
-                    text = String.valueOf(value);
-                }
-                return text;
-            }
-
-            @Override
-            public Double fromString(String text) {
-                Double value;
-
-                try {
-                    value = Double.valueOf(text.trim().replace(',', '.'));
-                } catch (NumberFormatException e) {
-                    value = null;
-                }
-                return value;
-            }
-        }));
-        colStock.setCellFactory(TextFieldTableCell.<Product, Integer>forTableColumn(new StringConverter<Integer>() {
-            @Override
-            public String toString(Integer value) {
-                String text;
-
-                text = "";
-                if (value != null) {
-                    text = String.valueOf(value);
-                }
-                return text;
-            }
-
-            @Override
-            public Integer fromString(String text) {
-                Integer value;
-
-                try {
-                    value = Integer.valueOf(text.trim());
-                } catch (NumberFormatException e) {
-                    value = null;
-                }
-                return value;
-            }
-        }));
-        colPrice.setOnEditCommit(new EventHandler<CellEditEvent<Product, Double>>() {
-            @Override
-            public void handle(CellEditEvent<Product, Double> event) {
-                savePrice(event.getRowValue(), event.getNewValue());
-            }
-        });
-        colStock.setOnEditCommit(new EventHandler<CellEditEvent<Product, Integer>>() {
-            @Override
-            public void handle(CellEditEvent<Product, Integer> event) {
-                saveStock(event.getRowValue(), event.getNewValue());
-            }
-        });
-    }
-
-    /**
-     * onEditCommit of colPrice: checks the new price and saves the product
-     * with {@link ProductDao#update}. If the price is not valid or the
-     * database fails, the product keeps its old price and an error is shown.
-     *
-     * @param product  product of the edited row
-     * @param newPrice price typed in the cell, or null if it is not a number
-     */
-    private void savePrice(Product product, Double newPrice) {
-        double oldPrice;
-
-        oldPrice = product.getPrice();
-        if (newPrice == null || newPrice < 0 || newPrice.isNaN() || newPrice.isInfinite()) {
-            showError("The price must be a number greater than or equal to 0.", "Invalid price");
-        } else {
-            product.setPrice(newPrice);
-            try {
-                if (productDao.update(product)) {
-                    logger.info("Admin Products: price of " + product.getName() + " changed from "
-                            + oldPrice + " to " + newPrice);
-                    if (product == editingProduct) {
-                        tfPrice.setText(String.valueOf(newPrice));
-                    }
-                } else {
-                    product.setPrice(oldPrice);
-                    showError("The product no longer exists.", "Product not saved");
-                    loadProducts();
-                }
-            } catch (DatabaseException e) {
-                product.setPrice(oldPrice);
-                logger.severe("Admin Products: error changing the price: " + e.getMessage());
-                showError(e.getMessage(), "Database Error");
-            }
-        }
-        productTable.refresh();
-    }
-
-    /**
-     * onEditCommit of colStock: checks the new stock and saves it with
-     * {@link ProductDao#updateStock}. If the stock is not valid or the
-     * database fails, the product keeps its old stock and an error is shown.
-     *
-     * @param product  product of the edited row
-     * @param newStock stock typed in the cell, or null if it is not a whole number
-     */
-    private void saveStock(Product product, Integer newStock) {
-        int oldStock;
-
-        oldStock = product.getStock();
-        if (newStock == null || newStock < 0) {
-            showError("The stock must be a whole number greater than or equal to 0.", "Invalid stock");
-        } else {
-            try {
-                if (productDao.updateStock(product.getId(), newStock)) {
-                    product.setStock(newStock);
-                    logger.info("Admin Products: stock of " + product.getName() + " changed from "
-                            + oldStock + " to " + newStock);
-                    if (product == editingProduct) {
-                        tfStock.setText(String.valueOf(newStock));
-                    }
-                } else {
-                    showError("The product no longer exists.", "Product not saved");
-                    loadProducts();
-                }
-            } catch (DatabaseException e) {
-                logger.severe("Admin Products: error changing the stock: " + e.getMessage());
-                showError(e.getMessage(), "Database Error");
-            }
-        }
-        productTable.refresh();
     }
 
     /**
