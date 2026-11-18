@@ -36,6 +36,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 class AdminViewsTest extends ApplicationTest {
 
@@ -70,25 +71,28 @@ class AdminViewsTest extends ApplicationTest {
 
     private Parent loadView(String resource) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
-        loader.setControllerFactory(controllerType -> {
-            if (controllerType == AdminOffersController.class) {
-                AdminOffersController controller = new AdminOffersController();
-                controller.setDiscountPackDao(new EmptyDiscountPackDao());
-                controller.setProductDao(new EmptyProductDao());
-                return controller;
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> controllerType) {
+                if (controllerType == AdminOffersController.class) {
+                    AdminOffersController controller = new AdminOffersController();
+                    controller.setDiscountPackDao(new EmptyDiscountPackDao());
+                    controller.setProductDao(new EmptyProductDao());
+                    return controller;
+                }
+                if (controllerType == AdminUsersController.class) {
+                    AdminUsersController controller = new AdminUsersController();
+                    controller.setUserDao(userDao);
+                    controller.setShipmentDao(shipmentDao);
+                    return controller;
+                }
+                if (controllerType == ShopProfileController.class) {
+                    ShopProfileController controller = new ShopProfileController();
+                    controller.setUserDao(userDao);
+                    return controller;
+                }
+                throw new IllegalArgumentException("Unexpected controller: " + controllerType.getName());
             }
-            if (controllerType == AdminUsersController.class) {
-                AdminUsersController controller = new AdminUsersController();
-                controller.setUserDao(userDao);
-                controller.setShipmentDao(shipmentDao);
-                return controller;
-            }
-            if (controllerType == ShopProfileController.class) {
-                ShopProfileController controller = new ShopProfileController();
-                controller.setUserDao(userDao);
-                return controller;
-            }
-            throw new IllegalArgumentException("Unexpected controller: " + controllerType.getName());
         });
         return loader.load();
     }
@@ -114,13 +118,21 @@ class AdminViewsTest extends ApplicationTest {
     @Test
     public void loggedInUserCannotBeDeletedAndOpenShipmentBlocksCustomerDeletion() {
         TableView<User> usersTable = (TableView<User>) usersRoot.lookup("#userTable");
-        interact(() -> {
-            stage.setScene(new Scene(usersRoot));
-            usersTable.getSelectionModel().select(loggedAdmin);
+        interact(new Runnable() {
+            @Override
+            public void run() {
+                stage.setScene(new Scene(usersRoot));
+                usersTable.getSelectionModel().select(loggedAdmin);
+            }
         });
         assertTrue(usersRoot.lookup("#btnDelete").isDisabled());
 
-        interact(() -> usersTable.getSelectionModel().select(customerWithOpenShipment));
+        interact(new Runnable() {
+            @Override
+            public void run() {
+                usersTable.getSelectionModel().select(customerWithOpenShipment);
+            }
+        });
         assertFalse(usersRoot.lookup("#btnDelete").isDisabled());
         clickOn("#btnDelete");
         clickOn("OK");
@@ -168,12 +180,22 @@ class AdminViewsTest extends ApplicationTest {
 
         @Override public User login(String email, String password) { return null; }
         @Override public User findByEmail(String email) {
-            return users.stream().filter(user -> user.getEmail().equals(email)).findFirst().orElse(null);
+            for (User user : users) {
+                if (user.getEmail().equals(email)) {
+                    return user;
+                }
+            }
+            return null;
         }
         @Override public boolean existsByEmail(String email) { return findByEmail(email) != null; }
         @Override public ArrayList<User> findAll() { return new ArrayList<>(users); }
         @Override public User findById(ObjectId id) {
-            return users.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
+            for (User user : users) {
+                if (user.getId().equals(id)) {
+                    return user;
+                }
+            }
+            return null;
         }
         @Override public void insert(User user) { users.add(user); }
         @Override public boolean update(User user) { return true; }
