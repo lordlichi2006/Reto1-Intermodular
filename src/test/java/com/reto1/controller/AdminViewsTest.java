@@ -94,6 +94,11 @@ class AdminViewsTest extends ApplicationTest {
                     controller.setShipmentDao(shipmentDao);
                     return controller;
                 }
+                if (controllerType == AdminShipmentsController.class) {
+                    shipmentsController = new TestAdminShipmentsController();
+                    shipmentsController.setShipmentDao(shipmentDao);
+                    return shipmentsController;
+                }
                 if (controllerType == ShopProfileController.class) {
                     ShopProfileController controller = new ShopProfileController();
                     controller.setUserDao(userDao);
@@ -101,23 +106,6 @@ class AdminViewsTest extends ApplicationTest {
                 }
                 throw new IllegalArgumentException("Unexpected controller: " + controllerType.getName());
             }
-            if (controllerType == AdminUsersController.class) {
-                AdminUsersController controller = new AdminUsersController();
-                controller.setUserDao(userDao);
-                controller.setShipmentDao(shipmentDao);
-                return controller;
-            }
-            if (controllerType == AdminShipmentsController.class) {
-                shipmentsController = new TestAdminShipmentsController();
-                shipmentsController.setShipmentDao(shipmentDao);
-                return shipmentsController;
-            }
-            if (controllerType == ShopProfileController.class) {
-                ShopProfileController controller = new ShopProfileController();
-                controller.setUserDao(userDao);
-                return controller;
-            }
-            throw new IllegalArgumentException("Unexpected controller: " + controllerType.getName());
         });
         return loader.load();
     }
