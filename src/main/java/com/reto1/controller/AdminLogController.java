@@ -48,11 +48,4 @@ public class AdminLogController extends BaseController {
             lblError.setText("Unable to open log file: " + e.getMessage());
         }
     }
-
-    /**
-     * Refresh button: reads the log file again and shows it.
-     */
-    @FXML
-    private void refresh() {
-    }
 }
