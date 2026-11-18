@@ -2,18 +2,20 @@ package com.reto1.controller;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 import com.reto1.dao.ShipmentDao;
 import com.reto1.dao.ShipmentImplementacionBD;
 import com.reto1.dao.UserDao;
 import com.reto1.dao.UserImplementacionBD;
 import com.reto1.exceptions.DatabaseException;
+import com.reto1.exceptions.DniException;
+import com.reto1.exceptions.EmailException;
 import com.reto1.model.Customer;
 import com.reto1.model.CustomerType;
 import com.reto1.model.Role;
 import com.reto1.model.User;
 import com.reto1.model.Worker;
+import com.reto1.util.UserValidation;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
@@ -36,8 +38,6 @@ import javafx.util.Callback;
  * The title bar and the menu buttons are handled by {@link BaseController}.
  */
 public class AdminUsersController extends BaseController {
-
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
 
     @FXML
     private Button btnUsers;
@@ -297,10 +297,15 @@ public class AdminUsersController extends BaseController {
      * @return {@code true} if the form is valid
      */
     private boolean validateForm() {
-        if (tfName.getText() == null || tfName.getText().trim().isEmpty()
-                || tfEmail.getText() == null || !EMAIL_PATTERN.matcher(tfEmail.getText().trim()).matches()
-                || tfIdDocument.getText() == null || tfIdDocument.getText().trim().isEmpty()) {
-            showError("Enter a name, a valid email address and an ID document.", "Invalid user");
+        if (tfName.getText() == null || tfName.getText().trim().isEmpty()) {
+            showError("Enter a name.", "Invalid user");
+            return false;
+        }
+        try {
+            UserValidation.validateEmail(tfEmail.getText());
+            UserValidation.validateIdDocument(tfIdDocument.getText());
+        } catch (EmailException | DniException e) {
+            showError(e.getMessage(), "Invalid user");
             return false;
         }
         if (editingUser instanceof Customer && cmbType.getValue() == null) {
