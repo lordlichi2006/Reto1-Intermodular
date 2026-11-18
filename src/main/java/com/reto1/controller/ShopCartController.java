@@ -16,11 +16,13 @@ import com.reto1.model.Customer;
 import com.reto1.model.Shipment;
 import com.reto1.model.ShipmentLine;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -38,6 +40,9 @@ public class ShopCartController extends BaseController {
 
     @FXML
     private TableView<CartItem> tblCart;
+
+    @FXML
+    private Button btnPurchase;
 
     @FXML
     private TableColumn<CartItem, String> colName;
@@ -71,6 +76,7 @@ public class ShopCartController extends BaseController {
      */
     @FXML
     private void initialize() {
+        btnPurchase.disableProperty().bind(Bindings.isEmpty(tblCart.getItems()));
         if (loggedUser == null || !(loggedUser instanceof Customer)) {
             return;
         }
