@@ -219,7 +219,6 @@ public class ShopCartController extends BaseController {
             return;
         }
 
-        // create shipment and shipmentline
         List<ShipmentLine> lines = new ArrayList<>();
         for (CartItem item : customer.getCart()) {
             lines.add(new ShipmentLine(

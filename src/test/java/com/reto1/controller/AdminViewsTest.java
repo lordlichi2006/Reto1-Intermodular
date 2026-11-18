@@ -34,6 +34,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -126,12 +127,13 @@ class AdminViewsTest extends ApplicationTest {
         assertInstanceOf(ComboBox.class, usersRoot.lookup("#cmbType"));
         assertInstanceOf(ComboBox.class, usersRoot.lookup("#cmbRole"));
         assertInstanceOf(ListView.class, usersRoot.lookup("#lstAddresses"));
-        assertInstanceOf(ComboBox.class, profileRoot.lookup("#cmbType"));
+        assertInstanceOf(Label.class, profileRoot.lookup("#lblType"));
         assertInstanceOf(ListView.class, profileRoot.lookup("#lstAddresses"));
     }
 
     @Test
     public void loggedInUserCannotBeDeletedAndOpenShipmentBlocksCustomerDeletion() {
+        BaseController.loggedUser = loggedAdmin;
         TableView<User> usersTable = (TableView<User>) usersRoot.lookup("#userTable");
         interact(new Runnable() {
             @Override

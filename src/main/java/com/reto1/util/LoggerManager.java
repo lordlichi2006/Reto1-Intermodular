@@ -36,7 +36,7 @@ public final class LoggerManager {
     }
     /**
      * Custom Formatter used to more easily read logs
-     * @return custom formatter with the following format: [ERROR LEVEL] DATE | USER | CLASS&METHOD | MESSAGE
+     * @return custom formatter with the following format: [ERROR LEVEL] DATE | USER | CLASS.METHOD | MESSAGE
      */
     public static Formatter customFormatter() {
         return new Formatter() {

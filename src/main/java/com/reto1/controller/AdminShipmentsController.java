@@ -10,13 +10,17 @@ import com.reto1.model.Shipment;
 import com.reto1.model.ShipmentStatus;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 /**
  * Controller of the window Admin Shipments (adminShipments.fxml).
@@ -62,8 +66,13 @@ public class AdminShipmentsController extends BaseController {
         configureTable();
         cmbStatus.setItems(FXCollections.observableArrayList(
                 ShipmentStatus.IN_PROGRESS, ShipmentStatus.IN_SHIPMENT, ShipmentStatus.ARRIVED));
-        shipmentTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldShipment, shipment) -> selectShipment(shipment));
+        shipmentTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Shipment>() {
+            @Override
+            public void changed(ObservableValue<? extends Shipment> observable, Shipment oldShipment,
+                    Shipment shipment) {
+                selectShipment(shipment);
+            }
+        });
         selectShipment(null);
         loadShipments();
     }
@@ -78,22 +87,39 @@ public class AdminShipmentsController extends BaseController {
     }
 
     private void configureTable() {
-        colDate.setCellValueFactory(cell -> {
-            if (cell.getValue().getCreatedAt() == null) {
-                return new ReadOnlyStringWrapper("");
+        colDate.setCellValueFactory(new Callback<CellDataFeatures<Shipment, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<Shipment, String> cell) {
+                String date;
+
+                date = "";
+                if (cell.getValue().getCreatedAt() != null) {
+                    date = new SimpleDateFormat("dd/MM/yyyy").format(cell.getValue().getCreatedAt());
+                }
+                return new ReadOnlyStringWrapper(date);
             }
-            return new ReadOnlyStringWrapper(
-                    new SimpleDateFormat("dd/MM/yyyy").format(cell.getValue().getCreatedAt()));
         });
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        colTotal.setCellValueFactory(cell ->
-                new ReadOnlyStringWrapper(String.format("%.2f", cell.getValue().getTotal())));
-        colCompany.setCellValueFactory(cell ->
-                new ReadOnlyStringWrapper(cell.getValue().getShipmentCompany() == null
-                        ? "" : cell.getValue().getShipmentCompany()));
-        colStatus.setCellValueFactory(cell ->
-                new ReadOnlyStringWrapper(cell.getValue().getStatus() == null
-                        ? "" : cell.getValue().getStatus().name()));
+        colTotal.setCellValueFactory(new Callback<CellDataFeatures<Shipment, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<Shipment, String> cell) {
+                return new ReadOnlyStringWrapper(String.format("%.2f", cell.getValue().getTotal()));
+            }
+        });
+        colCompany.setCellValueFactory(new Callback<CellDataFeatures<Shipment, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<Shipment, String> cell) {
+                return new ReadOnlyStringWrapper(cell.getValue().getShipmentCompany() == null
+                        ? "" : cell.getValue().getShipmentCompany());
+            }
+        });
+        colStatus.setCellValueFactory(new Callback<CellDataFeatures<Shipment, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<Shipment, String> cell) {
+                return new ReadOnlyStringWrapper(cell.getValue().getStatus() == null
+                        ? "" : cell.getValue().getStatus().name());
+            }
+        });
     }
 
     /**

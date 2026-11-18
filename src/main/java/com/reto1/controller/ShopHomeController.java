@@ -119,7 +119,6 @@ public class ShopHomeController extends BaseController {
      */
     @FXML
     private void addToCart() {
-        // Validation
         Product selectedProduct = tblProducts.getSelectionModel().getSelectedItem();
 
         if (selectedProduct == null) {
@@ -133,7 +132,6 @@ public class ShopHomeController extends BaseController {
             return;
         }
 
-        // Create Cart Item
         int units = Integer.parseInt(txtAmount.getText());
 
         CartItem cartItem = new CartItem(selectedProduct, units);
