@@ -2,14 +2,16 @@ package com.reto1.controller;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 import com.reto1.dao.UserDao;
 import com.reto1.dao.UserImplementacionBD;
 import com.reto1.exceptions.DatabaseException;
+import com.reto1.exceptions.DniException;
+import com.reto1.exceptions.EmailException;
 import com.reto1.model.Customer;
 import com.reto1.model.CustomerType;
 import com.reto1.model.User;
+import com.reto1.util.UserValidation;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,9 +26,6 @@ import javafx.scene.control.TextField;
  * The title bar and menu buttons are handled by {@link BaseController}.
  */
 public class ShopProfileController extends BaseController {
-
-    /** Regular expression used to validate the email address entered in the profile. */
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
 
     @FXML
     private TextField txtName;
@@ -130,12 +129,19 @@ public class ShopProfileController extends BaseController {
         }
         String name = txtName.getText() == null ? "" : txtName.getText().trim();
         String email = txtEmail.getText() == null ? "" : txtEmail.getText().trim();
-        if (name.isEmpty() || !EMAIL_PATTERN.matcher(email).matches() || cmbType.getValue() == null) {
-            lblError.setText("Enter a name, a valid email address and a customer type.");
+        Customer customer = (Customer) loggedUser;
+        if (name.isEmpty() || cmbType.getValue() == null) {
+            lblError.setText("Enter a name and select a customer type.");
+            return;
+        }
+        try {
+            UserValidation.validateEmail(email);
+            UserValidation.validateIdDocument(customer.getIdDocument());
+        } catch (EmailException | DniException e) {
+            lblError.setText(e.getMessage());
             return;
         }
 
-        Customer customer = (Customer) loggedUser;
         try {
             User existing = userDao.findByEmail(email);
             if (existing != null && !Objects.equals(existing.getId(), customer.getId())) {
