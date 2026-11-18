@@ -9,13 +9,11 @@ import com.reto1.exceptions.DatabaseException;
 import com.reto1.exceptions.DniException;
 import com.reto1.exceptions.EmailException;
 import com.reto1.model.Customer;
-import com.reto1.model.CustomerType;
 import com.reto1.model.User;
 import com.reto1.util.UserValidation;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -32,7 +30,7 @@ public class ShopProfileController extends BaseController {
     @FXML
     private TextField txtEmail;
     @FXML
-    private ComboBox<CustomerType> cmbType;
+    private Label lblType;
     @FXML
     private ListView<String> lstAddresses;
     @FXML
@@ -50,7 +48,6 @@ public class ShopProfileController extends BaseController {
      */
     @FXML
     private void initialize() {
-        cmbType.getItems().setAll(CustomerType.values());
         if (userDao == null) {
             userDao = new UserImplementacionBD();
         }
@@ -79,7 +76,7 @@ public class ShopProfileController extends BaseController {
         Customer customer = (Customer) loggedUser;
         txtName.setText(customer.getName());
         txtEmail.setText(customer.getEmail());
-        cmbType.getSelectionModel().select(customer.getType());
+        lblType.setText(customer.getType() == null ? "" : customer.getType().toString());
         lstAddresses.getItems().setAll(customer.getAddresses() == null
                 ? new ArrayList<>() : customer.getAddresses());
         lblError.setText("");
@@ -130,8 +127,8 @@ public class ShopProfileController extends BaseController {
         String name = txtName.getText() == null ? "" : txtName.getText().trim();
         String email = txtEmail.getText() == null ? "" : txtEmail.getText().trim();
         Customer customer = (Customer) loggedUser;
-        if (name.isEmpty() || cmbType.getValue() == null) {
-            lblError.setText("Enter a name and select a customer type.");
+        if (name.isEmpty()) {
+            lblError.setText("Enter a name.");
             return;
         }
         try {
@@ -149,7 +146,7 @@ public class ShopProfileController extends BaseController {
                 return;
             }
             Customer updatedCustomer = new Customer(name, email, customer.getPassword(), customer.getIdDocument(),
-                    new ArrayList<>(lstAddresses.getItems()), cmbType.getValue());
+                    new ArrayList<>(lstAddresses.getItems()), customer.getType());
             updatedCustomer.setId(customer.getId());
             updatedCustomer.setTotalSpent(customer.getTotalSpent());
             updatedCustomer.setCart(new ArrayList<>(customer.getCart()));
