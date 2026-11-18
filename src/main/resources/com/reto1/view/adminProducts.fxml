@@ -140,30 +140,14 @@
                                     <Font name="Cooper Black" size="15.0" />
                                 </font>
                             </TextField>
-                            <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#saveProduct" styleClass="uiButton" text="Confirm" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-                                <font>
-                                    <Font name="Cooper Black" size="13.0" />
-                                </font>
-                            </Button>
+                            <Button fx:id="btnConfirm" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveProduct" styleClass="uiButton" text="Confirm" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                         </children>
                     </GridPane>
                     <HBox alignment="CENTER_LEFT" spacing="25.0">
                         <children>
-                            <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addProduct" styleClass="uiButton" text="Add product">
-                                <font>
-                                    <Font name="Cooper Black" size="13.0" />
-                                </font>
-                            </Button>
-                            <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#editProduct" styleClass="uiButton" text="Edit product">
-                                <font>
-                                    <Font name="Cooper Black" size="13.0" />
-                                </font>
-                            </Button>
-                            <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#removeProduct" styleClass="uiButton" text="Remove product">
-                                <font>
-                                    <Font name="Cooper Black" size="13.0" />
-                                </font>
-                            </Button>
+                            <Button fx:id="btnAdd" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addProduct" styleClass="uiButton" text="Add product" HBox.hgrow="ALWAYS" />
+                            <Button fx:id="btnEdit" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editProduct" styleClass="uiButton" text="Edit product" HBox.hgrow="ALWAYS" />
+                            <Button fx:id="btnRemove" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeProduct" styleClass="uiButton" text="Remove product" HBox.hgrow="ALWAYS" />
                         </children>
                         <VBox.margin>
                             <Insets top="10.0" />
