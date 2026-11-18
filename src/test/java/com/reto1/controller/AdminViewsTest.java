@@ -3,6 +3,7 @@ package com.reto1.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -43,11 +44,13 @@ class AdminViewsTest extends ApplicationTest {
     private Parent offersRoot;
     private Parent usersRoot;
     private Parent profileRoot;
+    private Parent shipmentsRoot;
     private Stage stage;
     private ScreenUserDao userDao;
     private TrackingShipmentDao shipmentDao;
     private Worker loggedAdmin;
     private Customer customerWithOpenShipment;
+    private TestAdminShipmentsController shipmentsController;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -60,9 +63,14 @@ class AdminViewsTest extends ApplicationTest {
         userDao.users.add(loggedAdmin);
         userDao.users.add(customerWithOpenShipment);
         shipmentDao = new TrackingShipmentDao();
+        shipmentDao.shipments.add(shipment(ShipmentStatus.IN_PROGRESS));
+        shipmentDao.shipments.add(shipment(ShipmentStatus.IN_SHIPMENT));
+        shipmentDao.shipments.add(shipment(ShipmentStatus.ARRIVED));
+        shipmentDao.shipments.add(shipment(ShipmentStatus.CANCELLED));
         BaseController.loggedUser = loggedAdmin;
         offersRoot = loadView("/com/reto1/view/adminOffers.fxml");
         usersRoot = loadView("/com/reto1/view/adminUsers.fxml");
+        shipmentsRoot = loadView("/com/reto1/view/adminShipments.fxml");
         BaseController.loggedUser = customerWithOpenShipment;
         profileRoot = loadView("/com/reto1/view/shopProfile.fxml");
         stage.setScene(new Scene(profileRoot));
@@ -93,6 +101,23 @@ class AdminViewsTest extends ApplicationTest {
                 }
                 throw new IllegalArgumentException("Unexpected controller: " + controllerType.getName());
             }
+            if (controllerType == AdminUsersController.class) {
+                AdminUsersController controller = new AdminUsersController();
+                controller.setUserDao(userDao);
+                controller.setShipmentDao(shipmentDao);
+                return controller;
+            }
+            if (controllerType == AdminShipmentsController.class) {
+                shipmentsController = new TestAdminShipmentsController();
+                shipmentsController.setShipmentDao(shipmentDao);
+                return shipmentsController;
+            }
+            if (controllerType == ShopProfileController.class) {
+                ShopProfileController controller = new ShopProfileController();
+                controller.setUserDao(userDao);
+                return controller;
+            }
+            throw new IllegalArgumentException("Unexpected controller: " + controllerType.getName());
         });
         return loader.load();
     }
@@ -108,6 +133,7 @@ class AdminViewsTest extends ApplicationTest {
         assertEquals(4, ((TableView<?>) offersRoot.lookup("#productsTable")).getColumns().size());
         assertEquals(3, ((TableView<?>) offersRoot.lookup("#offersTable")).getColumns().size());
         assertEquals(4, ((TableView<?>) usersRoot.lookup("#userTable")).getColumns().size());
+        assertEquals(2, ((TableView<?>) shipmentsRoot.lookup("#shipmentTable")).getItems().size());
         assertInstanceOf(ComboBox.class, usersRoot.lookup("#cmbType"));
         assertInstanceOf(ComboBox.class, usersRoot.lookup("#cmbRole"));
         assertInstanceOf(ListView.class, usersRoot.lookup("#lstAddresses"));
@@ -140,6 +166,60 @@ class AdminViewsTest extends ApplicationTest {
         assertFalse(userDao.deleted);
     }
 
+    @Test
+    public void adminCanUpdateAndCancelActiveShipments() {
+        TableView<Shipment> table = (TableView<Shipment>) shipmentsRoot.lookup("#shipmentTable");
+        Shipment inProgress = table.getItems().get(0);
+        Shipment inShipment = table.getItems().get(1);
+        ComboBox<ShipmentStatus> status = (ComboBox<ShipmentStatus>) shipmentsRoot.lookup("#cmbStatus");
+
+        interact(() -> {
+            stage.setScene(new Scene(shipmentsRoot));
+            table.getSelectionModel().select(inProgress);
+            status.getSelectionModel().select(ShipmentStatus.ARRIVED);
+        });
+        clickOn("#btnConfirm");
+        assertEquals(ShipmentStatus.ARRIVED, inProgress.getStatus());
+        assertEquals(1, table.getItems().size());
+        assertEquals("Shipment status updated successfully.", shipmentsController.infoMessage);
+
+        interact(() -> table.getSelectionModel().select(inShipment));
+        clickOn("#btnCancel");
+        assertEquals(ShipmentStatus.CANCELLED, inShipment.getStatus());
+        assertTrue(table.getItems().isEmpty());
+        assertTrue(shipmentsController.confirmationRequested);
+        assertNull(shipmentsController.errorMessage);
+    }
+
+    private Shipment shipment(ShipmentStatus status) {
+        Shipment shipment = new Shipment(new ObjectId(), "Test address", new ArrayList<>(), 10.0, "Test carrier");
+        shipment.setId(new ObjectId());
+        shipment.setStatus(status);
+        return shipment;
+    }
+
+    private static class TestAdminShipmentsController extends AdminShipmentsController {
+        private String errorMessage;
+        private String infoMessage;
+        private boolean confirmationRequested;
+
+        @Override
+        protected void showError(String message, String header) {
+            errorMessage = message;
+        }
+
+        @Override
+        protected void showInfo(String message, String header) {
+            infoMessage = message;
+        }
+
+        @Override
+        protected boolean confirm(String message, String header) {
+            confirmationRequested = true;
+            return true;
+        }
+    }
+
     private static class EmptyProductDao implements ProductDao {
         @Override public ArrayList<Product> findAll() { return new ArrayList<>(); }
         @Override public Product findById(ObjectId id) { return null; }
@@ -162,12 +242,22 @@ class AdminViewsTest extends ApplicationTest {
 
     private static class TrackingShipmentDao implements ShipmentDao {
         private boolean checked;
+        private final ArrayList<Shipment> shipments = new ArrayList<>();
 
         @Override public void insert(Shipment shipment) { }
         @Override public Shipment findById(ObjectId id) { return null; }
-        @Override public ArrayList<Shipment> findAll() { return new ArrayList<>(); }
+        @Override public ArrayList<Shipment> findAll() { return new ArrayList<>(shipments); }
         @Override public ArrayList<Shipment> findByCustomer(ObjectId customerId) { return new ArrayList<>(); }
-        @Override public boolean updateStatus(ObjectId id, ShipmentStatus status) { return false; }
+        @Override public boolean updateStatus(ObjectId id, ShipmentStatus status) {
+            return shipments.stream()
+                    .filter(shipment -> shipment.getId().equals(id))
+                    .findFirst()
+                    .map(shipment -> {
+                        shipment.setStatus(status);
+                        return true;
+                    })
+                    .orElse(false);
+        }
         @Override public boolean existsInProgressByCustomer(ObjectId customerId) {
             checked = true;
             return true;
