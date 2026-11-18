@@ -61,6 +61,10 @@ public class AdminUsersController extends BaseController {
     private ComboBox<Role> cmbRole;
     @FXML
     private ListView<String> lstAddresses;
+    @FXML
+    private TextField tfNewAddress;
+    @FXML
+    private Button btnAddAddress;
 
     private UserDao userDao;
     private ShipmentDao shipmentDao;
@@ -76,6 +80,8 @@ public class AdminUsersController extends BaseController {
         cmbRole.getItems().setAll(Role.values());
         configureTable();
         btnDelete.setDisable(true);
+        tfNewAddress.setDisable(true);
+        btnAddAddress.setDisable(true);
         userTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
             @Override
             public void changed(ObservableValue<? extends User> observable, User oldUser, User user) {
@@ -159,11 +165,15 @@ public class AdminUsersController extends BaseController {
         tfEmail.setText(selected.getEmail());
         tfIdDocument.setText(selected.getIdDocument());
         pfPasswd.clear();
+        tfNewAddress.clear();
+        cmbRole.getItems().setAll(Role.values());
 
         boolean isCustomer = selected instanceof Customer;
         cmbType.setDisable(!isCustomer);
         cmbRole.setDisable(isCustomer);
         lstAddresses.setDisable(!isCustomer);
+        tfNewAddress.setDisable(!isCustomer);
+        btnAddAddress.setDisable(!isCustomer);
         if (isCustomer) {
             Customer customer = (Customer) selected;
             cmbType.getSelectionModel().select(customer.getType());
@@ -275,6 +285,29 @@ public class AdminUsersController extends BaseController {
             lstAddresses.getItems().remove(selectedIndex);
         }
     }
+
+    /**
+     * Adds the address entered in the form to the selected customer's address list.
+     */
+    @FXML
+    private void addAddress() {
+        if (!(editingUser instanceof Customer)) {
+            showError("Edit a customer before adding an address.", "Addresses");
+            return;
+        }
+        String address = tfNewAddress.getText() == null ? "" : tfNewAddress.getText().trim();
+        if (address.isEmpty()) {
+            showError("Enter an address to add.", "Addresses");
+            return;
+        }
+        if (lstAddresses.getItems().contains(address)) {
+            showError("That address is already in the list.", "Addresses");
+            return;
+        }
+        lstAddresses.getItems().add(address);
+        tfNewAddress.clear();
+    }
+
     /**
      * Empties every field of the form.
      */
@@ -288,8 +321,11 @@ public class AdminUsersController extends BaseController {
         cmbRole.getSelectionModel().clearSelection();
         cmbType.setDisable(false);
         cmbRole.setDisable(false);
-        lstAddresses.setDisable(false);
+        lstAddresses.setDisable(true);
         lstAddresses.getItems().clear();
+        tfNewAddress.clear();
+        tfNewAddress.setDisable(true);
+        btnAddAddress.setDisable(true);
     }
     /**
      * Checks the form: name, email and idDocument filled and a valid email.

@@ -131,6 +131,13 @@
                         <RowConstraints />
                      </rowConstraints>
                     </GridPane>
+                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <children>
+                            <Label styleClass="formLabel" text="New address" />
+                            <TextField fx:id="tfNewAddress" promptText="Enter address" styleClass="formField" HBox.hgrow="ALWAYS" />
+                            <Button fx:id="btnAddAddress" mnemonicParsing="false" onAction="#addAddress" styleClass="actionButton" text="Add address" />
+                        </children>
+                    </HBox>
                     <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="523.0" spacing="25.0">
                         <children>
                             <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#editUser" styleClass="actionButton" text="Edit user">

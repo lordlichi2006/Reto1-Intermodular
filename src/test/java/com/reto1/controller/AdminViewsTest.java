@@ -36,6 +36,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -161,22 +162,67 @@ class AdminViewsTest extends ApplicationTest {
         Shipment inShipment = table.getItems().get(1);
         ComboBox<ShipmentStatus> status = (ComboBox<ShipmentStatus>) shipmentsRoot.lookup("#cmbStatus");
 
-        interact(() -> {
-            stage.setScene(new Scene(shipmentsRoot));
-            table.getSelectionModel().select(inProgress);
-            status.getSelectionModel().select(ShipmentStatus.ARRIVED);
+        interact(new Runnable() {
+            @Override
+            public void run() {
+                stage.setScene(new Scene(shipmentsRoot));
+                table.getSelectionModel().select(inProgress);
+                status.getSelectionModel().select(ShipmentStatus.ARRIVED);
+            }
         });
         clickOn("#btnConfirm");
         assertEquals(ShipmentStatus.ARRIVED, inProgress.getStatus());
         assertEquals(1, table.getItems().size());
         assertEquals("Shipment status updated successfully.", shipmentsController.infoMessage);
 
-        interact(() -> table.getSelectionModel().select(inShipment));
+        interact(new Runnable() {
+            @Override
+            public void run() {
+                table.getSelectionModel().select(inShipment);
+            }
+        });
         clickOn("#btnCancel");
         assertEquals(ShipmentStatus.CANCELLED, inShipment.getStatus());
         assertTrue(table.getItems().isEmpty());
         assertTrue(shipmentsController.confirmationRequested);
         assertNull(shipmentsController.errorMessage);
+    }
+
+    @Test
+    public void editingWorkerShowsRolesAndEditingCustomerAllowsAddingAddress() {
+        TableView<User> usersTable = (TableView<User>) usersRoot.lookup("#userTable");
+        ComboBox<Role> roleCombo = (ComboBox<Role>) usersRoot.lookup("#cmbRole");
+        ListView<String> addresses = (ListView<String>) usersRoot.lookup("#lstAddresses");
+        TextField newAddress = (TextField) usersRoot.lookup("#tfNewAddress");
+
+        interact(new Runnable() {
+            @Override
+            public void run() {
+                stage.setScene(new Scene(usersRoot));
+                usersTable.getSelectionModel().select(loggedAdmin);
+            }
+        });
+        clickOn("#btnEdit");
+        assertFalse(roleCombo.isDisabled());
+        for (Role role : Role.values()) {
+            assertTrue(roleCombo.getItems().contains(role));
+        }
+
+        interact(new Runnable() {
+            @Override
+            public void run() {
+                usersTable.getSelectionModel().select(customerWithOpenShipment);
+            }
+        });
+        clickOn("#btnEdit");
+        interact(new Runnable() {
+            @Override
+            public void run() {
+                newAddress.setText("New test address");
+            }
+        });
+        clickOn("#btnAddAddress");
+        assertTrue(addresses.getItems().contains("New test address"));
     }
 
     private Shipment shipment(ShipmentStatus status) {
@@ -237,14 +283,13 @@ class AdminViewsTest extends ApplicationTest {
         @Override public ArrayList<Shipment> findAll() { return new ArrayList<>(shipments); }
         @Override public ArrayList<Shipment> findByCustomer(ObjectId customerId) { return new ArrayList<>(); }
         @Override public boolean updateStatus(ObjectId id, ShipmentStatus status) {
-            return shipments.stream()
-                    .filter(shipment -> shipment.getId().equals(id))
-                    .findFirst()
-                    .map(shipment -> {
-                        shipment.setStatus(status);
-                        return true;
-                    })
-                    .orElse(false);
+            for (Shipment shipment : shipments) {
+                if (shipment.getId().equals(id)) {
+                    shipment.setStatus(status);
+                    return true;
+                }
+            }
+            return false;
         }
         @Override public boolean existsInProgressByCustomer(ObjectId customerId) {
             checked = true;
